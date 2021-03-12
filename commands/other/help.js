@@ -13,7 +13,7 @@ module.exports = {
         const commandCategoryFolders = fs.readdirSync('commands').filter(file => !file.includes('.'))
         if (!category) {
             let embed = new Discord.MessageEmbed()
-            .setColor(vars.config.embedcolor)
+            .setColor(vars.embedcolor)
             .setTitle(`Command Categories`)
             .setFooter(`For more specific information, do: $help (category)`)
 

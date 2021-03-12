@@ -372,7 +372,7 @@ function helpCategory(category, msg, num, client) {
             .setDescription(`*${c.description}*`)
             .setTitle(`${c.emote} ${c.title} | Help`)
             .setFooter(`Hope this helps!`)
-            .setColor(vars.config.embedcolor)
+            .setColor(vars.embedcolor)
         
             let text = ''
             client.commands.forEach(cmd => {
