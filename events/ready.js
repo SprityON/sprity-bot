@@ -3,7 +3,6 @@ module.exports = {
     once: true,
     execute(client) {
         const vars = require('../variables.js')
-        console.log('test')
         console.log(`Logged in as ${client.user.tag}!`)
         client.user.setActivity(`${vars.config.prefix}help`, { type: "LISTENING" })
         let guild = client.guilds.cache.get(`${process.env.GUILDID}`)
