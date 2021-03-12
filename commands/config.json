@@ -1,0 +1,44 @@
+[
+	{
+		"category": "moderation",
+		"description": "These commands will help you moderate this server!",
+		"title": "Moderation Commands",
+		"emote": ":wrench:",
+		"usage": "$help moderation"
+	},
+	{
+		"category": "fun",
+		"description": "Are you lacking fun? Then try out one of these!",
+		"title": "Fun Commands",
+		"emote": ":game_die:",
+		"usage": "$help fun"
+	},
+	{
+		"category": "other",
+		"description": "These are all commands which are uncategorized!",
+		"title": "Other Commands",
+		"emote": ":question:",
+		"usage": "$help other"
+	},
+	{
+		"category": "points",
+		"description": "Buy stuff, sell stuff, earn rewards, and more!",
+		"title": "Points System",
+		"emote": ":yellow_circle:",
+		"usage": "$help points"
+	},
+	{
+		"category": "utils",
+		"description": "Everyone wants more, right? Try these extra commands out!",
+		"title": "Utility Commands",
+		"emote": ":hammer_pick:",
+		"usage": "$help utils"
+	},
+	{
+		"category": "settings",
+		"description": "Wanting to disable something? Change settings here!",
+		"title": "Settings",
+		"emote": ":gear:",
+		"usage": "$help settings"
+	}
+]
