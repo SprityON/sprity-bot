@@ -1,31 +1,49 @@
 const { query } = require('../../functions');
 const { Discord, embedcolor, space } = require('../../variables')
 
-module.exports = {
+module.exports.info = {
     name: 'profile',
-	usage: '$profile',
-    description: 'See profile',
     category: 'other',
-    aliases: ['userinfo', 'aboutme'],
-	help: true,
-    execute(msg, args) {
+    usage: '$profile <member>',
+    short_description: 'View a profile',
+    help: {
+        enabled: true,
+        title: 'View Profile',
+        aliases: [],
+        description: 'View the profile of a member',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		const moment = require('moment')
         let mentionedMember = msg.mentions.members.first()
 		let thisMember;
 
 		if (mentionedMember) { thisMember = mentionedMember }
 		if (!mentionedMember) { 
-			if (args[0]) {
+			if (!isNaN(args[0])) {
 				let memberID = args[0]
 				if (memberID.length != 18) return msg.reply(`this is not a valid Member ID.`)
-				if (isNaN(memberID)) return msg.reply(`a Member ID may only contain numbers!`)
 
 				const findMember = msg.guild.members.cache.find(member => member.id === memberID)
 
 				if (findMember) {
 					thisMember = findMember
 				} else {
-					msg.reply(`could not find this Member.`)
+					return msg.reply(`could not find this Member.`)
+				}
+			} else if (isNaN(args[0])) {
+				let memberName = args[0]
+				if (memberID.length != 18) return msg.reply(`this is not a valid Member ID.`)
+
+				const findMember = msg.guild.members.cache.find(member => member.name === memberName)
+
+				if (findMember) {
+					thisMember = findMember
+				} else {
+					return msg.reply(`could not find this Member.`)
 				}
 			} else { thisMember = msg.member }
 			

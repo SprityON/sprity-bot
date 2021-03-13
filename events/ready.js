@@ -16,7 +16,6 @@ module.exports = {
             Functions.updateDB.checkLeaderboard(m)
         }, 10800000);
 
-        // --- //
         Functions.query("SELECT * FROM members", data => {
             data[0].forEach(row => {
                 let member = guild.members.cache.get(row.member_id)

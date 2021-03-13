@@ -1,13 +1,21 @@
 const { query } = require('../../functions')
 const { Functions, embedcolor, Discord } = require('../../variables')
 
-module.exports = {
+module.exports.info = {
     name: 'inventory',
-    usage: '$inventory',
-    description: 'See your bought items',
     category: 'points',
-    aliases: ['inv'],
-    help: true,
+    usage: '$inventory <member>',
+    short_description: 'See inventory of member',
+    help: {
+        enabled: true,
+        title: 'See Inventory of Member',
+        aliases: ['inv', 'items'],
+        description: 'See the amount of items which a member has',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
     execute(msg, args, client) {
         Functions.updateDB.updateItemsDB()
 
@@ -115,5 +123,5 @@ module.exports = {
                 })
             }
         })
-    },
+    }
 }

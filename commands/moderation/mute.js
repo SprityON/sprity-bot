@@ -1,11 +1,19 @@
-module.exports = {
+module.exports.info = {
     name: 'mute',
-	usage: '$mute (member) (duration)',
-    description: 'Mute a member',
     category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
+    usage: '$mute <member> <duration: 10m, 1h, etc...>',
+    short_description: 'Mute a member',
+    help: {
+        enabled: true,
+        title: 'Mute A Member',
+        aliases: ['silence'],
+        description: 'Mute a member for a specific amount of time',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		const { Functions } = require('../../variables.js')
 		const moment = require('moment')
 		const ms = require('ms')
@@ -62,5 +70,5 @@ module.exports = {
 			Functions.query(`DELETE FROM timer_dates WHERE member_id = ${member.id}`)
 		}, ms(time));
 		return msg.channel.send(`**${member.user.username}** has been muted for ${ms(ms(time), {long: true})}!`)
-    },
-};
+    }
+}

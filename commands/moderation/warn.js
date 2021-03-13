@@ -1,14 +1,21 @@
 const { embedcolor, Discord, Functions } = require("../../variables")
 
-module.exports = {
+module.exports.info = {
     name: 'warn',
-	usage: '$warn (member)',
-    description: 'Warn a member',
     category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
+    usage: '$warn <emmber> <reason>',
+    short_description: 'Warn a member',
+    help: {
+        enabled: true,
+        title: 'Warn Member',
+        aliases: [],
+        description: 'Warn a member with a reason',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
 
+module.exports.command = {
+    execute(msg, args, client) {
 		if (!msg.member.permissions.has("MANAGE_MESSAGES")) return msg.channel.send(`You don't have permission to do that, ${msg.author}`)
 
 		let mentionedMember = msg.mentions.members.first()

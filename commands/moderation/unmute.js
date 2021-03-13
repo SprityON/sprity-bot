@@ -1,15 +1,21 @@
-const { Functions } = require("../../variables");
+const { query } = require("../../functions");
 
-module.exports = {
-    name: 'unmute',
-	usage: '$unmute (member)',
-    description: 'Unmute a member',
+module.exports.info = {
+    name: 'mute',
     category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
-        
-        // *** start of code ***
+    usage: '$unmute <member>',
+    short_description: 'Unmute a member',
+    help: {
+        enabled: true,
+        title: 'Unmute A Member',
+        aliases: [],
+        description: 'Unmute a member ',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		let member = msg.mentions.members.first()
 		if (!member) return msg.reply('you have to mention a user first!')
 		let muteRole = msg.guild.roles.cache.get('731524672629506169')
@@ -23,6 +29,6 @@ module.exports = {
 		msg.channel.send(`**${member.displayName}** has been unmuted!`)
 		member.roles.remove(muteRole)
 
-		Functions.query(`DELETE FROM timer_dates WHERE member_id = ${member.id}`)
-    },
-};
+		query(`DELETE FROM timer_dates WHERE member_id = ${member.id}`)
+    }
+}

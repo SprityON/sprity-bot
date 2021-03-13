@@ -1,13 +1,21 @@
 const { query } = require('../../functions')
 
-module.exports = {
+module.exports.info = {
     name: 'gift',
-    usage: '$gift (member) (item id) (amount)',
-    description: 'Gift an item',
     category: 'points',
-    aliases: [],
-    help: true,
-    execute(msg, args) {
+    usage: '$gift <member> <item id>',
+    short_description: 'Gift a item',
+    help: {
+        enabled: true,
+        title: 'Gift A Item',
+        aliases: [],
+        description: 'Gift a item to a member. Note: You WILL lose the amount of items you gift!',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
         const shop = require('./shop-items.json')
 
         let member = msg.mentions.members.first()
@@ -26,9 +34,9 @@ module.exports = {
             if (amount > 1) { additionalText += "'s"}
 
             query("SELECT "+item_id+" FROM members_inventory WHERE member_id = '"+msg.member.id+"'", data => {
-                let prevAmount = parseInt(Object.values(result[0]))
+                let prevAmount = parseInt(Object.values(data[0][0]))
 
-                if ((prevAmount - amount) < 0) return msg.reply(`you can't gift ${amount} item(s) since you don't have those items.`)
+                if ((prevAmount - amount) <= 0) return msg.reply(`you can't gift ${amount} item(s) since you don't have those items.`)
                 
                 query("UPDATE `members_inventory` SET "+item_id+" = "+(prevAmount - amount)+" WHERE member_id = '"+msg.member.id+"'")
                 query("UPDATE `members_inventory` SET "+item_id+" = "+(prevAmount + amount)+" WHERE member_id = '"+member.id+"'")
@@ -107,5 +115,5 @@ module.exports = {
             msg.reply(`that member does not exist, or it is not a valid member ID.`)
             return
         }
-    },
+    }
 }

@@ -1,15 +1,22 @@
 const { query } = require("../../functions");
 const { Discord, embedcolor } = require("../../variables");
 
-module.exports = {
+module.exports.info = {
     name: 'leaderboard',
-    usage: '$leaderboard',
-    description: 'List of top 5 chatters',
     category: 'other',
-    aliases: ['lb'],
-    help: true,
-    execute(msg, args) {
+    usage: '$leaderboard',
+    short_description: 'Show leaderboard',
+    help: {
+        enabled: true,
+        title: 'Show Leaderboard',
+        aliases: ['lb'],
+        description: 'Show 5 members with the most highest amount of messages',
+        permissions: ['SEND_MESSAGES']
+    }
+}
 
+module.exports.command = {
+    execute(msg, args, client) {
         query(`SELECT * FROM members ORDER BY messages DESC LIMIT 5`, data => {
             let memberList = []
             data[0].forEach(row => {
@@ -81,5 +88,5 @@ module.exports = {
                 })
             })
         })
-    },
-};
+    }
+}

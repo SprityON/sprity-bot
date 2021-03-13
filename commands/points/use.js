@@ -1,13 +1,21 @@
 const { query } = require('../../functions.js')
 
-module.exports = {
+module.exports.info = {
     name: 'use',
-    usage: '$use (item id)',
-    description: 'Use an item',
     category: 'points',
-    aliases: [],
-    help: true,
-    execute(msg, args) {
+    usage: '$use <item id>',
+    short_description: 'Use a item from the shop',
+    help: {
+        enabled: true,
+        title: 'Use Item',
+        aliases: [],
+        description: 'Use a item from the shop. BE AWARE: when used, the item WILL be removed from your inventory!\nIf anything still goes wrong, refund by doing $refund (used items will stay for 15 minutes)',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
         let id = args[0]
         if (!id) return msg.channel.send(`**${msg.author.username}**, you have to provide an item id.`)
         try {
@@ -21,5 +29,5 @@ module.exports = {
         } catch (error) {
             return msg.channel.send(`**${msg.author.username}**, \`${id}\` is not a valid item id, or this item can't be used.`)
         }
-    },
+    }
 }

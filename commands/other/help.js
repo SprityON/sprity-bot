@@ -1,8 +1,18 @@
-module.exports = {
+module.exports.info = {
     name: 'help',
-    description: 'help',
-    category: '',
-    aliases: [],
+    category: 'other',
+    usage: '$help <category> <command>',
+    short_description: 'Show a list of commands/categories',
+    help: {
+        enabled: true,
+        title: 'Help',
+        aliases: [],
+        description: 'Show a list of commmands or categories',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
     execute(msg, args, client) {
         const vars = require('../../variables.js')
         const { Discord, fs } = vars
@@ -48,25 +58,28 @@ module.exports = {
             msg.channel.send(embed)
             return
         } else {
-            if (command) {
-                
-                return
-            }
             let num = 0
             let commands = fs.readdirSync(`commands/${category}`).filter(file => file.includes('.'))
             commands.forEach(f => {
                 num++
             })
 
+            let notFound; 
+            command ? notFound = `Command \`${command}\`` : notFound = `Category \`${category}\``
+
             for (let i = 0; i < commandCategoryFolders.length; i++) {
                 const folder = commandCategoryFolders[i];
                 if (folder === category) {
-                    Functions.helpCategory(category, msg, num, client)
-                    return
+                    if (command) {
+                        if (client.commands.find(cmd => cmd.info.name === command)) return Functions.helpCommand(msg, args, num ,client)
+                    } else {
+                        Functions.helpCategory(category, msg, num, client)
+                        return
+                    }
                 }
             }
             
-            msg.channel.send(`Category \`${category}\` not found.`)
+            msg.channel.send(`${notFound} not found.`)
         }
-    },
-};
+    }
+}

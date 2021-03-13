@@ -1,13 +1,19 @@
-module.exports = {
+module.exports.info = {
     name: 'removerole',
-	usage: '$removerole (member) (role)',
-    description: 'Remove a role from a member',
     category: 'utils',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
-        
-        // *** start of code ***
+    usage: '$removerole <member> <role>',
+    short_description: 'Remove role from member',
+    help: {
+        enabled: true,
+        title: 'Remove Role from Member',
+        aliases: [],
+        description: 'Remove any type of role from a member (only for upper-staff)',
+        permissions: ['MANAGE_GUILD']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		if (!msg.member.permissions.has("MANAGE_GUILD")) return msg.reply(`you don't have permission to use this command!`)
 
 		let mentionedRole = msg.mentions.roles.first()
@@ -27,5 +33,5 @@ module.exports = {
 
 		let botChatChannel = msg.guild.channels.cache.find(channel => channel.id === '719290506177282140')
 		botChatChannel.send(`Removed ${roleToString} role for ${mentionedUser}.`)
-    },
-};
+    }
+}

@@ -1,11 +1,19 @@
-module.exports = {
+module.exports.info = {
     name: 'clear',
-	usage: '$clear (amount)',
-	description: 'Clear/Purge messages',
-	category: 'moderation',
-	aliases: ['purge'],
-	help: true,
-    execute(msg, args) {
+    category: 'moderation',
+    usage: '$clear <amount>',
+    short_description: 'Clear messages',
+    help: {
+        enabled: true,
+        title: 'Clear Messages',
+        aliases: ['purge'],
+        description: 'Clear a certain amount of messages (max 100)',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		if (!msg.member.permissions.has("MANAGE_MESSAGES")) {
 			msg.channel.send(`You don't have permission to do that, ${msg.author}!`)
 			return
@@ -34,5 +42,5 @@ module.exports = {
 		msg.channel.bulkDelete(args[0]).then(() => {
 			msg.reply(`cleared ${args[0]} messages.`).then(msg => msg.delete({ timeout: 5000 }));
 		})
-    },
-};
+    }
+}

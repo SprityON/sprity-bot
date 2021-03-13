@@ -1,11 +1,21 @@
 const { embedcolor, Discord } = require('../../variables');
-module.exports = {
-    name: 'serverinfo',
-	usage: '$serverinfo',
-    description: 'Server info',
-    category: 'other',
-    aliases: [],
-    execute(msg, args) {
+
+module.exports.info = {
+    name: '',
+    category: '',
+    usage: '',
+    short_description: '',
+    help: {
+        enabled: false,
+        title: '',
+        aliases: [],
+        description: '',
+        permissions: []
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		const moment = require('moment')
         
         let memberCount = msg.guild.members.cache.filter(member => !member.user.bot).size
@@ -65,5 +75,5 @@ module.exports = {
         .addField(`Server Creation Date`, `${date.getDate()}/${date.getMonth()}/${date.getFullYear()} ${daysAmount}`)
         
         msg.channel.send(embed)
-    },
-};
+    }
+}

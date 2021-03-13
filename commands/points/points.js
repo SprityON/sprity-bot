@@ -1,15 +1,22 @@
 const { query } = require("../../functions")
 const { Functions, Discord, embedcolor } = require("../../variables")
 
-module.exports = {
+module.exports.info = {
     name: 'points',
-    usage: '$points',
-    description: 'See your amount of points',
     category: 'points',
-    aliases: ['bal', 'p', 'balance'],
-    help: true,
-    execute(msg, args, client) {
+    usage: '$points',
+    short_description: 'Amount of member points',
+    help: {
+        enabled: true,
+        title: 'Amount of Member Points',
+        aliases: ['bal', 'balance'],
+        description: 'See a member\'s amount of points',
+        permissions: ['SEND_MESSAGES']
+    }
+}
 
+module.exports.command = {
+    execute(msg, args, client) {
         query(`SELECT * FROM members WHERE member_id = ${msg.author.id}`, data => {
             for (let row of data[0]) {
                 if (!args[0]) {
@@ -24,5 +31,5 @@ module.exports = {
                 }
             }
         })
-    },
+    }
 }

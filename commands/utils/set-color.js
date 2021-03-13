@@ -1,15 +1,21 @@
 const { Discord, embedcolor } = require("../../variables");
 
-module.exports = {
+module.exports.info = {
     name: 'set-color',
-	usage: '$set-color (hexcode)',
-    description: 'Set a color role',
     category: 'utils',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
-        // *** start of code ***
-		if (msg.channel.id == config.channels.botChatChannel.id || msg.channel.id == config.channels.devDebugChannel.id) { /* do nothing */ } else return(msg.reply(`bot commands are only allowed in <#719290506177282140>`))
+    usage: '$set-color <hexcode>',
+    short_description: 'Set color role by hexcode',
+    help: {
+        enabled: true,
+        title: 'Set Color Role',
+        aliases: [],
+        description: 'Set a custom color role via a hexcode.\nUse [this link](https://image-color-picker.com/hex-code-picker) to pick a hexcode',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		if (!msg.member.permissions.has('MANAGE_MESSAGES')){
 			return msg.reply(`you have to buy this item! For more info, use \`$help points\``)
 		}
@@ -79,5 +85,5 @@ module.exports = {
 			
 			addRole()
 		})
-    },
-};
+    }
+}

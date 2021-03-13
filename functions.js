@@ -69,20 +69,6 @@ function dbConnection() {
     
     return con
 }
-// function dbConnection() {
-//     require('dotenv').config()
-//     const mysql = require('mysql')
-//     var con = mysql.createConnection({
-//         host: 'localhost',
-//         user: 'root',
-//         password: '',
-//         database: "sprity_bot",
-//         connectTimeout: 300000
-//     })
-    
-//     return con
-// }
-
 
 var con = dbConnection()
 
@@ -346,7 +332,7 @@ function incrementMessageAmountDB(msg) {
 
     query(`SELECT messages FROM members WHERE member_id = ${msg.member.user.id}`, data => {
         let msgAmount = data[0][0].messages + 1
-        query(`UPDATE members SET messages = ${msgAmount} WHERE member_id = ${msg.member.user.id}`)
+        query(`UPDATE members SET messages = ${msgAmount} WHERE member_id = ${msg.member.user.id}`, () => {})
     })
 }
 
@@ -358,14 +344,24 @@ function addNote(msg, noteText, setting) {
     }
 }
 
-function helpCommand(command, msg, num) {
-    
+function helpCommand(msg, args, num, client) {
+    const vars = require('./variables.js')
+
+    let cmd = client.commands.get(args[1])
+
+    let embed = new vars.Discord.MessageEmbed()
+    .setTitle(`${cmd.info.help.title} | Help`)
+    .setDescription(`**Category: ${args[0]}**\n*${cmd.info.help.description}*\n\n**Usage**\n\`${cmd.info.usage}\`\n\n**Aliases**\n${cmd.info.help.aliases.toString().replace(',',', ')}\n\n**Permissions**\n\`${cmd.info.help.permissions.toString().replace(',' , ', ')}\``)
+    .setFooter(`Hope this helps!`)
+    .setColor(vars.embedcolor)
+
+    return msg.channel.send(embed)
 }
 
 function helpCategory(category, msg, num, client) {
     const vars = require('./variables.js')
     let config = require('./commands/config.json')
-
+    
     config.forEach(c => {
         if (category == c.category) {
             let embed = new vars.Discord.MessageEmbed()
@@ -376,12 +372,13 @@ function helpCategory(category, msg, num, client) {
         
             let text = ''
             client.commands.forEach(cmd => {
-                if (cmd.help == false || !cmd.help) return
-                if (cmd.category == category) {
-                    let commandName = cmd.name.charAt(0).toUpperCase() + cmd.name.slice(1)
-                    text = ''
-                    text += `\`${cmd.usage}\`\n*${cmd.description}*`
-                    embed.addField(`${commandName}`,`${text}`,true)
+                if (cmd.info.help.enabled == true) {
+                    if (cmd.info.category == category) {
+                        let commandName = cmd.info.name.charAt(0).toUpperCase() + cmd.info.name.slice(1)
+                        text = ''
+                        text += `\`${cmd.info.usage}\`\n*${cmd.info.short_description}*`
+                        embed.addField(`${commandName}`,`${text}`,true)
+                    }
                 }
             });
         
@@ -411,10 +408,7 @@ function helpCategory(category, msg, num, client) {
 function changeInventory(amount, item, msg) {
     const file = require(`./commands/points/items/${item}`)
     let id = file.name
-    let sql = "UPDATE `members_inventory` SET "+id+" = "+(amount - 1)+" WHERE member_id = '"+msg.member.id+"'"
-    con.query(sql, function(err,result,fields) {
-        if (err) throw err
-    })
+    query("UPDATE `members_inventory` SET "+id+" = "+(amount - 1)+" WHERE member_id = '"+msg.member.id+"'")
 }
 
 function publicAdvert(msg) {
@@ -440,25 +434,16 @@ normalizePrice = function(number){
     return price
 }
 
-function checkError(sql, command, message, msg) {
+function query(sql, callback) {
     con.query(sql, function(err,result,fields) {
-        if (err) {
-            if (command == 'return') {
-                return msg.reply(`${message}`)
-            }
+        if (arguments[1]) {
+            callback([result, fields, err])
         }
     })
 }
 
-function query(sql, callback) {
-    con.query(sql, function(err,result,fields) {
-        if (err) throw err
-
-        if(sql.startsWith('SELECT')) callback([result, fields])
-    })
-}
-
-module.exports = { addRoleByReaction, 
+module.exports = { 
+    addRoleByReaction, 
     removeRoleByReaction, 
     insertInLog, 
     dbConnection, 
@@ -470,6 +455,5 @@ module.exports = { addRoleByReaction,
     changeInventory,
     publicAdvert,
     normalizePrice,
-    checkError,
     query
 }

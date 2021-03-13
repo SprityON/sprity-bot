@@ -1,13 +1,21 @@
 const { embedcolor, Discord } = require('../../variables.js');
 
-module.exports = {
+module.exports.info = {
     name: 'suggestion',
-    usage: '$suggestion',
-    description: 'Make a suggestion',
     category: 'other',
-    aliases: [],
-    help: true,
-    execute(msg, args) {
+    usage: '$suggestion',
+    short_description: 'Make a suggestion',
+    help: {
+        enabled: true,
+        title: 'Make A Suggestion',
+        aliases: [],
+        description: 'After entering this command, you will be given a few questions which you will have to reply to',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
         const Functions = require('../../functions.js')
         const config = require('../../config.json')
         const suggestionChannel = msg.guild.channels.cache.find(channel => channel.id === '720739903331237949')
@@ -82,5 +90,5 @@ module.exports = {
         }).catch(collected => {
 			msg.channel.send(`Cancelled suggestion for ${msg.member}. You ran out of time...`)
 		})
-    },
-};
+    }
+}

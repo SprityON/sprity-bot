@@ -1,8 +1,19 @@
-module.exports = {
+module.exports.info = {
     name: 'rules',
-    description: 'rules',
-	aliases: [],
-    execute(msg, args) {
+    category: 'other',
+    usage: '$rules',
+    short_description: 'Read the rules',
+    help: {
+        enabled: false,
+        title: '',
+        aliases: [],
+        description: '',
+        permissions: []
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		let roleFind = msg.member.roles.cache.get('380721348856774661')
 		if (!roleFind) {
 			msg.reply('please read the rules in <#380724759740153866>!')
@@ -117,5 +128,5 @@ module.exports = {
 		
 		}
 		msg.channel.send({ embed: embedMessage })
-	}
-};
+    }
+}

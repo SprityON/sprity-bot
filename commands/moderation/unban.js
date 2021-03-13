@@ -1,11 +1,19 @@
-module.exports = {
+module.exports.info = {
     name: 'unban',
-	usage: '$unban (memberID)',
-    description: 'Unban a member by ID',
     category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
+    usage: '$unban <member id>',
+    short_description: 'Unban a member',
+    help: {
+        enabled: true,
+        title: 'Unban A Member',
+        aliases: [],
+        description: 'Unban a member by id',
+        permissions: ['BAN_MEMBERS']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
 		if (msg.member.permissions.has('BAN_MEMBERS')){
 			let mentionedMember = msg.mentions.members.first()
 			if (mentionedMember) return msg.reply('you cannot ban members by mentioning them! Unban members using only their ID.')
@@ -28,5 +36,5 @@ module.exports = {
 				msg.guild.members.unban(bannedMember)
 			}).catch(err => console.log(err))
 		}
-    },
-};
+    }
+}

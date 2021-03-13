@@ -9,20 +9,21 @@ con.connect(function(err) {
 	console.log("Database connected!")
 })
 
-const commandCategoryFolders = fs.readdirSync('./commands').filter(file => !file.endsWith('.js') && !file.endsWith('.json'))
-const eventFolders = fs.readdirSync('./events').filter(file => file.endsWith('.js'))
 client.commands = new Discord.Collection()
 
+const commandCategoryFolders = fs.readdirSync('./commands').filter(file => !file.endsWith('.js') && !file.endsWith('.json'))
 for (const folder of commandCategoryFolders) {
 	const commandFiles = fs.readdirSync(`./commands/${folder}`)
 	for (const file of commandFiles) {
 		if (file.endsWith('.js')) {
 			const command = require(`./commands/${folder}/${file}`)
-			client.commands.set(command.name, command)
+			
+			client.commands.set(command.info.name, command)
 		}
 	}
 }
 
+const eventFolders = fs.readdirSync('./events').filter(file => file.endsWith('.js'))
 for (const e of eventFolders) {
 	const event = require(`./events/${e}`)
 	const ifOnce = event ? event.once : false;

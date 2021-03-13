@@ -1,14 +1,23 @@
+const { query } = require("../../functions");
 const { Functions, Discord, embedcolor } = require("../../variables");
 
-module.exports = {
+module.exports.info = {
     name: 'notes',
-    usage: '$notes help',
-    description: 'Add notes anonimously',
     category: 'fun',
-    aliases: ['note'],
-    help: true,
+    usage: '$notes <page number/add/remove>',
+    short_description: 'Add notes anonimously',
     dm: true,
-    execute(msg, args) {
+    help: {
+        enabled: true,
+        title: 'Notes',
+        aliases: ['note'],
+        description: 'Notes are multi-purpose anonymous texts for the server and/or yourself!\nYou can choose whether you want your note to be anonymous by specifying a setting.',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
         let status = args[0]
         if (status == 'add') {
             let member;
@@ -23,17 +32,17 @@ module.exports = {
                     msg.channel.send(text)
                 }
             }
-
+    
             if (!args[1]) return sendMessage(msg, `, wrong usage! Add a note like this: \`$notes add "Text" (setting)\``)
-
+    
             let x = args.length - 1
             let setting = args[x]
-
+    
             args.splice(0,1)
             
             firstChar = args[0].charAt(0)
             if (firstChar != '"') return sendMessage(msg, `, wrong usage! Make sure to add \`""\` in between your text, e.g.: \`$note add "Text" (setting: private/public)\``)
-
+    
             let temp = []
             let count = 0
             args.forEach(arg => {
@@ -52,18 +61,18 @@ module.exports = {
                     for (let index = 0; index < arg.length; index++) {
                         if (count == 2) break;
                         let char = arg.charAt(index)
-
+    
                         if (char != '"') {
                             temp2 += char
                         } else { count++ }
                     } arg = temp2
                 }
-
+    
                 temp.push(arg)
             }); args = temp
-
+    
             noteText = args.toString()
-
+    
             let temp3 = ''
             for (let index = 0; index < noteText.length; index++) {
                 let char = noteText.charAt(index)
@@ -71,11 +80,11 @@ module.exports = {
                 if (char == ',') char = ' '
                 temp3 += char
             } noteText = temp3
-
+    
             if (noteText == '' || !noteText) return sendMessage(msg, `, your note needs content!`)
-
+    
             sendMessage(msg, `, your note has been added.`)
-
+    
             if (setting == 'public') {
                 Functions.addNote(msg, noteText, setting)
             } else if (setting == 'private') {
@@ -84,29 +93,25 @@ module.exports = {
                 Functions.addNote(msg, noteText, 'public')
             }
         } else if (status == 'remove') {
-            // list of registered notes (if selected to be public)
-        } else if (status == 'help') {
-            let embed = new Discord.MessageEmbed()
-            .setTitle(`Notes | Help`)
-            .addField("Uh, notes... What are they?",'Notes are multi-purpose anonymous texts for the server and/or yourself!\nYou can choose whether you want your note to be anonymous by specifying a setting.')
-            .addField(`Usages and settings`,`*You can either see, add or remove (your own) notes from the server.*\n\nSee global notes: \`$notes\`\nSee your notes: \`$notes me\` *(public notes)*\nAdd a note: \`$notes add "text" (setting: private/public)\`\nRemove a note: \`$notes remove (position: 1,3,37)\``)
-            .setColor(embedcolor)
-
-            if (msg.channel.type == 'dm') {
-                msg.author.send(embed)
-            } else {
-                msg.channel.send(embed)
-            }
+            if (!args[2]) msg.channel.send(`**${msg.author.username}**, you need to specify an ID!`)
+    
+            let id = args[2]
+            if (isNaN(id)) return msg.channel.send(`**${msg.author.send}**, ${id} is not a valid ID!`)
+    
+            query(`SELECT * FROM notes WHERE id = ${id}`, err, (data) => {
+                
+            })
+            query(`DELETE * FROM notes WHERE id = ${id}`)
         } else if (!status || !isNaN(status)) {
             if (msg.channel.type == 'dm') {
                 return msg.author.send(`I'm sorry, but you can only use the following commands in a DM: \`$notes help\`, \`$notes add\`, \`$notes remove\``)
             }
-
+    
             Functions.query("SELECT * FROM notes", data => {
                 const result = data[0]
                 if (!result[0]) return msg.channel.send(`There are no notes in the server, **${msg.member.displayName}**`)
                 status = Math.floor(status)
-
+    
                 let lastPage;
                 let currentPage;
                 if (!status) { currentPage = 1 } else {
@@ -120,16 +125,16 @@ module.exports = {
                 } else {
                     lastPage = Math.ceil(rL)
                 }
-
+    
                 let text;
                 if (lastPage == 1) { text = `there is only **${lastPage}** page.` } else { text = `there are only **${lastPage}** pages.` }
                 if (status > lastPage) return msg.channel.send(`**${msg.member.displayName}**, ${text}`)
-
+    
                 let embed = new Discord.MessageEmbed()
                 embed.setTitle(`Notes in ${msg.guild.name} [${result.length}]`)
                 embed.setFooter(`For more info, use $notes help | Page ${currentPage} of ${lastPage}`)
                 embed.setColor(embedcolor)
-
+    
                 let name = ''
                 let content = ''
                 let i = 0
@@ -155,12 +160,12 @@ module.exports = {
                         i++
                     }
                 }
-
+    
                 embed.addField(`Name`,`${name}`, true)
                 embed.addField(`Content`,`${content}`, true)
-
+    
                 msg.channel.send(embed)
             })
         }
-    },
+    }
 }

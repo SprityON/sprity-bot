@@ -1,15 +1,23 @@
 const { query } = require('../../functions')
 const { Discord, embedcolor } = require('../../variables')
 
-module.exports = {
+module.exports.info = {
     name: 'monthly',
-    usage: '$monthly',
-    description: 'Receive points monthly',
     category: 'points',
-    aliases: [],
-    help: true,
+    usage: '$monthly',
+    short_description: 'Receive monthly points',
+    help: {
+        enabled: true,
+        title: 'Receive Monthly Points',
+        aliases: [],
+        description: 'Receive a monthly amount of points. Each use will add +20000 points on your account',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
     execute(msg, args, client) {
-		const moment = require('moment')
+        const moment = require('moment')
 
         query(`SELECT * FROM currency_times WHERE member_id = ${msg.member.id}`, data => {
             let result = data[0]
@@ -106,5 +114,5 @@ module.exports = {
                 }
             }
         })
-    },
+    }
 }

@@ -1,11 +1,20 @@
-module.exports = {
-    name: 'ban',
-	usage: '$ban (member/memberID)',
-    description: 'Ban a member',
-    category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
+module.exports.info = {
+	name: 'ban',
+	category: 'moderation',
+	usage: '$ban <member>',
+	short_description: 'Ban a member',
+	help: {
+		enabled: true,
+		title: 'Ban Member',
+		aliases: ['banhammer'],
+		description: 'Ban a specific member',
+		permissions: ['BAN_MEMBERS']
+	}
+}
+
+module.exports.commands = {
+    execute(msg, args, client) {
+		return console.log(msg.member.permissions)
 		if (msg.member.permissions.has('BAN_MEMBERS')) {
 			let mentionedMember = msg.mentions.members.first()
 			let memberID = args[0]

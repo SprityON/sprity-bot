@@ -1,12 +1,20 @@
-module.exports = {
+module.exports.info = {
     name: 'kick',
-	usage: '$kick (member)',
-    description: 'Kick a member',
     category: 'moderation',
-    aliases: [],
-	help: true,
-    execute(msg, args) {
-        const Functions = require('../../functions.js')
+    usage: '$kick <member> <reason>',
+    short_description: 'Kick a member',
+    help: {
+        enabled: true,
+        title: 'Kick A Member',
+        aliases: [],
+        description: 'Kick a certain member with a reason',
+        permissions: ['KICK_MEMBERS']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
+		const Functions = require('../../functions.js')
 
 		let mentionedMember = msg.mentions.members.first()
 		if (!mentionedMember) return msg.reply(`you did not mention a member!`)
@@ -33,5 +41,5 @@ module.exports = {
 			else return msg.reply(`please provide a member first before providing your reason!`)
 		}
 		else { return msg.reply('you don\'t have permission to use this command!') }
-    },
-};
+    }
+}

@@ -1,13 +1,21 @@
 const { embedcolor, Discord, Functions } = require("../../../variables")
 
-module.exports = {
+module.exports.info = {
     name: 'custom_color',
+    category: 'points',
     usage: '',
-    description: '',
-    category: '',
-    aliases: [],
-    help: false,
-    execute(msg, args, amount) {
+    short_description: 'Have a custom color',
+    help: {
+        enabled: false,
+        title: '',
+        aliases: [],
+        description: '',
+        permissions: []
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, amount, client) {
         const filter = m => m.author.id === msg.author.id
 
         msg.channel.send(`**${msg.author.username}**, please type in the hexcode of your custom color. *Type 'cancel' to cancel*`)
@@ -81,5 +89,5 @@ module.exports = {
             console.log(collected)
 			msg.channel.send(`Cancelled suggestion for ${msg.member}. You ran out of time...`)
         }) 
-    },
+    }
 }

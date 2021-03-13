@@ -1,13 +1,21 @@
 const { Discord, Functions, embedcolor, space } = require("../../variables");
 
-module.exports = {
+module.exports.info = {
     name: 'warns',
-    usage: '$warns help',
-    description: 'See warns',
     category: 'moderation',
-    aliases: ['warnlist'],
-    help: true,
-    execute(msg, args) {
+    usage: '$warns <member>',
+    short_description: 'See or remove warnings',
+    help: {
+        enabled: true,
+        title: 'See & Remove Warnings',
+        aliases: [],
+        description: 'See warnings or remove warnings\nUsage to remove a warn: $warns clear <all/amount> <member>',
+        permissions: ['MANAGE_MESSAGES']
+    }
+}
+
+module.exports.command = {
+    execute(msg, args, client) {
         let member;
         let mentionedMember = msg.mentions.members.first()
         if (!mentionedMember && !args[0]) { member = msg.member }
@@ -149,5 +157,5 @@ module.exports = {
                 }
             }
         })
-    },
-};
+    }
+}

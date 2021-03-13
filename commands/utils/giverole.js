@@ -1,10 +1,18 @@
-module.exports = {
+module.exports.info = {
     name: 'giverole',
-	usage: '$giverole (member) (role)',
-    description: 'Give a role to a member',
     category: 'utils',
-    aliases: [],
-	help: true,
+    usage: '$giverole <member> <role>',
+    short_description: 'Give member a role',
+    help: {
+        enabled: true,
+        title: 'Give Member a Role',
+        aliases: [],
+        description: 'Give a member any kind of role (only for upper-staff)',
+        permissions: ['MANAGE_GUILD']
+    }
+}
+
+module.exports.command = {
     execute(msg, args, client) {
 		if (!msg.member.permissions.has("MANAGE_GUILD")) return msg.reply(`you don't have permission to use this command!`)
 		
@@ -25,5 +33,5 @@ module.exports = {
 
 		let botChatChannel = msg.guild.channels.cache.find(channel => channel.id === '719290506177282140')
 		botChatChannel.send(`Congratulations ${mentionedUser}, you have been given the ${roleToString} role!`)
-    },
-};
+    }
+}

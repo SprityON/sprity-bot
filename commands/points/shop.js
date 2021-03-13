@@ -1,13 +1,21 @@
 const { query } = require('../../functions')
 const { Functions, Discord, embedcolor } = require('../../variables')
 
-module.exports = {
+module.exports.info = {
     name: 'shop',
-    usage: '$shop (page)',
-    description: 'Buy stuff with points',
     category: 'points',
-    aliases: ['market', 'marketplace'],
-    help: true,
+    usage: '$shop <page>',
+    short_description: 'Buy items',
+    help: {
+        enabled: true,
+        title: 'Shop',
+        aliases: ['market', 'marketplace'],
+        description: 'Buy items with points! From a simple role to converting messages to points',
+        permissions: ['SEND_MESSAGES']
+    }
+}
+
+module.exports.command = {
     execute(msg, args, client) {
         Functions.updateDB.updateItemsDB()
         
@@ -63,7 +71,7 @@ module.exports = {
                             emote = client.emojis.resolveID(e)
                             emote = msg.guild.emojis.cache.get(emote)
                         } else { emote = `:${item.emote}:`}
-                        let price = global.normalizePrice(item.price)
+                        let price = Functions.normalizePrice(item.price)
                         text += `${emote} **${item.name}** ▬ [[${price}p.]](https://www.youtube.com/sprityen)\n${item.description}\n*ID* \`${item.id}\` \n\n`
                         
                         testI++
@@ -76,5 +84,5 @@ module.exports = {
                 msg.channel.send(embed)
             }
         })
-    },
+    }
 }
