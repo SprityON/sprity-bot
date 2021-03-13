@@ -49,7 +49,7 @@ module.exports.command = {
                     alt_num++
                 } else {
                     for (let i = 0; i < extraFields; i++) {
-                        embed.addField(`${space}`, `${space}`,true)
+                        embed.addField(`${vars.space}`, `${vars.space}`,true)
                     }
                     break
                 }
