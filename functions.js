@@ -435,8 +435,9 @@ normalizePrice = function(number){
 }
 
 function query(sql, callback) {
+    let scnd_arg = arguments[1]
     con.query(sql, function(err,result,fields) {
-        if (arguments[1]) {
+        if (scnd_arg) {
             callback([result, fields, err])
         }
     })
