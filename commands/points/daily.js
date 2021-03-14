@@ -28,7 +28,7 @@ module.exports.command = {
 
             if (result.length == 0 || result[0] == undefined) {
                 console.log(result[0])
-                query(`INSERT INTO currency_times (member_id) VALUES ( '${msg.member.id}')`)
+                query(`INSERT INTO currency_times (member_id) VALUES ('${msg.member.id}')`)
             } else {
                 let amountOfMillisecondsLeft;
                 let amountOfWeeks;
