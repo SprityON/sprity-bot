@@ -76,8 +76,7 @@ const updateDB = {
     addCurrencytime: async function(member) {
         query(`SELECT * FROM currency_times WHERE member_id = ${member.id}`, data => {
             if (data[0].length == 0) {
-                console.log('member added')
-                query(`INSERT INTO currency_times (member_id) VALUES ('${member.id}')`)
+                query(`INSERT INTO currency_times (member_id) VALUES (${member.id})`)
             }
         })
     },

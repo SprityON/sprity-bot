@@ -4,7 +4,7 @@ const { Discord, embedcolor } = require('../../variables');
 module.exports.info = {
     name: 'yt-info',
     category: 'fun',
-    usage: '$yt-subs',
+    usage: '$yt-info',
     short_description: 'See Sprity\'s amount of subs',
     help: {
         enabled: true,
@@ -17,8 +17,6 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, client) {
-
-        //let { YouTube } = require('youtube-node')
         let YouTube = require('youtube-node')
         let youtube = new YouTube()
 

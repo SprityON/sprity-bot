@@ -1,5 +1,4 @@
 const { embedcolor, Discord, Functions } = require("../../../variables")
-
 module.exports.info = {
     name: 'custom_color',
     category: 'points',
@@ -7,87 +6,97 @@ module.exports.info = {
     short_description: 'Have a custom color',
     help: {
         enabled: false,
-        title: '',
+        title: 'Custom Color',
         aliases: [],
         description: '',
         permissions: []
     }
 }
 
+let thisName = this.info.name
 module.exports.command = {
-    execute(msg, args, amount, client) {
+    async execute(msg, args, amount, client) {
+
+        let bool = false;
+        let message = 'ERROR';
+        let hasRole;
+        let hexcode;
+
         const filter = m => m.author.id === msg.author.id
 
         msg.channel.send(`**${msg.author.username}**, please type in the hexcode of your custom color. *Type 'cancel' to cancel*`)
-        msg.channel.awaitMessages(filter, {
+
+        await msg.channel.awaitMessages(filter, {
             max: 1,
             time: 180000
         }).then(collected => {
-            if (!collected.first().content) return msg.reply(`you have to type in a hexcode.`)
-            if (collected.first().content == 'cancel') return msg.channel.send(`Command cancelled, **${msg.author.username}**`)
-            
-            let hexcode = collected.first().content.toLowerCase()
-            hexcode = hexcode.replace('#', '')
-            let str = hexcode
-            const legend = '0123456789abcdef';
-            for(let i = 0; i < str.length; i++){
-                if(!legend.includes(str[i])) {
-                    var embed = new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .addField(`Something went wrong, ${msg.author.username}...`, `Error: \`#${hexcode}\` is not a valid hexcode`)
-                    return(msg.reply(embed))
-                }
-            }
-            if (hexcode.length == 3 || hexcode.length == 6) { /* ignore */ }
-            else {
-                let embed = new Discord.MessageEmbed()
-                .setColor(embedcolor)
-                .addField(`Something went wrong, ${msg.author.username}...`, `Error: a valid hexcode requires 3 or 6 numbers`)
-                return(msg.reply(embed))
-            }
-            
-            let otherRole = msg.member.roles.cache.find(role => role.name === `⨀`)
-            if (otherRole) {
-                let otherGuildRole = msg.guild.roles.cache.get(otherRole.id)
-                otherGuildRole.setColor(hexcode).then(role => {
-                    let embed = new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .addField(`Changed ${msg.author.username}'s nickname color!`, `Color hexcode: \`${role.hexColor}\``)
-                    .setFooter(`use $del-color to delete your nickname color`)
-                    msg.channel.send(embed)
-                })
-                Functions.changeInventory(amount, 'custom_color', msg)
-                return
-            }
-    
-            msg.guild.roles.create({
-                data: {
-                    name: `⨀`,
-                    color: `${hexcode}`,
-                    mentionable: false,
-                    permissions: 0,
-                },
-                reason: `Created role for ${msg.member}`
-            }).then(role => {
-                async function addRole() {
-                    msg.member.roles.add(role)
-                    var embed = new Discord.MessageEmbed()
-                    .setColor(embedcolor)
-                    .addField(`Assigned ${msg.author.username}'s nickname color!`, `Color hexcode: \`${role.hexColor}\``)
-                    .setFooter(`use $del-color to delete your nickname color`)
-                    msg.channel.send(embed)
+            if (collected.first().content) {
+                if (collected.first().content !== 'cancel') { 
+                    hexcode = collected.first().content.toLowerCase()
+                    hexcode = hexcode.replace('#', '')
+                    let str = hexcode
+                    const legend = '0123456789abcdef';
+                    for(let i = 0; i < str.length; i++) {
+                        if(legend.includes(str[i])) {
+                            if (hexcode.length == 3 || hexcode.length == 6) { 
+                                bool = true
 
-                    Functions.changeInventory(amount, 'custom_color', msg)
-                    
+                                msg.member.roles.cache.find(role => role.name === `⨀`)
+                                ? hasRole = true 
+                                : hasRole = false
+                            } else if (hexcode.length != 3 && hexcode.length != 6) { bool = false; message = 'A valid hexcode requires 3 or 6 numbers.'; break }
+                        } else if (!legend.includes(str[i])) { bool = false; message = `\`${hexcode}\` is not a valid hexcode!`; break }
+                    }
+                } else if (collected.first().content === 'cancel') { bool = false; message = 'The use of your current item was cancelled.' }
+            } else if (!collected.first().content) { bool = false; message = 'You did not provide a hexcode.' }
+        }).catch(collected => {
+			message = `Cancelled suggestion: you ran out of time...`
+            bool = false
+        }) 
+
+        if (bool === true) {
+            let status = 'Assigned'
+            if (hasRole === true) {
+                status = 'Changed'
+
+                msg.member.roles.remove('⨀')
+
+                msg.guild.roles.create({
+                    data: {
+                        name: `⨀`,
+                        color: `${hexcode}`,
+                        mentionable: false,
+                        permissions: 0,
+                    },
+                    reason: `Created role for ${msg.member}`
+                }).then(role => {
+                    msg.member.roles.add(role)
                     var rolePosition = msg.guild.me.roles.highest.position - 2
                     role.setPosition(rolePosition)
-                }
-                
-                addRole()
-            })
-        }).catch(collected => {
-            console.log(collected)
-			msg.channel.send(`Cancelled suggestion for ${msg.member}. You ran out of time...`)
-        }) 
+                })
+            } else if (hasRole === false) {
+                msg.guild.roles.create({
+                    data: {
+                        name: `⨀`,
+                        color: `${hexcode}`,
+                        mentionable: false,
+                        permissions: 0,
+                    },
+                    reason: `Created role for ${msg.member}`
+                }).then(role => {
+                    msg.member.roles.add(role)
+                    var rolePosition = msg.guild.me.roles.highest.position - 2
+                    role.setPosition(rolePosition)
+                })
+            }
+
+            msg.channel.send(new Discord.MessageEmbed().setColor(embedcolor)
+            .addField(`${status} ${msg.author.username}'s nickname color!`, `Color hexcode: \`${hexcode}\``)
+            .setFooter(`use $del-color to delete your nickname color`))
+            
+            return true
+        } else if (bool === false) {
+            return [false, message]
+        }
     }
 }
