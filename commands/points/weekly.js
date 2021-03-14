@@ -27,8 +27,7 @@ module.exports.command = {
             let nextDate = currentDate.clone().add(1, 'week')
 
             if (result.length == 0) {
-                query(`INSERT INTO currency_times (member_id, monthly_date) VALUES ( '${msg.member.id}', '')`, async data => {
-                    await data
+                query(`INSERT INTO currency_times (member_id) VALUES ( '${msg.member.id}')`, () => {
                     return msg.channel.send(`Oops... Something went wrong, please try again`)
                 })
             } else {
