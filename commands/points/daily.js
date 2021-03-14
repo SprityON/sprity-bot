@@ -26,7 +26,7 @@ module.exports.command = {
             let prevDate
             let nextDate = currentDate.clone().add(1, 'day')
 
-            if (result.length == 0) {
+            if (result.length == 0 || !result) {
                 console.log(result[0])
                 query(`INSERT INTO currency_times (member_id) VALUES ( '${msg.member.id}')`)
             } else {
