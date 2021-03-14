@@ -122,9 +122,7 @@ const updateDB = {
                     let enddates = enddate.split('/')
                     let day = enddates[1]
                     let year = enddates[2]
-                    console.log(year)
-                    console.log(currentDate.getFullYear())
-                    if (currentDate.getDay() == 1 && currentDate.getDate() == day && currentDate.getFullYear() == year) {
+                    if (currentDate.getDay() == 1 && currentDate.getDate() == day) {
                         let topMember = member.guild.members.cache.find(member => member.id === topmemberDB[0].member_id)
 
                         const moment = require('moment')
