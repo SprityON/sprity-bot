@@ -27,20 +27,10 @@ module.exports.command = {
             let nextDate = currentDate.clone().add(1, 'week')
 
             if (result.length == 0) {
-                query(`INSERT INTO currency_times (member_id, weekly_date) VALUES ('${msg.member.id}', '${nextDate.format(format)}')`, async data => {
+                query(`INSERT INTO currency_times (member_id, monthly_date) VALUES ( '${msg.member.id}', '')`, async data => {
                     await data
-
-                    query(`UPDATE members SET points = 2000 WHERE member_id = ${msg.member.id}`)
+                    return msg.channel.send(`Oops... Something went wrong, please try again`)
                 })
-
-                msg.channel.send(`Here are your first 2000 points, **${msg.author.username}**!`)
-                msg.author.send(new Discord.MessageEmbed()
-                .setTitle(`Hi ${msg.author.username}!`)
-                .setDescription(`With points you can buy amazing stuff like tickets for advertising, having a custom color role and much, much more (e.g. ranking up)!\n\nUse \`$help points\` for more information about this category.`)
-                .setColor(embedcolor)
-                .setFooter(`From the Official Sprity Server`)
-                )
-                return
             } else {
                 let amountOfMillisecondsLeft;
                 let amountOfWeeks;
