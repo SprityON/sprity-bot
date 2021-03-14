@@ -18,7 +18,8 @@
     "ms": "^2.1.2",
     "mysql": "^2.18.1",
     "snoostorm": "^1.5.2",
-    "snoowrap": "^1.22.0"
+    "snoowrap": "^1.22.0",
+    "youtube-node": "^1.3.3"
   },
   "devDependencies": {},
   "repository": {
