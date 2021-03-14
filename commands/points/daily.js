@@ -27,8 +27,11 @@ module.exports.command = {
             let nextDate = currentDate.clone().add(1, 'day')
 
             if (result.length == 0) {
-                query(`INSERT INTO currency_times (member_id, daily_date) VALUES ('${msg.member.id}', '${nextDate.format(format)}')`)
-                query(`UPDATE members SET points = 200 WHERE member_id = ${msg.member.id}`)
+                query(`INSERT INTO currency_times (member_id, daily_date) VALUES ('${msg.member.id}', '${nextDate.format(format)}')`, async data => {
+                    await data
+
+                    query(`UPDATE members SET points = 200 WHERE member_id = ${msg.member.id}`)
+                })
 
                 msg.channel.send(`Here are your first 200 points, **${msg.author.username}**!`)
                 msg.author.send(new Discord.MessageEmbed()
@@ -45,6 +48,7 @@ module.exports.command = {
                 let amountOfHours;
                 let amountOfMinutes;
                 let amountOfSeconds;
+                console.log(result[0])
                 if (result[0].daily_date != '') {
                     let enddate = result[0].daily_date.split(' ')
                     let enddates = enddate[0].split('/')
@@ -80,7 +84,7 @@ module.exports.command = {
                         query(`UPDATE members SET points = ${points} WHERE member_id = ${msg.member.id}`)
 
                         msg.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`More daily points, ${msg.author.username}!`)
+                        .setTitle(`Here are your daily points, ${msg.author.username}!`)
                         .setDescription(`You got +200 points`)
                         .setColor(embedcolor))
                     })
