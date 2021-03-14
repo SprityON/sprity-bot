@@ -25,6 +25,7 @@ module.exports = {
                     Functions.updateDB.isMemberKicked(member)
                     Functions.updateDB.checkMemberWarns(member)
                     Functions.updateDB.checkMuted(member)
+                    Functions.updateDB.addCurrencytime(member)
 
                     let memberRole = guild.roles.cache.find(role => role.name === "Member")
                     if (!member.roles.cache.has(memberRole.id)) {

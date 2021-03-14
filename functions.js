@@ -73,6 +73,14 @@ function dbConnection() {
 var con = dbConnection()
 
 const updateDB = {
+    addCurrencytime: async function(member) {
+        query(`SELECT * FROM currency_times WHERE member_id = ${member.id}`, data => {
+            if (data[0].length == 0) {
+                console.log('member added')
+                query(`INSERT INTO currency_times (member_id) VALUES ('${member.id}')`)
+            }
+        })
+    },
     addInventory: async function(member) {
         query(`SELECT * FROM members_inventory WHERE member_id = ${member.id}`, data => {
             if (data[0].length == 0) {
