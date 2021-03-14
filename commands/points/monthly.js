@@ -27,8 +27,11 @@ module.exports.command = {
             let nextDate = currentDate.clone().add(1, 'month')
 
             if (result.length == 0) {
-                query(`INSERT INTO currency_times (member_id, monthly_date) VALUES ( '${msg.member.id}', '${nextDate.format(format)}')`)
-                query(`UPDATE members SET points = 20000 WHERE member_id = ${msg.member.id}`)
+                query(`INSERT INTO currency_times (member_id, monthly_date) VALUES ( '${msg.member.id}', '${nextDate.format(format)}')`, async data => {
+                    await data
+
+                    query(`UPDATE members SET points = 20000 WHERE member_id = ${msg.member.id}`)
+                })
 
                 msg.channel.send(`Here are your first 20000 points, **${msg.author.username}**!`)
                 msg.author.send(new Discord.MessageEmbed()
@@ -81,8 +84,8 @@ module.exports.command = {
                         query(`UPDATE currency_times SET monthly_date = '${nextDate.format(format)}' WHERE member_id = ${msg.member.id}`)
 
                         msg.channel.send(new Discord.MessageEmbed()
-                        .setTitle(`More monthly points, ${msg.author.username}!`)
-                        .setDescription(`You received +20000 points`)
+                        .setTitle(`Here are your monthly points, ${msg.author.username}!`)
+                        .setDescription(`You received +20,000 points`)
                         .setColor(embedcolor)
                         )
                     })
