@@ -1,5 +1,5 @@
 module.exports.info = {
-    name: 'ad_ticket',
+    name: 'Advertising Ticket',
     category: 'points',
     usage: '',
     short_description: 'Ticket for advertising',

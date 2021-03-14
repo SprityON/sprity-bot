@@ -59,26 +59,30 @@ module.exports.command = {
             return
         } else {
             let num = 0
-            let commands = fs.readdirSync(`commands/${category}`).filter(file => file.includes('.'))
-            commands.forEach(f => {
-                num++
-            })
-
-            let notFound; 
-            command ? notFound = `Command \`${command}\`` : notFound = `Category \`${category}\``
-
+            let commands
+            let notFound
+            try {
+                commands = fs.readdirSync(`commands/${category}`).filter(file => file.includes('.'))
+                commands.forEach(f => {
+                    num++
+                })
+            } catch (err) {
+                notFound = `Category \`${category}\``
+            }
+            
+            
             for (let i = 0; i < commandCategoryFolders.length; i++) {
                 const folder = commandCategoryFolders[i];
                 if (folder === category) {
                     if (command) {
-                        if (client.commands.find(cmd => cmd.info.name === command)) return Functions.helpCommand(msg, args, num ,client)
+                        client.commands.includes(command) ? (function() {return Functions.helpCommand(msg, args, num ,client) }) : notFound = `Command \`${command}\` not found`
                     } else {
                         Functions.helpCategory(category, msg, num, client)
                         return
                     }
                 }
             }
-            
+
             msg.channel.send(`${notFound} not found.`)
         }
     }
