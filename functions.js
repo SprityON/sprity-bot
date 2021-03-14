@@ -355,6 +355,31 @@ function helpCommand(msg, args, num, client) {
     .setFooter(`Hope this helps!`)
     .setColor(vars.embedcolor)
 
+    /*
+    *
+    * Normally, when the last field of an embed is for example the 4th field, then it will space it out (using more space then needed)
+    * This makes it less beautiful for the eye. Following code resolves this problem.
+    *
+    */
+   
+    let space = '\u200b'
+        
+    let extraFields = 0
+
+    let alt_num = num - 1
+    for (i = 0; i < num; i++) {
+        let check = alt_num / 3
+        if (check.toString().startsWith(Math.floor(check) + '.')) { 
+            extraFields++ 
+            alt_num++
+        } else {
+            for (let i = 0; i < extraFields; i++) {
+                embed.addField(`${space}`, `${space}`,true)
+            }
+            break
+        }
+    }
+
     return msg.channel.send(embed)
 }
 
@@ -381,7 +406,14 @@ function helpCategory(category, msg, num, client) {
                     }
                 }
             });
-        
+            
+            /*
+            *
+            * Normally, when the last field of an embed is for example the 4th field, then it will space it out (using more space then needed)
+            * This makes it less beautiful for the eye. Following code resolves this problem.
+            *
+            */
+
             let space = '\u200b'
         
             let extraFields = 0

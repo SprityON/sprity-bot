@@ -1,15 +1,3 @@
-module.exports = {
-    name: 'rules-read',
-    description: 'rules-read',
-    category: 'other',
-    aliases: [],
-    async execute(msg, args) {
-        
-        // *** start of code ***
-		
-    },
-};
-
 module.exports.info = {
     name: 'rules-read',
     category: 'other',

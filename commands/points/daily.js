@@ -75,8 +75,7 @@ module.exports.command = {
 
                 if (amountOfMillisecondsLeft <= 0) {
                     query(`SELECT * FROM members WHERE member_id = ${msg.member.id}`, data => {
-                        let points = result[0].points
-                        points += 200
+                        let points = result[0].points + 200
                         
                         query(`UPDATE currency_times SET daily_date = '${nextDate.format(format)}' WHERE member_id = ${msg.member.id}`)
                         query(`UPDATE members SET points = ${points} WHERE member_id = ${msg.member.id}`)

@@ -16,7 +16,9 @@
     "dotenv": "^8.2.0",
     "moment": "^2.29.1",
     "ms": "^2.1.2",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "snoostorm": "^1.5.2",
+    "snoowrap": "^1.22.0"
   },
   "devDependencies": {},
   "repository": {
