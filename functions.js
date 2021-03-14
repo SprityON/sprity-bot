@@ -1,5 +1,5 @@
 const vars = require('./variables.js')
-const { Discord } = vars
+const Discord = require('discord.js')
 /* RANDOM STUFF */
 async function addRoleByReaction(guild, roleUser, reaction, user, msg) {
     const member = reaction.message.guild.member(user)
@@ -117,28 +117,26 @@ const updateDB = {
                 const result = data[0]
                 query(`SELECT * FROM members ORDER BY messages DESC LIMIT 1`, data => {
                     let topmemberDB = data[0]
-                    let topMember = member.guild.members.cache.find(member => member.id === topmemberDB[0].member_id)
-
-                    const moment = require('moment')
-
                     let currentDate = new Date()
-
                     let enddate = result[0].enddate
                     let enddates = enddate.split('/')
-
-                    let month = enddates[0]
                     let day = enddates[1]
                     let year = enddates[2]
+                    if (currentDate.getDay() == 1 && currentDate.getDate() == day && currentDate.getFullYear() == year) {
+                        let topMember = member.guild.members.cache.find(member => member.id === topmemberDB[0].member_id)
 
-                    let week = result[0].week
+                        const moment = require('moment')
+    
+                        let month = enddates[0]
+    
+                        let week = result[0].week
+    
+                        let endDateMoment = moment([year,month,day], 'YYYYMD')
+                        let newBeginDate = `${endDateMoment.month() + 1}/${endDateMoment.date()}/${endDateMoment.year()}`
+                        let nEndDate = endDateMoment.add(7, 'days')
+                        let newEndDate = `${nEndDate.month() + 1}/${nEndDate.date()}/${nEndDate.year()}`
+                        let newWeek = week + 1
 
-                    let endDateMoment = moment([year,month,day], 'YYYYMD')
-                    let newBeginDate = `${endDateMoment.month() + 1}/${endDateMoment.date()}/${endDateMoment.year()}`
-                    let nEndDate = endDateMoment.add(7, 'days')
-                    let newEndDate = `${nEndDate.month() + 1}/${nEndDate.date()}/${nEndDate.year()}`
-                    let newWeek = week + 1
-
-                    if (currentDate.getDay() == 1 && currentDate.getDate() == day) {
                         query(`UPDATE leaderboard_stats SET top_member_id = ${topMember.id}, messages = ${topmemberDB[0].messages} WHERE week = ${week}`)
                         query(`SELECT * FROM members ORDER BY messages DESC LIMIT 5`, data => {
                             let memberList = []

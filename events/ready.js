@@ -12,9 +12,9 @@ module.exports = {
         Functions.updateDB.updateItemsDB()
         Functions.updateDB.insertInDatabase(m)
         Functions.updateDB.checkLeaderboard(m)
-        setTimeout(() => {
+        setInterval(() => {
             Functions.updateDB.checkLeaderboard(m)
-        }, 10800000);
+        }, 30000);
 
         Functions.query("SELECT * FROM members", data => {
             data[0].forEach(row => {
