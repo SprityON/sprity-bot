@@ -75,8 +75,7 @@ module.exports.command = {
 
                 if (amountOfMillisecondsLeft <= 0) {
                     query(`SELECT * FROM members WHERE member_id = ${msg.member.id}`, data => {
-                        let points = result[0].points
-                        points += 2000
+                        let points = data[0][0].points + 2000
                         query(`UPDATE members SET points = ${points} WHERE member_id = ${msg.member.id}`)
                         msg.channel.send(new Discord.MessageEmbed()
                         .setTitle(`More weekly points, ${msg.author.username}!`)
