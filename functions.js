@@ -443,7 +443,7 @@ function helpCategory(category, msg, num, client) {
 
 function changeInventory(amount, item, msg) {
     const file = require(`./commands/points/items/${item}`)
-    let id = file.name
+    let id = file.info.name
     query("UPDATE `members_inventory` SET "+id+" = "+(amount - 1)+" WHERE member_id = '"+msg.member.id+"'")
 }
 
