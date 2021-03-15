@@ -1,5 +1,6 @@
 const vars = require('./variables.js')
 const Discord = require('discord.js')
+const ms = require('ms')
 /* RANDOM STUFF */
 async function addRoleByReaction(guild, roleUser, reaction, user, msg) {
     const member = reaction.message.guild.member(user)
@@ -89,7 +90,7 @@ const updateDB = {
     updateItemsDB: async function() {
         let items = require('./commands/points/shop-items.json')
         items.items.forEach(item => {
-            query(`SELECT * FROM members_inventory`, data => {
+            query(`SELECT * FROM members_inventory LIMIT 1`, data => {
                 let fields = data[1]
 
                 let index = fields.length - 1
@@ -111,7 +112,7 @@ const updateDB = {
         })
     },
     checkLeaderboard: async function(member) {
-        query(`SELECT * FROM leaderboard_stats ORDER BY week DESC`, data => {
+        query(`SELECT * FROM leaderboard_stats ORDER BY week DESC LIMIT 1`, data => {
             if (data[0][0]) {
                 const result = data[0]
                 query(`SELECT * FROM members ORDER BY messages DESC LIMIT 1`, data => {
@@ -296,7 +297,7 @@ const updateDB = {
     },
 
     insertInDatabase: function(m) {
-        query(`SELECT * FROM members`, data => {
+        query(`SELECT * FROM members WHERE member_id = ${m.id}`, data => {
             dbMemberList = []
             for (let row of data[0]) {
                 dbMemberList.push({"id": row.id, "member_id": row.member_id})
@@ -534,7 +535,7 @@ function durationInBetweenMessages(msg, set, time) {
         for (let u of set) {
             if (u.id === msg.author.id) {
                 if ((Date.now() - u.time) > time) {
-                    set.delete({id: u.id, time: u.time})
+                    set.delete(u)
                     return false
                 } else {
                     return true
@@ -544,8 +545,67 @@ function durationInBetweenMessages(msg, set, time) {
     }
 }
 
+function spamCheck(msg, set, time, times) {
+    let bool = false
+    let user = { id: `${msg.member.id}`, time: Date.now(), times: 1 }
+
+    for (let u of set) {
+        if (u.id === msg.member.id) {
+            bool = true
+            console.log((Date.now() - u.time))
+            if (u.times == 5) {
+                msg.channel.send(`Woah, not so fast **${msg.author.username}**. Muted for 1 minute due to spam protection.`)
+                if (!msg.member.roles.cache.find(role => role.name === "Muted")) {
+                    msg.member.roles.add(msg.guild.roles.cache.find(role => role.name === "Muted"))
+                    setTimeout(() => {
+                        msg.member.roles.remove(msg.guild.roles.cache.find(role => role.name === "Muted"))
+                        set.delete(u)
+                    }, 60000);
+                }
+            } else if ((Date.now() - u.time) <= time) {
+                u.times++
+                u.time = Date.now()
+            }
+        }
+    }
+
+    if (bool === false) {
+        set.add(user)
+        return false
+    }
+
+    return true
+}
+
+function memberChecks(member) {
+    query(`SELECT * FROM members WHERE member_id = ${member.id}`, ([result, fields, err]) => {
+        if (member.user.bot) return
+        if (err) {
+            query(`INSERT INTO members (member_id) VALES (${member.id})`)
+            updateDB.addInventory(member)
+
+            let memberRole = member.guild.roles.cache.find(role => role.name === "Member")
+            if (!member.roles.cache.has(memberRole.id)) {
+                member.roles.add(memberRole)
+            }
+            return
+        }
+
+        updateDB.addInventory(member)
+        updateDB.isMemberKicked(member)
+        updateDB.checkMemberWarns(member)
+        updateDB.checkMuted(member)
+
+        let memberRole = member.guild.roles.cache.find(role => role.name === "Member")
+        if (!member.roles.cache.has(memberRole.id)) {
+            member.roles.add(memberRole)
+        }
+    })
+}
+
 module.exports = { 
     addRoleByReaction, 
+    memberChecks,
     removeRoleByReaction, 
     insertInLog, 
     dbConnection, 
@@ -559,5 +619,6 @@ module.exports = {
     normalizePrice,
     query,
     commandCooldown,
-    durationInBetweenMessages
+    durationInBetweenMessages,
+    spamCheck
 }

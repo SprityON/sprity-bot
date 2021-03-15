@@ -14,8 +14,9 @@ module.exports.info = {
     }
 }
 
+let thisName = this.info.name
 module.exports.command = {
     execute(msg, args, client) {
-        msg.channel.send(msg.content.slice(0, config.prefix.length))
+        msg.channel.send(arguments[0].content.slice(config.prefix.length + thisName.length))
     }
 }

@@ -1,19 +1,19 @@
-const { durationInBetweenMessages, commandCooldown } = require('../functions');
+const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks } = require('../functions');
 let set = new Set()
 module.exports = {
     name: 'message',
     execute(msg, client) {
-        const vars = require('../variables.js')
-        const Functions = vars.Functions
         
         if (msg.author.bot == true) return
-        let bool = durationInBetweenMessages(msg, set, 250)
-        if (bool === true) return msg.channel.send(`Woah **${msg.author.username}**! Tune it down a notch... (spam)`)
 
-        let bool1 = durationInBetweenMessages(msg, set, 30000)
-        if (bool1 === false) Functions.incrementMessageAmountDB(msg)
+        memberChecks(msg.member)
+
+        let bool = spamCheck(msg, set, 500)
+
+        bool = durationInBetweenMessages(msg, set, 5000)
+        if (bool === false) Functions.incrementMessageAmountDB(msg)
         
-        Functions.publicAdvert(msg)
+        publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
     
         const args = msg.content.slice(vars.config.prefix.length).trim().split(/ +/)
