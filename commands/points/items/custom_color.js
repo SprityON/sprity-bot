@@ -44,8 +44,8 @@ module.exports.command = {
                                 msg.member.roles.cache.find(role => role.name === `⨀`)
                                 ? hasRole = true 
                                 : hasRole = false
-                            } else if (hexcode.length != 3 && hexcode.length != 6) { bool = false; message = 'A valid hexcode requires 3 or 6 numbers.'; break }
-                        } else if (!legend.includes(str[i])) { bool = false; message = `\`${hexcode}\` is not a valid hexcode!`; break }
+                            } else if (hexcode.length != 3 && hexcode.length != 6) { bool = false; message = 'A valid hexcode requires 3 or 6 numbers.'; }
+                        } else if (!legend.includes(str[i])) { bool = false; message = `\`${hexcode}\` is not a valid hexcode!`; }
                     }
                 } else if (collected.first().content === 'cancel') { bool = false; message = 'The use of your current item was cancelled.' }
             } else if (!collected.first().content) { bool = false; message = 'You did not provide a hexcode.' }
