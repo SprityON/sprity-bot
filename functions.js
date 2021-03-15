@@ -560,6 +560,7 @@ function spamCheck(msg, set, time, times) {
                     setTimeout(() => {
                         msg.member.roles.remove(msg.guild.roles.cache.find(role => role.name === "Muted"))
                         set.delete(u)
+                        msg.channel.send(`${msg.member} was unmuted.`)
                     }, 60000);
                 }
             } else if ((Date.now() - u.time) <= time) {
