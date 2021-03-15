@@ -70,12 +70,16 @@ module.exports.command = {
                 notFound = `Category \`${category}\``
             }
             
-            
             for (let i = 0; i < commandCategoryFolders.length; i++) {
                 const folder = commandCategoryFolders[i];
                 if (folder === category) {
                     if (command) {
-                        client.commands.includes(command) ? (function() {return Functions.helpCommand(msg, args, num ,client) }) : notFound = `Command \`${command}\` not found`
+                        for (const cmd of client.commands) {
+                            if (cmd[0] === command) {
+                                return Functions.helpCommand(msg, args, num ,client)
+                            }
+                        }
+                        notFound = `Command \`${command}\``
                     } else {
                         Functions.helpCategory(category, msg, num, client)
                         return
