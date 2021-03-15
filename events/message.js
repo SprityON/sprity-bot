@@ -1,3 +1,5 @@
+const { durationInBetweenMessages } = require('../functions');
+let set = new Set()
 module.exports = {
     name: 'message',
     execute(msg, client) {
@@ -5,7 +7,9 @@ module.exports = {
         const Functions = vars.Functions
         
         if (msg.author.bot == true) return
-        Functions.incrementMessageAmountDB(msg)
+        let bool = durationInBetweenMessages(msg, set, 30000)
+        if (bool === false) Functions.incrementMessageAmountDB(msg)
+        
         Functions.publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
     
@@ -42,6 +46,7 @@ module.exports = {
                             try {
                                client.commands.get(commandName).command.execute(msg, args, client)
                             } catch (error) {
+                                msg.channel.send(`Something went wrong... Please try again or contact staff.`)
                                 console.log('\n***ERROR***\ncouldn\'t execute command: ' + error + '\ncommand of error: ' + command + '\n***ERROR***\n')
                             }
                         }

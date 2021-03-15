@@ -1,4 +1,4 @@
-const { query } = require("../../functions");
+const { query, commandCooldown } = require("../../functions");
 const { Discord, embedcolor } = require("../../variables");
 
 module.exports.info = {
@@ -15,8 +15,12 @@ module.exports.info = {
     }
 }
 
+let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
+        let bool = commandCooldown(msg, set, 15000)
+        if (bool === true) return
+
         query(`SELECT * FROM members ORDER BY messages DESC LIMIT 5`, data => {
             let memberList = []
             data[0].forEach(row => {

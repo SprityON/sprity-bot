@@ -1,3 +1,4 @@
+const { commandCooldown } = require('../../functions');
 const { Discord, embedcolor } = require('../../variables');
 
 module.exports.info = {
@@ -14,8 +15,12 @@ module.exports.info = {
     }
 }
 
+let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
+        let bool = commandCooldown(msg, set, 3000)
+        if (bool === true) return
+
         let snoowrap = require('snoowrap')
         const r = new snoowrap({
             userAgent: process.env.USERAGENT,

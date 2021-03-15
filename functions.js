@@ -480,6 +480,71 @@ function query(sql, callback) {
     })
 }
 
+function commandCooldown(msg, set, time) {
+    let bool = false
+    let user = { id: `${msg.member.id}`, time: `${Date.now()}` }
+    for (let u of set) {
+        if (u.id === msg.member.id) {
+            bool = true
+            if ((Date.now() - u.time) > time) {
+                bool = false
+                set.delete(u)
+            }
+        }
+    }
+
+    if (bool === false) {
+        set.add(user)
+        return false
+    }
+
+    if (bool === true) {
+        for (let u of set) {
+            if (u.id === msg.author.id) {
+                if ((Date.now() - u.time) > time) {
+                    set.delete({id: u.id, time: u.time})
+                    return false
+                } else {
+                    msg.channel.send(`**${msg.author.username}**, you have to wait ${(Math.floor((time / 1000) - (Date.now() - u.time) / 1000))} seconds to use this command again.`)
+                    return true
+                }
+            }
+        }
+    }
+}
+
+function durationInBetweenMessages(msg, set, time) {
+    let bool = false
+    let user = { id: `${msg.member.id}`, time: `${Date.now()}` }
+    for (let u of set) {
+        if (u.id === msg.member.id) {
+            bool = true
+            if ((Date.now() - u.time) > time) {
+                bool = false
+                set.delete(u)
+            }
+        }
+    }
+
+    if (bool === false) {
+        set.add(user)
+        return false
+    }
+
+    if (bool === true) {
+        for (let u of set) {
+            if (u.id === msg.author.id) {
+                if ((Date.now() - u.time) > time) {
+                    set.delete({id: u.id, time: u.time})
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
+    }
+}
+
 module.exports = { 
     addRoleByReaction, 
     removeRoleByReaction, 
@@ -493,5 +558,7 @@ module.exports = {
     changeInventory,
     publicAdvert,
     normalizePrice,
-    query
+    query,
+    commandCooldown,
+    durationInBetweenMessages
 }

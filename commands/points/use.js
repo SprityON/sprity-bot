@@ -1,4 +1,4 @@
-const { query } = require('../../functions.js')
+const { query, commandCooldown } = require('../../functions.js')
 const { Functions } = require('../../variables.js')
 
 module.exports.info = {
@@ -15,8 +15,12 @@ module.exports.info = {
     }
 }
 
+let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
+        let bool = commandCooldown(msg, set, 10000)
+        if (bool === true) return
+
         let id = args[0]
         if (!id) return msg.channel.send(`**${msg.author.username}**, you have to provide an item id.`)
         try {
