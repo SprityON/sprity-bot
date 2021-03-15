@@ -17,7 +17,7 @@ module.exports.command = {
         let noobRole = msg.guild.roles.cache.find(role => role.name === 'Noob')
         if (msg.member.roles.has(noobRole.id)) return [false, `You already have this item equipped. Unequip in \`$settings\``]
 
-         msg.member.roles.add(noobRole)
-         return true
+        msg.member.roles.add(noobRole)
+        return true
     }
 }
