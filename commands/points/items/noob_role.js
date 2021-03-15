@@ -13,11 +13,11 @@ module.exports.info = {
 }
 
 module.exports.command = {
-    execute(msg, args, client) {
+    async execute(msg, args, client) {
         let noobRole = msg.guild.roles.cache.find(role => role.name === 'Noob')
-        if (msg.member.roles.has(noobRole.id)) return [false, `You already have this item equipped. Unequip in \`$settings\``]
+        if (msg.member.roles.cache.has(noobRole.id)) return [false, `You already have this item equipped. Unequip in \`$settings\``]
 
         msg.member.roles.add(noobRole)
-        return true
+        return [true, 'test']
     }
 }
