@@ -554,7 +554,6 @@ function spamCheck(msg, set, time) {
         if (isNaN(u.times)) u.times = 1
         if (u.id === msg.member.id) {
             bool = true
-            console.log((Date.now() - u.time))
             if (u.times >= 5) {
                 set.delete(u)
                 msg.channel.send(`Woah, not so fast **${msg.author.username}**. Muted for 1 minute due to spam protection.`)
