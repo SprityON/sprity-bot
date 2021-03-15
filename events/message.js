@@ -1,4 +1,4 @@
-const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks } = require('../functions');
+const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB } = require('../functions');
 let set = new Set()
 module.exports = {
     name: 'message',
@@ -11,7 +11,7 @@ module.exports = {
         let bool = spamCheck(msg, set, 500)
 
         bool = durationInBetweenMessages(msg, set, 5000)
-        if (bool === false) Functions.incrementMessageAmountDB(msg)
+        if (bool === false) incrementMessageAmountDB(msg)
         
         publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
