@@ -1,4 +1,4 @@
-const { durationInBetweenMessages } = require('../functions');
+const { durationInBetweenMessages, commandCooldown } = require('../functions');
 let set = new Set()
 module.exports = {
     name: 'message',
@@ -7,8 +7,11 @@ module.exports = {
         const Functions = vars.Functions
         
         if (msg.author.bot == true) return
-        let bool = durationInBetweenMessages(msg, set, 30000)
-        if (bool === false) Functions.incrementMessageAmountDB(msg)
+        let bool = durationInBetweenMessages(msg, set, 250)
+        if (bool === true) return msg.channel.send(`Woah **${msg.author.username}**! Tune it down a notch... (spam)`)
+
+        let bool1 = durationInBetweenMessages(msg, set, 30000)
+        if (bool1 === false) Functions.incrementMessageAmountDB(msg)
         
         Functions.publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
