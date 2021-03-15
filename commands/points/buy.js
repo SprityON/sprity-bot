@@ -31,10 +31,20 @@ module.exports.command = {
                 let amount = 1
                 if (args[1]) amount = parseInt(args[1])
                 
+                for (let item of shop.items) {
+                    if (item.id == item_id) {
+                        if (item.once === true) {
+                            if (amount >= 1) {
+                                return msg.channel.send(`**${msg.author.username}**, the item \`${item_id}\` can only be bought once.`)
+                            }
+                        }
+                    }
+                }
+
                 let additionalText = ''
                 if (amount > 1) { additionalText += "'s"}
 
-                if (points[0].points > (parseInt(item.price) * amount)) {
+                if (points[0].points >= (parseInt(item.price) * amount)) {
                     query(`SELECT * FROM members_inventory WHERE member_id = ${msg.member.id}`, data => {
                         let result = data[0]
 

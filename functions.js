@@ -57,7 +57,6 @@ function insertInLog(command, msg, guild, role, user, reaction) {
 /* start of database functions */
 
 function dbConnection() {
-    require('dotenv').config()
     const mysql = require('mysql')
     var con = mysql.createConnection({
         host: process.env.DB_HOST,

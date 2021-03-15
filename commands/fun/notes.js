@@ -4,7 +4,7 @@ const { Functions, Discord, embedcolor } = require("../../variables");
 module.exports.info = {
     name: 'notes',
     category: 'fun',
-    usage: '$notes <page number/add/remove>',
+    usage: '$notes <page number|add|remove>',
     short_description: 'Add notes anonimously',
     dm: true,
     help: {
@@ -97,10 +97,6 @@ module.exports.command = {
     
             let id = args[2]
             if (isNaN(id)) return msg.channel.send(`**${msg.author.send}**, ${id} is not a valid ID!`)
-    
-            query(`SELECT * FROM notes WHERE id = ${id}`, err, (data) => {
-                
-            })
             query(`DELETE * FROM notes WHERE id = ${id}`)
         } else if (!status || !isNaN(status)) {
             if (msg.channel.type == 'dm') {
@@ -160,7 +156,7 @@ module.exports.command = {
                         i++
                     }
                 }
-    
+                
                 embed.addField(`Name`,`${name}`, true)
                 embed.addField(`Content`,`${content}`, true)
     
