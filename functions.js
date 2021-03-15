@@ -566,14 +566,11 @@ function spamCheck(msg, set, time) {
                     }, 60000);
                 }
             } else if ((Date.now() - u.time) <= time) {
-                console.log('yep')
                 u.times++
                 u.time = Date.now()
             } else if (time > (Date.now() - u.time)){
                 u.times = 1
                 u.time = Date.now()
-                console.log('yeah')
-                console.log(set)
             }
         }
     }
