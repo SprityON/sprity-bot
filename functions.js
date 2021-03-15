@@ -548,15 +548,17 @@ function durationInBetweenMessages(msg, set, time) {
 function spamCheck(msg, set, time) {
     let bool = false
     let user = { id: `${msg.member.id}`, time: Date.now(), times: 1 }
-    let usr
-    console.log(set)
+
     for (let u of set) {
         if (isNaN(u.times)) u.times = 1
+
         if (u.id === msg.member.id) {
             bool = true
+
             if (u.times >= 5) {
                 set.delete(u)
                 msg.channel.send(`Woah, not so fast **${msg.author.username}**. Muted for 1 minute due to spam protection.`)
+                
                 if (!msg.member.roles.cache.find(role => role.name === "Muted")) {
                     msg.member.roles.add(msg.guild.roles.cache.find(role => role.name === "Muted"))
                     setTimeout(() => {
@@ -577,8 +579,6 @@ function spamCheck(msg, set, time) {
     if (bool === false) {
         set.add(user)
         return false
-    } else {
-        set.delete(usr)
     }
 }
 
