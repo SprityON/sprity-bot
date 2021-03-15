@@ -545,37 +545,45 @@ function durationInBetweenMessages(msg, set, time) {
     }
 }
 
-function spamCheck(msg, set, time, times) {
+function spamCheck(msg, set, time) {
     let bool = false
     let user = { id: `${msg.member.id}`, time: Date.now(), times: 1 }
-
+    let usr
+    console.log(set)
     for (let u of set) {
+        if (isNaN(u.times)) u.times = 1
         if (u.id === msg.member.id) {
             bool = true
             console.log((Date.now() - u.time))
-            if (u.times == 5) {
+            if (u.times >= 5) {
+                set.delete(u)
                 msg.channel.send(`Woah, not so fast **${msg.author.username}**. Muted for 1 minute due to spam protection.`)
                 if (!msg.member.roles.cache.find(role => role.name === "Muted")) {
                     msg.member.roles.add(msg.guild.roles.cache.find(role => role.name === "Muted"))
                     setTimeout(() => {
                         msg.member.roles.remove(msg.guild.roles.cache.find(role => role.name === "Muted"))
-                        set.delete(u)
                         msg.channel.send(`${msg.member} was unmuted.`)
+                        set.delete(u)
                     }, 60000);
                 }
             } else if ((Date.now() - u.time) <= time) {
+                console.log('yep')
                 u.times++
                 u.time = Date.now()
+            } else if (time > (Date.now() - u.time)){
+                u.times = 1
+                u.time = Date.now()
+                console.log('yeah')
+                console.log(set)
             }
         }
     }
-
     if (bool === false) {
         set.add(user)
         return false
+    } else {
+        set.delete(usr)
     }
-
-    return true
 }
 
 function memberChecks(member) {
