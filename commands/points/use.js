@@ -29,12 +29,10 @@ module.exports.command = {
                 let amount = parseInt(Object.values(data[0][0]))
                 if (amount == 0) return msg.channel.send(`**${msg.author.username}**, you don't have this item.`)
                 
-                await searchItem.command.execute(msg, args).then(([item, message]) => {
-                    console.log(item)
-                    console.log(message)
-                    if (data[0] === false) {
-                        if (data[1]) {
-                            msg.channel.send(`${data[1]} The item \`${id}\` was not removed from your inventory.`)
+                await searchItem.command.execute(msg, args).then(([succeeded, message]) => {
+                    if (succeeded === false) {
+                        if (message) {
+                            msg.channel.send(`${message} The item \`${id}\` was not removed from your inventory.`)
                         } else {
                             msg.channel.send(`Something went wrong when using the item ${searchItem.info.name}. It was not removed from your inventory.`)
                         }
