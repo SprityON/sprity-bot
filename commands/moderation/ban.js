@@ -12,9 +12,8 @@ module.exports.info = {
 	}
 }
 
-module.exports.commands = {
+module.exports.command = {
     execute(msg, args, client) {
-		return console.log(msg.member.permissions)
 		if (msg.member.permissions.has('BAN_MEMBERS')) {
 			let mentionedMember = msg.mentions.members.first()
 			let memberID = args[0]
