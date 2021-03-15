@@ -18,7 +18,7 @@ module.exports.command = {
     execute(msg, args, client) {
         const Functions = require('../../functions.js')
         const config = require('../../config.json')
-        const suggestionChannel = msg.guild.channels.cache.find(channel => channel.name === 'suggestion')
+        const suggestionChannel = msg.guild.channels.cache.find(channel => channel.id === '720739903331237949')
         
         const filter = m => m.author.id === msg.author.id
 
