@@ -1,12 +1,7 @@
 module.exports = {
     name: 'messageDelete',
-    async execute(msg, Discord) {
-        // *** important variables ***
-        const Functions = require('../functions.js')
-        const config = require('../config.json')
-        const con = Functions.dbConnection()
-        
-        // *** start of event ***
+    async execute(msg) {
+        const Discord = require('discord.js')
         if (msg.partial) {
             try {
                 await msg.fetch()
