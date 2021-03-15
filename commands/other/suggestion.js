@@ -18,7 +18,7 @@ module.exports.command = {
     execute(msg, args, client) {
         const Functions = require('../../functions.js')
         const config = require('../../config.json')
-        const suggestionChannel = msg.guild.channels.cache.find(channel => channel.id === '720739903331237949')
+        const suggestionChannel = msg.guild.channels.cache.find(channel => channel.name === 'suggestion')
         
         const filter = m => m.author.id === msg.author.id
 
@@ -51,7 +51,7 @@ module.exports.command = {
                 .addField(`Issued by:`,`${msg.author}`)
 				.addField(`${suggestionTitle}`, `${suggestionContent}`)
 				.addField(`Status`, `Under Review`)
-				.setThumbnail(Functions.userAvatar(msg.member))
+				.setThumbnail(msg.author.avatarURL({dynamic: true}))
                 .setFooter(`By ${msg.author.tag}`)
 				.setTimestamp()
 
@@ -85,6 +85,7 @@ module.exports.command = {
 						i++
 					}, 750)})
             }).catch(collected => {
+                console.log(collected)
 			msg.channel.send(`Cancelled suggestion for ${msg.member}. You ran out of time...`)
 			})
         }).catch(collected => {

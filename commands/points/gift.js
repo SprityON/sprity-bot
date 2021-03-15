@@ -36,7 +36,7 @@ module.exports.command = {
             query("SELECT "+item_id+" FROM members_inventory WHERE member_id = '"+msg.member.id+"'", data => {
                 let prevAmount = parseInt(Object.values(data[0][0]))
 
-                if ((prevAmount - amount) <= 0) return msg.reply(`you can't gift ${amount} item(s) since you don't have those items.`)
+                if ((prevAmount - amount) < 0) return msg.reply(`you can't gift ${amount} item(s) since you don't have those items.`)
                 
                 query("UPDATE `members_inventory` SET "+item_id+" = "+(prevAmount - amount)+" WHERE member_id = '"+msg.member.id+"'")
                 query("UPDATE `members_inventory` SET "+item_id+" = "+(prevAmount + amount)+" WHERE member_id = '"+member.id+"'")
