@@ -1,4 +1,5 @@
 const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB } = require('../functions');
+const vars = require('../variables')
 let set = new Set()
 module.exports = {
     name: 'message',
@@ -8,9 +9,9 @@ module.exports = {
 
         memberChecks(msg.member)
 
-        let bool = spamCheck(msg, set, 2000)
+        spamCheck(msg, set, 2000)
 
-        bool = durationInBetweenMessages(msg, set, 5000)
+        let bool = durationInBetweenMessages(msg, set, 5000)
         if (bool === false) incrementMessageAmountDB(msg)
         
         publicAdvert(msg)
