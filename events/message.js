@@ -9,7 +9,7 @@ module.exports = {
 
         memberChecks(msg.member)
 
-        spamCheck(msg, set, 2000)
+        spamCheck(msg, set, 1000)
 
         let bool = durationInBetweenMessages(msg, set, 5000)
         if (bool === false) incrementMessageAmountDB(msg)
