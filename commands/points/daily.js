@@ -37,7 +37,6 @@ module.exports.command = {
                 let amountOfHours;
                 let amountOfMinutes;
                 let amountOfSeconds;
-                console.log(result[0])
                 if (result[0].daily_date != '') {
                     let enddate = result[0].daily_date.split(' ')
                     let enddates = enddate[0].split('/')
