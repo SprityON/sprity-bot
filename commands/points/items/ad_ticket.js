@@ -18,8 +18,7 @@ module.exports.command = {
     async execute(msg, args, amount, client) {
         let role = msg.member.roles.cache.get('818558804617986089') 
         if(role) {
-            msg.channel.send(`**${msg.author.username}**, you are already using **1** ticket.`) 
-            return [false]
+            return [false, `**${msg.author.username}**, you are already using **1** ticket.`]
         } else {
             Functions.changeInventory(amount, 'ad_ticket', msg)
             msg.member.roles.add('818558804617986089')
