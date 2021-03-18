@@ -38,7 +38,6 @@ module.exports.command = {
                             msg.channel.send(`Something went wrong when using the item ${searchItem.info.name}. It was not removed from your inventory.`)
                         }
                     } else {
-                        console.log(id)
                         Functions.changeInventory(1, id, msg)
                         msg.channel.send(`You have used the item \`${id}\`. One item was removed from your inventory.`)
                     }
