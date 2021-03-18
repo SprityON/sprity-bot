@@ -1,5 +1,3 @@
-const { Functions } = require("../../../variables")
-
 module.exports.info = {
     name: 'ad_ticket',
     category: 'points',
@@ -20,7 +18,6 @@ module.exports.command = {
         if(role) {
             return [false, `**${msg.author.username}**, you are already using **1** ticket.`]
         } else {
-            Functions.changeInventory(amount, 'ad_ticket', msg)
             msg.member.roles.add('818558804617986089')
             msg.channel.send(`**${msg.author.username}**, you can now advertise **once** in <#818558571410096148>.`)
             return [true]
