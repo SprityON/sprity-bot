@@ -18,7 +18,7 @@ module.exports.command = {
 		const moment = require('moment')
 		const ms = require('ms')
 
-		let muteRole = msg.guild.roles.cache.get('731524672629506169')
+		let muteRole = msg.guild.roles.cache.find(role => role.name === "Muted")
 		
 		let permission = msg.member.permissions.has('MANAGE_MESSAGES')
 		if (!permission) return(msg.channel.send(`You don't have permission to mute other members, ${msg.author.tag}!`))
