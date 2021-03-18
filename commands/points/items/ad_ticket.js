@@ -1,7 +1,7 @@
 const { Functions } = require("../../../variables")
 
 module.exports.info = {
-    name: 'Advertising Ticket',
+    name: 'ad_ticket',
     category: 'points',
     usage: '',
     short_description: 'Ticket for advertising',
