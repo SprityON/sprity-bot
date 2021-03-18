@@ -19,10 +19,12 @@ module.exports.command = {
         let role = msg.member.roles.cache.get('818558804617986089') 
         if(role) {
             msg.channel.send(`**${msg.author.username}**, you are already using **1** ticket.`) 
+            return [false]
         } else {
             Functions.changeInventory(amount, 'ad_ticket', msg)
             msg.member.roles.add('818558804617986089')
             msg.channel.send(`**${msg.author.username}**, you can now advertise **once** in <#818558571410096148>.`)
+            return [true]
         }
     }
 }
