@@ -1,7 +1,7 @@
 const { query } = require("../../functions");
 
 module.exports.info = {
-    name: 'mute',
+    name: 'unmute',
     category: 'moderation',
     usage: '$unmute <member>',
     short_description: 'Unmute a member',
@@ -18,8 +18,8 @@ module.exports.command = {
     execute(msg, args, client) {
 		let member = msg.mentions.members.first()
 		if (!member) return msg.reply('you have to mention a user first!')
-		let muteRole = msg.guild.roles.cache.get('731524672629506169')
-		let checkIfHasRole = member.roles.cache.find(role => role === muteRole)
+		let muteRole = msg.guild.roles.cache.find(role => role.name === "Muted")
+		let checkIfHasRole = member.roles.cache.find(role => role === "Muted")
 		let permission = msg.member.permissions.has('MANAGE_MESSAGES')
 
 		if (!permission) return msg.channel.send(`You don't have permission to mute other members, ${msg.author.tag}!`)

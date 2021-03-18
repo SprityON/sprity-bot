@@ -179,6 +179,7 @@ const updateDB = {
     checkMuted: function(member) {
         query(`SELECT * FROM timer_dates WHERE member_id = ${member.id}`, data => {
             data[0].forEach(row => {
+                let result = data[0]
                 if (row.member_id == member.id) {
                     const moment = require('moment')
                     
