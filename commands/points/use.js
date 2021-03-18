@@ -27,7 +27,7 @@ module.exports.command = {
             const searchItem = require(`./items/${id}.js`)
             query("SELECT "+id+" FROM members_inventory WHERE member_id = '"+msg.member.id+"'", async data => {
                 let amount = parseInt(Object.values(data[0][0]))
-
+                
                 if (amount == 0) return msg.channel.send(`**${msg.author.username}**, you don't have this item.`)
                 
                 await searchItem.command.execute(msg, args).then(data => {
