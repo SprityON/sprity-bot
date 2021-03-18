@@ -547,6 +547,7 @@ function durationInBetweenMessages(msg, set, time) {
 }
 
 function spamCheck(msg, set, time) {
+    if (msg.member.roles.cache.find(role => role.name === "Muted")) return
     let bool = false
     let user = { id: `${msg.member.id}`, time: Date.now(), times: 1 }
 
