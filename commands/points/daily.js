@@ -27,9 +27,7 @@ module.exports.command = {
             let nextDate = currentDate.clone().add(1, 'day')
 
             if (result.length == 0 || result[0] == undefined) {
-                query(`INSERT INTO currency_times (member_id) VALUES ('${msg.member.id}')`, data => {
-
-                })
+                query(`INSERT INTO currency_times (member_id) VALUES ('${msg.member.id}')`)
             } else {
                 let amountOfMillisecondsLeft;
                 let amountOfWeeks;

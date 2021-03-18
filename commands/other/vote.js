@@ -13,7 +13,8 @@ module.exports.info = {
 }
 
 module.exports.command = {
-    execute(msg, args, client) {
+    execute(msg, args, client)
+	{
 		if(msg.member.permissions.has("MANAGE_MESSAGES") || msg.member.roles.cache.find(role => role.name === "YouTuber")) {
 			const voteChannel = msg.guild.channels.cache.find(channel => channel.id === '718152742832701541')
         

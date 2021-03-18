@@ -13,7 +13,7 @@ module.exports.info = {
 }
 
 module.exports.command = {
-    execute(msg, args, amount, client) {
+    async execute(msg, args, amount, client) {
         msg.member.roles.cache.get('818558804617986089') 
         ? msg.channel.send(`**${msg.author.username}**, you are already using **1** ticket.`) 
         : (function() {
