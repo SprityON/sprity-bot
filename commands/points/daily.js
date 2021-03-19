@@ -25,7 +25,6 @@ module.exports.command = {
             let currentDate = moment()
             let prevDate
             let nextDate = currentDate.clone().add(12, 'hour')
-
             if (result.length == 0 || result[0] == undefined) {
                 query(`INSERT INTO currency_times (member_id) VALUES ('${msg.member.id}')`)
             } else {

@@ -7,7 +7,6 @@ module.exports = {
         
         if (msg.author.bot == true) return
         memberChecks(msg.member)
-
         spamCheck(msg, set, 1000)
 
         let bool = durationInBetweenMessages(msg, set, 5000)

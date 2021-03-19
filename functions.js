@@ -315,6 +315,7 @@ function incrementMessageAmountDB(msg) {
     if (msg.member.bot == true) return
 
     query(`SELECT messages FROM members WHERE member_id = ${msg.member.user.id}`, data => {
+        if (data[2]) return
         let msgAmount = data[0][0].messages + 1
         query(`UPDATE members SET messages = ${msgAmount} WHERE member_id = ${msg.member.user.id}`, () => {})
     })
@@ -564,7 +565,7 @@ function spamCheck(msg, set, time) {
 function memberChecks(member) {
     query(`SELECT * FROM members WHERE member_id = ${member.id}`, ([result, fields, err]) => {
         if (member.user.bot) return
-        if (err) {
+        if (err || result.length == 0) {
             query(`INSERT INTO members (member_id) VALUES (${member.id})`)
             updateDB.addInventory(member)
 
