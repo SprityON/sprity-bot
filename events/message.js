@@ -1,4 +1,4 @@
-const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB } = require('../functions');
+const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB, updateDB } = require('../functions');
 const vars = require('../variables')
 let set = new Set()
 module.exports = {
@@ -6,6 +6,8 @@ module.exports = {
     execute(msg, client) {
         
         if (msg.author.bot == true) return
+
+        updateDB.insertInDatabase(msg.member)
 
         memberChecks(msg.member)
 

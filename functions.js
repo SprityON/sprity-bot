@@ -297,31 +297,9 @@ const updateDB = {
         })
     },
 
-    insertInDatabase: function(m) {
-        query(`SELECT * FROM members WHERE member_id = ${m.id}`, data => {
-            dbMemberList = []
-            for (let row of data[0]) {
-                dbMemberList.push({"id": row.id, "member_id": row.member_id})
-            }
-
-            let members = m.guild.members.cache
-            members.forEach(member => {
-                if (member.user.bot == true) return
-                if (!dbMemberList.find(m => m.member_id === member.id)) {
-                    query(`INSERT INTO members (member_id) VALUES (${member.id})`)
-                    let channel = m.guild.channels.cache.get('759072966893240330')
-                    channel.send(`Welcome to our server, ${member}! Please read the <#380724759740153866>`)
-                    updateDB.addInventory(member)
-                }
-            })
-
-            dbMemberList.forEach(dbMember => {
-                if (!members.find(m => m.id === dbMember.member_id)) {
-                    if (dbMember.kicked == false || dbMember.warns == 0) {
-                        query(`DELETE FROM members WHERE member_id = ${dbMember.member_id}`)
-                    }
-                }
-            })
+    insertInDatabase: function(member) {
+        query(`SELECT * FROM members WHERE member_id = ${member.id}`, data => {
+            if (data[2]) query(`INSERT INTO members (member_id) VALUES (${member.id})`)
         })
     },
 
