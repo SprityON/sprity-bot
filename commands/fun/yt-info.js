@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 
 const { Discord, embedcolor } = require('../../variables');
 
+=======
+const { commandCooldown } = require('../../functions');
+const { Discord, embedcolor } = require('../../variables');
+>>>>>>> master
 module.exports.info = {
     name: 'yt-info',
     category: 'fun',
@@ -15,8 +20,17 @@ module.exports.info = {
     }
 }
 
+<<<<<<< HEAD
 module.exports.command = {
     execute(msg, args, client) {
+=======
+let set = new Set()
+module.exports.command = {
+    execute(msg, args, client) {
+        let bool = commandCooldown(msg, set, 3000)
+        if (bool === true) return
+
+>>>>>>> master
         let YouTube = require('youtube-node')
         let youtube = new YouTube()
 
@@ -33,5 +47,9 @@ module.exports.command = {
             embed.addField(`Video Amount`, `${data.items[0].statistics.videoCount}`,true)
             msg.channel.send(embed)
         })
+<<<<<<< HEAD
+=======
+        
+>>>>>>> master
     }
 }
