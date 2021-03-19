@@ -1,5 +1,11 @@
 const { Discord, embedcolor } = require('../../variables');
 
+<<<<<<< HEAD
+=======
+const { commandCooldown } = require('../../functions');
+const { Discord, embedcolor } = require('../../variables');
+
+>>>>>>> b1e04a6b0dc8d92240bafe9192c5ca1475c7ea3b
 module.exports.info = {
     name: 'yt-info',
     category: 'fun',
@@ -14,12 +20,21 @@ module.exports.info = {
     }
 }
 
+<<<<<<< HEAD
 module.exports.command = {
     execute(msg, args, client) {
+=======
+let set = new Set()
+module.exports.command = {
+    execute(msg, args, client) {
+        let bool = commandCooldown(msg, set, 3000)
+        if (bool === true) return
+
+>>>>>>> b1e04a6b0dc8d92240bafe9192c5ca1475c7ea3b
         let YouTube = require('youtube-node')
         let youtube = new YouTube()
 
-        youtube.setKey('AIzaSyCuMj6m-iyWTeu2NwJyEtYT4B6L3jKk1AM')
+        youtube.setKey(process.env.YOUTUBE_KEY)
 
         youtube.getChannelById('UCCctXOcrgNzGLAhjHneMi8Q', (err, data) => {
             if (err) throw err
