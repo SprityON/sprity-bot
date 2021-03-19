@@ -42,7 +42,7 @@
 		"emote": "nick",
 		"uploaded": true,
 		"once": false,
-		"type": "tool"
+		"type": "cosmetic"
 	},
 	{
 		"id": "ad_ticket",
