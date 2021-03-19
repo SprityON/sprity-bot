@@ -6,9 +6,6 @@ module.exports = {
     execute(msg, client) {
         
         if (msg.author.bot == true) return
-
-        updateDB.insertInDatabase(msg.member)
-
         memberChecks(msg.member)
 
         spamCheck(msg, set, 1000)

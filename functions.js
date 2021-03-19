@@ -565,7 +565,7 @@ function memberChecks(member) {
     query(`SELECT * FROM members WHERE member_id = ${member.id}`, ([result, fields, err]) => {
         if (member.user.bot) return
         if (err) {
-            query(`INSERT INTO members (member_id) VALES (${member.id})`)
+            query(`INSERT INTO members (member_id) VALUES (${member.id})`)
             updateDB.addInventory(member)
 
             let memberRole = member.guild.roles.cache.find(role => role.name === "Member")
