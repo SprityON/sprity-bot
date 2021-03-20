@@ -14,6 +14,7 @@ module.exports.info = {
     }
 }
 
+let thisName = this.info.name
 module.exports.command = {
     execute(msg, args, client)
 	{
