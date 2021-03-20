@@ -1,0 +1,16 @@
+[
+	{
+		"category": "regular",
+		"description": "Buy custom colors, ad tickets and more!",
+		"title": "Regular Items",
+		"emote": "🛍️",
+		"usage": "$shop regular"
+	},
+	{
+		"category": "rpg",
+		"description": "Fight enemies, bosses and earn points!",
+		"title": "RPG Items",
+		"emote": "⚔️",
+		"usage": "$shop rpg"
+	}
+]

@@ -88,28 +88,37 @@ const updateDB = {
         })
     },
     updateItemsDB: async function() {
-        let items = require('./commands/points/shop-items.json')
-        items.items.forEach(item => {
-            query(`SELECT * FROM members_inventory LIMIT 1`, data => {
-                let fields = data[1]
+        const shop_categories = require('./commands/points/shop-categories.json')
+        let allShopItems = []
+        for (category of shop_categories) {
+            let items = require(`./commands/points/items/${category.category}/items.json`)
+            allShopItems.push(items.items)
+        }
 
-                let index = fields.length - 1
-                let lastField = fields[index]
-
-                let item_id = item.id
-
-                let bool = false
-                fields.forEach(field => {
-                    if (field.name == item_id) {
-                        bool = true
+        for (let i = 0; i < allShopItems.length; i++) {
+            let items = Object.values(allShopItems[i])
+            items.forEach(item => {
+                query(`SELECT * FROM members_inventory LIMIT 1`, data => {
+                    let fields = data[1]
+    
+                    let index = fields.length - 1
+                    let lastField = fields[index]
+    
+                    let item_id = item.id
+    
+                    let bool = false
+                    fields.forEach(field => {
+                        if (field.name == item_id) {
+                            bool = true
+                        }
+                    })
+                    
+                    if (bool == false) {
+                        query("ALTER TABLE members_inventory ADD `"+item_id+"` INT NOT NULL AFTER `"+lastField.name+"`")
                     }
                 })
-                
-                if (bool == false) {
-                    query("ALTER TABLE members_inventory ADD `"+item_id+"` INT NOT NULL AFTER `"+lastField.name+"`")
-                }
-            })
-        })
+            });
+        }
     },
     checkLeaderboard: async function(member) {
         query(`SELECT * FROM leaderboard_stats ORDER BY week DESC LIMIT 1`, data => {
