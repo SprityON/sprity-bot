@@ -16,23 +16,16 @@ module.exports.command = {
     execute(msg, args, client)
 	{
 		if(msg.member.permissions.has("MANAGE_MESSAGES") || msg.member.roles.cache.find(role => role.name === "YouTuber")) {
-			const voteChannel = msg.guild.channels.cache.find(channel => channel.id === '718152742832701541')
-        
-			if (msg.channel.id == voteChannel.id) {
-				let message = msg.content.join(" ")
-				msg.delete({timeout: 100})
-				if (!message) return msg.channel.send(`You have to type in a description, ${msg.author}!`).then(msg => msg.delete({ timeout: 5000 }))
-				else {
-					msg.channel.send(message).then(async msg => {
-						await msg.react('👍')
-						await msg.react('👎')
-					})
-				}
-				return
-			} else {
-				msg.channel.send(`${msg.author}, vote commands are only allowed in <#718152742832701541>!`).then(msg => msg.delete({ timeout: 5000 }))
-				return 
+			let message = msg.content.join(" ")
+			msg.delete({timeout: 100})
+			if (!message) return msg.channel.send(`You have to type in a description, ${msg.author}!`).then(msg => msg.delete({ timeout: 5000 }))
+			else {
+				msg.channel.send(message).then(async msg => {
+					await msg.react('👍')
+					await msg.react('👎')
+				})
 			}
+			return
 		} else return msg.channel.send(`**${msg.author.username}**, only YouTubers or staff can use this command!`)
     }
 }

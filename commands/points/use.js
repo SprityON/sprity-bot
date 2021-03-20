@@ -62,8 +62,10 @@ module.exports.command = {
                             msg.channel.send(`Something went wrong when using the item ${searchItem.info.name}. It was not removed from your inventory.`)
                         }
                     } else {
-                        Functions.changeInventory(1, id, msg)
-                        msg.channel.send(`You have used the item \`${id}\`. One item was removed from your inventory.`)
+                        item.once ? msg.channel.send(`You have used the item \`${id}\`. Enable/Disable this item in your $settings.`) : (function() {
+                            Functions.changeInventory(1, id, msg)
+                            msg.channel.send(`You have used the item \`${id}\`. One item was removed from your inventory.`)
+                        })
                     }
                 })
             })

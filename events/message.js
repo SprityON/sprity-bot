@@ -1,4 +1,4 @@
-const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB, updateDB } = require('../functions');
+const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB } = require('../functions');
 const vars = require('../variables')
 let set = new Set()
 module.exports = {

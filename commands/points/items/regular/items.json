@@ -28,7 +28,8 @@
 			"emote": "poop",
 			"uploaded": false,
 			"once": true,
-			"type": "cosmetic"
+			"type": "role",
+			"role_name": "Noob"
 		},
 		{
 			"id": "change_nick",
