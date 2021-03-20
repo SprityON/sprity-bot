@@ -1,3 +1,5 @@
+const { config } = require("../../variables")
+
 module.exports.info = {
     name: 'vote',
     category: 'other',
