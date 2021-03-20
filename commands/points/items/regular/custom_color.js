@@ -1,4 +1,4 @@
-const { embedcolor, Discord, Functions } = require("../../../variables")
+const { embedcolor, Discord, Functions } = require("../../../../variables")
 module.exports.info = {
     name: 'custom_color',
     category: 'points',

@@ -1,9 +1,9 @@
 {
 	"items": [
 		{
-			"id": "noob_sword",
-			"name": "Noob Sword",
-			"description": "A regular sword for newbies.",
+			"id": "basic_sword",
+			"name": "Basic Sword",
+			"description": "A basic sword for newbies.",
 			"price": "1000",
 			"emote": "🗡️",
 			"uploaded": false,

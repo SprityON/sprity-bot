@@ -1,5 +1,5 @@
 const { query, commandCooldown } = require('../../functions.js')
-const { Functions } = require('../../variables.js')
+const { Functions, fs } = require('../../variables.js')
 
 module.exports.info = {
     name: 'use',
@@ -21,10 +21,34 @@ module.exports.command = {
         let bool = commandCooldown(msg, set, 10000)
         if (bool === true) return
 
-        let id = args[0]
-        if (!id) return msg.channel.send(`**${msg.author.username}**, you have to provide an item id.`)
+        const shop_categories = require('./shop-categories.json')
+        let allShopItems = []
+        for (let category of shop_categories) {
+            let items = require(`./items/${category.category}/items.json`)
+            allShopItems.push(items.items)
+        }
+
+        const id = args[0]
+        if (!id) return msg.channel.send(`**${msg.author.username}**, you did not specify an item.`)
+
+        let itemFound = false
+        let item
+        let category
+        for (let i = 0; i < allShopItems.length; i++) {
+            const temporary_item = allShopItems[i].find(item => item.id === id)
+            
+            if (temporary_item) {
+                category = i
+                itemFound = true; item = temporary_item; break
+            }
+        }
+
+        let itemFolder = fs.readdirSync('commands/points/items')
+        for (let i = 0; i < itemFolder.length; i++) if (i == category) category = itemFolder[i]
+
+        if (itemFound === false) return msg.channel.send(`Item \`${id}\` was not found`)
         try {
-            const searchItem = require(`./items/${id}.js`)
+            const searchItem = require(`./items/${category}/${id}`)
             query("SELECT "+id+" FROM members_inventory WHERE member_id = '"+msg.member.id+"'", async data => {
                 let amount = parseInt(Object.values(data[0][0]))
                 

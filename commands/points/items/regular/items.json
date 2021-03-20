@@ -8,7 +8,7 @@
 			"emote": "paintbrush",
 			"uploaded": false,
 			"once": false,
-			"type": "cosmetic"
+			"type": "tool"
 		},
 		{
 			"id": "convert_messages_points",
