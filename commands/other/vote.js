@@ -16,7 +16,7 @@ module.exports.command = {
     execute(msg, args, client)
 	{
 		if(msg.member.permissions.has("MANAGE_MESSAGES") || msg.member.roles.cache.find(role => role.name === "YouTuber")) {
-			let message = msg.content.join(" ")
+			let message = arguments[0].content.slice(config.prefix.length + thisName.length)
 			msg.delete({timeout: 100})
 			if (!message) return msg.channel.send(`You have to type in a description, ${msg.author}!`).then(msg => msg.delete({ timeout: 5000 }))
 			else {
