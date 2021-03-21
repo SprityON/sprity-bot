@@ -1,3 +1,5 @@
+const { query } = require("../../functions")
+
 module.exports.info = {
     name: 'test',
     category: '',
@@ -14,18 +16,6 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, client) {
-        function gemiddelde(values) {
-            let gemiddelde = 0;
-
-            for (let value of values) gemiddelde += value
-
-            let result = gemiddelde / values.length
-
-            return result
-        }
-
-        let nummers = [10, 15, 25]
-
-        console.log(gemiddelde(nummers))
+        
     }
 }

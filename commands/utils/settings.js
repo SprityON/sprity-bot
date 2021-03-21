@@ -24,10 +24,10 @@ module.exports.command = {
         const setting = args[0] // could be a item
         const status = args[1]
 
-        const shop_categories = require('./shop-categories.json')
+        const shop_categories = require('../points/shop-categories.json')
         let allShopItems = []
         for (let category of shop_categories) {
-            let items = require(`./items/${category.category}/items.json`)
+            let items = require(`../points/items/${category.category}/items.json`)
             allShopItems.push(items.items)
         }
 
@@ -35,7 +35,10 @@ module.exports.command = {
             query(`SELECT * FROM members_inventory WHERE member_id = ${msg.member.id}`, data => {
                 let result = data[0]
 
-                
+                result.forEach(row => {
+                    let r = Object.entries(row)
+                    console.log(r)
+                })
             })
         } else {
             let isItem = false

@@ -166,7 +166,7 @@ const updateDB = {
                             .addField(`3. ${memberList[2].name}`,`Messages: ${memberList[2].messages}`)
                             .addField(`4. ${memberList[3].name}`,`Messages: ${memberList[3].messages}`)
                             .addField(`5. ${memberList[4].name}`,`Messages: ${memberList[4].messages}`)
-                            .setFooter(`to find more information about the current leaderboard, use $leaderboard`)
+                            .setFooter(`Your messages will be converted into points by * 3 IF you have bought the convert_messages_points item! (everyone gets this bonus as of now)`)
                             .setColor('#7289da')
 
                             let announcementsChannel = member.guild.channels.cache.find(channel => channel.id === '719173855859703868')
@@ -175,10 +175,16 @@ const updateDB = {
 
                             query(`INSERT INTO leaderboard_stats(begindate, enddate, week) VALUES ('${newBeginDate}', '${newEndDate}', '${newWeek}')`)
 
-                            let members = member.guild.members.cache
-                            members.forEach(member => {
-                                query(`UPDATE members SET messages = '0' WHERE member_id = ${member.id}`)
+                            query(`SELECT * FROM members WHERE NOT messages = 0`, data => {
+                                let result = Object.values(data[0])
+                                result.forEach(row => {
+                                    let member = msg.guild.members.cache.find(member => member.id === row.member_id)
+                                    let points = (row.messages) + ((row.messages / 100) * 30)
+                                    query(`UPDATE members SET points = ${points} WHERE member_id = ${member.id}`)
+                                })
                             })
+                            
+                            query(`UPDATE members SET messages = '0'`)
                         })
                     }
                 })
