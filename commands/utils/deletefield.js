@@ -17,7 +17,7 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
-        if (msg.member.permissions.has("MANAGE_GUILD")) return msg.channel.send(`Wow, what are you doing? Only administrators can use this command!`)
+        if (msg.member.hasPermission("MANAGE_GUILD")) return msg.channel.send(`Wow, what are you doing? Only administrators can use this command!`)
         if (!args[0]) return msg.channel.send(`You have to provide both a table and a field! Usage: \`$deletefield <table> <field>\``)
         let table = args[0]
         let column = args[1]
