@@ -19,6 +19,7 @@ module.exports.command = {
 	execute(msg, args, client) {
 		let embed = new Discord.MessageEmbed()
         .setTitle(`${msg.author.username}'s settings`)
+        .setDescription(`These are all your settings which you can enable/disable`)
         .setColor(embedcolor)
 
         const setting = args[0] // could be a item
@@ -38,6 +39,30 @@ module.exports.command = {
                 result.forEach(row => {
                     let r = Object.entries(row)
                     console.log(r)
+
+                    let item
+                    for (let i = 0; i < allShopItems.length; i++) {
+                        const temporary_item = allShopItems[i].find(item => item.id === setting)
+                        
+                        if (temporary_item) {
+                            item = temporary_item; break
+                        }
+                    }
+
+                    switch (item.type) {
+                        case 'role':
+                            let role = msg.guild.roles.cache.find(role => role.name === item.role_name)
+
+                            msg.member.roles.cache.has(role.id) 
+                            ? embed.addField(`${item.id}`, `Enabled`) 
+                            : embed.addField(`${item.id}`, `Disabled`)
+                        break
+                        case 'tool':
+                            if (item.once === true) {
+                                 
+                            }
+                        break
+                    }
                 })
             })
         } else {
@@ -47,7 +72,6 @@ module.exports.command = {
                 const temporary_item = allShopItems[i].find(item => item.id === setting)
                 
                 if (temporary_item) {
-                    category = i
                     isItem = true; item = temporary_item; break
                 }
             }

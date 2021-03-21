@@ -19,27 +19,24 @@ module.exports.command = {
     execute(msg, args, client) {
         Functions.updateDB.updateItemsDB()
 
-        query(`SELECT * FROM members_inventory WHERE member_id = ${msg.member.id}`, data => {
+        query(`SELECT * FROM members_inventory WHERE member_id = ${msg.member.id}`, async data => {
             if (data[0].length == 0) {
                 query(`INSERT INTO members_inventory (member_id) VALUES (${msg.member.id})`)
             }
             for (let row of data[0]) {
-                const shop = require('./shop-items.json')
-                let text = '';
-                let i = 0
-                shop.items.forEach(item => {
-                    i++
-                    if (i == shop.items.length) {
-                        text += `\`${item.id}\``
-                    } else {
-                        text += `\`${item.id}\`,`
-                    }
-                })
+                const shop_categories = require('../points/shop-categories.json')
+                let shop = []
+                let shopLength = 0
+                let length = 0
+                for (let category of shop_categories) {
+                    let items = require(`../points/items/${category.category}/items.json`)
+                    shopLength += items.items.length
+                    shop.push(items.items)
+                    length++
+                }
 
-                query("SELECT "+text+" FROM members_inventory WHERE member_id = '"+msg.member.id+"'", data => {
+                query("SELECT * FROM members_inventory WHERE member_id = '"+msg.member.id+"'", data => {
                     let result = data[0]
-                    const shop = require('./shop-items.json')
-
                     let status = args[0]
 
                     status = Math.floor(status)
@@ -57,46 +54,51 @@ module.exports.command = {
 
                     let text1 = ''
                     let itemAmount = 0
-                    for (let [itemname, amount] of Object.entries(result[0])) {
-                        for (let item of shop.items) {
-                            if (item.id == itemname) {
-                                if (amount > 0) {
-                                    if (testI != i) { testI++ } else {
-                                        itemAmount++
 
-                                        if (itemAmount > 5) break;
-                                        let emote;
-                                        if (item.uploaded === true) {
-                                            let e = client.emojis.cache.find(e => e.name === item.emote)
-                                            emote = client.emojis.resolveID(e)
-                                            emote = msg.guild.emojis.cache.get(emote)
-                                        } else { emote = `:${item.emote}:`}
+                    shop.forEach(shoplist => {
+                        shoplist.forEach(item => {
+                            for (let [itemname, amount] of Object.entries(result[0])) {
+                                if (item.id == itemname) {
+                                    if (amount > 0) {
+                                        if (testI != i) { testI++ } else {
+                                            itemAmount++
     
-                                        text1 += `${emote} **${item.name}** ▬ ${amount}\n*ID* \`${item.id}\`\n\n`
-                                        
-                                        testI++
-                                        i++
+                                            if (itemAmount > 5) break;
+                                            let emote;
+                                            if (item.uploaded === true) {
+                                                let e = client.emojis.cache.find(e => e.name === item.emote)
+                                                emote = client.emojis.resolveID(e)
+                                                emote = msg.guild.emojis.cache.get(emote)
+                                            } else { emote = `:${item.emote}:`}
+        
+                                            text1 += `${emote} **${item.name}** ▬ ${amount}\n*ID* \`${item.id}\`\n\n`
+                                            
+                                            testI++
+                                            i++
+                                        }
                                     }
                                 }
                             }
-                        }
-                    }
+                        })
+                    })
 
-                    let a = 0
                     let itemsLength1 = 0
                     let totalItems = 0
-                    for (let [itemname, amount] of Object.entries(result[0])) {
-                        for (let item of shop.items) {
-                            if (item.id == itemname) {
-                                if (amount > 0) {
-                                    for (let i = 0; i < amount; i++) {
-                                        totalItems++
+
+                    shop.forEach(shoplist => {
+                        shoplist.forEach(item => {
+                            for (let [itemname, amount] of Object.entries(result[0])) {
+                                if (item.id == itemname) {
+                                    if (amount > 0) {
+                                        for (let i = 0; i < amount; i++) {
+                                            totalItems++
+                                        }
+                                        itemsLength1++
                                     }
-                                    itemsLength1++
                                 }
                             }
-                        }
-                    }
+                        })
+                    })
 
                     itemsLength = itemsLength1 / 5
                     if (itemsLength < 1) {
