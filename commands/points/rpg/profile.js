@@ -28,7 +28,7 @@ module.exports.command = {
 
             let embed = new Discord.MessageEmbed().setColor(embedcolor)
             .setDescription(`\`ID: ${result.member_id}\``)
-            .setAuthor(`Profile of ${result.rpg_name} | ${result.gold} Gold, ${result.experience} EXP | LVL. ${result.level}`, msg.author.avatarURL({dynamic: true}))
+            .setAuthor(`Profile of ${result.rpg_name} | LVL. ${result.level}`, msg.author.avatarURL({dynamic: true}))
             .addField(`Basic Stats`, `HP: ${basic_stats_json.health}\nDEF: ${basic_stats_json.defense}\nATT: ${basic_stats_json.attack}`, true)
             .addField(`Body Slots`, `Head: ${body_slots_json.head}\nChest: ${body_slots_json.chest}\nLegs: ${body_slots_json.legs}\nFeet: ${body_slots_json.feet}`, true)
             .addField(`Gold and EXP`, `Gold: ${result.gold}\nEXP: ${result.experience}`, true)
