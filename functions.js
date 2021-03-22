@@ -471,7 +471,7 @@ function query(sql, callback) {
     con.query(sql, function(err,result,fields) {
         if (scnd_arg) {
             callback([result, fields, err])
-        }
+        } else { if (err) throw err }
     })
 }
 
@@ -603,6 +603,19 @@ function memberChecks(member) {
     })
 }
 
+function checkRPGprofile(msg) {
+    let hasProfile = false
+
+    query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, data => {
+        if (!data[2] && !data[0].length == 0) { 
+            hasProfile = true 
+        } else {
+            msg.channel.send(`Oh, seems like you don't have a profile! Create one with command \`$rpg\``)
+        }
+        return hasProfile
+    })
+}
+
 module.exports = { 
     addRoleByReaction, 
     memberChecks,
@@ -620,5 +633,6 @@ module.exports = {
     query,
     commandCooldown,
     durationInBetweenMessages,
-    spamCheck
+    spamCheck,
+    checkRPGprofile
 }

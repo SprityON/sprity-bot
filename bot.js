@@ -16,9 +16,17 @@ for (const folder of commandCategoryFolders) {
 	const commandFiles = fs.readdirSync(`./commands/${folder}`)
 	for (const file of commandFiles) {
 		if (file.endsWith('.js')) {
-			const command = require(`./commands/${folder}/${file}`)
+			let command = require(`./commands/${folder}/${file}`)
 			
 			client.commands.set(command.info.name, command)
+
+			const rpg_folder = fs.readdirSync(`./commands/points/rpg`).filter(file => !file.endsWith('.json') && file.endsWith(`.js`))
+			for (const file of rpg_folder) {
+				if (file.endsWith('.js')) {
+					command = require(`./commands/points/rpg/${file}`)
+					client.commands.set(command.info.name, command)
+				}
+			}
 		}
 	}
 }

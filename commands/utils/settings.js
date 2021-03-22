@@ -64,9 +64,9 @@ module.exports.command = {
 
                     // checks if a item has a type of once, then checks if it is enabled or disabled
                     for (let [item_name, amount] of r) {
-                        let typeCheck = typeof(amount)
+                        let type = typeof(amount)
 
-                        if (typeCheck === 'number') {
+                        if (type === 'number') {
                             if (amount > 0) {
                                 let isEnabled = enabledItems.find(enabled_item => enabled_item.name === item_name)
 
@@ -129,7 +129,7 @@ module.exports.command = {
                             let role = msg.guild.roles.cache.find(role => role.name === item.role_name)
 
                             let isValidStatus = true
-                            let successfull = true
+                            let successful = true
                             objs.forEach(obj => {
                                 if (item.id === r[obj.id][0]) {
 
@@ -138,7 +138,7 @@ module.exports.command = {
 
                                         if (bool === true) {
                                             msg.channel.send(`Something went wrong! The item \`${item.id}\` is already enabled.`)
-                                            successfull = false
+                                            successful = false
                                         } else { 
                                             arr[obj.id - 3] = 't' 
                                             const newEnabled = arr.toString()
@@ -152,7 +152,7 @@ module.exports.command = {
 
                                         if (bool === true) {
                                             msg.channel.send(`Something went wrong! The item \`${item.id}\` is already disabled.`)
-                                            successfull = false
+                                            successful = false
                                         } else { 
                                             arr[obj.id - 3] = 'f' 
                                             const newEnabled = arr.toString()
@@ -165,15 +165,15 @@ module.exports.command = {
                             })
                             
                             if (isValidStatus === false) return msg.channel.send(`\`${status}\` is not a valid status! You can choose to either enable or disable.`)
-                            if (successfull === false) return
+                            if (successful === false) return
                             return msg.channel.send(`Your **${role.name}** role has been ${status}d!`)
                         break
-                        case 'tool':
+                        case 'weapon':
                             
                         break
                     }
                 } else {
-                    return msg.channel.send(`You have provided no item to enable or disable!`)
+                    return msg.channel.send(`You have provided no valid item to enable or disable!`)
                 }
             })
         }

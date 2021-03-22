@@ -1,4 +1,4 @@
-const { Discord } = require("../../variables")
+const { Discord } = require("../../../variables")
 
 module.exports.info = {
     name: 'boss',
