@@ -616,6 +616,39 @@ function checkRPGprofile(msg) {
     })
 }
 
+function userLevel(exp) {
+    let levels = [
+        {xp: 50, level: 1},
+        {xp: 100, level: 2},
+        {xp: 175, level: 3},
+        {xp: 306, level: 4},
+        {xp: 536, level: 5},
+        {xp: 938, level: 6},
+        {xp: 1641, level: 7},
+        {xp: 2872, level: 8},
+        {xp: 5026, level: 9},
+        {xp: 8796, level: 10}
+    ]
+    
+    for (let i = 0; i < levels.length; i++) {
+        level = levels[i]
+
+        if (exp < level.xp) {
+            return level.level
+        }
+    }    
+}
+
+function checkIfNewLevel(previousXP, nextXP, embed, member) {
+    let previousLevel = userLevel(previousXP)
+    let nextLevel = userLevel(nextXP)
+
+    if (previousLevel < nextLevel) {
+        query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
+        return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP)`)
+    }
+}
+
 module.exports = { 
     addRoleByReaction, 
     memberChecks,
@@ -634,5 +667,7 @@ module.exports = {
     commandCooldown,
     durationInBetweenMessages,
     spamCheck,
-    checkRPGprofile
+    checkRPGprofile,
+    userLevel,
+    checkIfNewLevel
 }

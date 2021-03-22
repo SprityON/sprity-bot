@@ -1,4 +1,4 @@
-const { query, checkRPGprofile } = require("../../../functions")
+const { query, checkRPGprofile, checkIfNewLevel } = require("../../../functions")
 const { Discord } = require("../../../variables")
 
 module.exports.info = {
@@ -26,11 +26,14 @@ module.exports.command = {
             let thisGold = randomGold + data[0][0].gold
             let thisEXP = randomEXP + data[0][0].experience
 
+            
+
             let embed = new Discord.MessageEmbed()
             let message = [`Adventure time!`, `These monsters are hard to kill...`, `Woah, close one!`, `I hope my Sword hasn't been damaged...`, `I'm too powerful for these lowlives!`, `These monsters sure are scary, but easy to beat!`, `Adventure time #18904, lol`]
             let randomMessage = message[Math.floor(Math.random() * message.length)]
             embed.setTitle('🏹  ' + randomMessage)
             embed.setDescription(`You went on a adventure and got ${thisGold - data[0][0].gold} gold and ${thisEXP - data[0][0].experience} experience levels`)
+            checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
             embed.setColor('#00FF00')
 
             query(`UPDATE members_rpg SET gold = ${thisGold}, experience = ${thisEXP} WHERE member_id = ${msg.member.id}`)
