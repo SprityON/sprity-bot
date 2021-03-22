@@ -41,7 +41,7 @@ module.exports.command = {
                                 
                                 if (rpg_name.length > 18) return msg.channel.send(`Your name is too long! Names are only allowed to have 18 characters.`)
     
-                                query(`INSERT INTO members_rpg (member_id, rpg_name, basic_stats, body_slots, hand_slots, gold) VALUES ('${msg.member.id}' , '${rpg_name}', '{health: 100, defense: 0, attack: 20}', '{head: "none", chest: "none", legs: "none", feet: "none"}', '{left_hand: "none", right_hand: "none"}', '100')`)
+                                query(`INSERT INTO members_rpg (member_id, rpg_name, basic_stats, body_slots, hand_slots, gold) VALUES ('${msg.member.id}' , '${rpg_name}', '{"health": 100, "defense": 0, "attack": 20}', '{"head": "none", "chest": "none", "legs": "none", "feet": "none"}', '{"left_hand": "none", "right_hand": "none"}', '100')`)
     
                                 msg.channel.send(new Discord.MessageEmbed()
                                 .setTitle(`Profile created with name ${rpg_name}!`)
