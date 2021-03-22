@@ -1,4 +1,4 @@
-const { query, checkRPGprofile, checkIfNewLevel } = require("../../../functions")
+const { query, checkRPGprofile, checkIfNewLevel, commandCooldown } = require("../../../functions")
 const { Discord } = require("../../../variables")
 
 module.exports.info = {
@@ -15,8 +15,10 @@ module.exports.info = {
     }
 }
 
+let set = new Set()
 module.exports.command = {
     execute(msg, args, amount, client) {
+        if (commandCooldown(msg, set, 120000) === true) return
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, data => {
             let randomGold = Math.floor(Math.random() * 50) + 10
             let randomEXP = Math.floor(Math.random() * 15) + 5
