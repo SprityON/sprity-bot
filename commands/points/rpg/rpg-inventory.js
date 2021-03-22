@@ -14,6 +14,7 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
+        if ( checkRPGprofile(msg) === false ) return
        
     }
 }
