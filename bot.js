@@ -33,4 +33,4 @@ for (const e of eventFolders) {
 	})
 }
 
-client.login(process.env.TOKEN)
+client.login(process.env.TOKEN).catch(console.log())

@@ -64,7 +64,7 @@ function dbConnection() {
         user: process.env.DB_USER,
         password: process.env.DB_PASS,
         database: "sprity_bot",
-        connectTimeout: 5000
+        connectTimeout: 30000
     })
     
     return con
