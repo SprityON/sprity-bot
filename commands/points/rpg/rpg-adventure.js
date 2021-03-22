@@ -1,3 +1,6 @@
+const { query } = require("../../../functions")
+const { Discord } = require("../../../variables")
+
 module.exports.info = {
     name: 'rpg-adventure',
     category: '$rpg-adventure',
@@ -14,6 +17,23 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
-        
+        query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, data => {
+            let randomGold = Math.floor(Math.random() * 50) + 10
+            let randomEXP = Math.floor(Math.random() * 15) + 5
+
+            let thisGold = randomGold + data[0][0].gold
+            let thisEXP = randomEXP + data[0][0].experience
+
+            let embed = new Discord.MessageEmbed()
+            let message = [`Adventure time!`, `These monsters are hard to kill...`, `Woah, close one!`, `I hope my Sword hasn't been damaged...`, `I'm too powerful for these lowlives!`, `These monsters sure are scary, but easy to beat!`, `Adventure time #18904, lol`]
+            let randomMessage = message[Math.floor(Math.random() * message.length)]
+            embed.setTitle('🏹  ' + randomMessage)
+            embed.setDescription(`You went on a adventure and got ${thisGold - data[0][0].gold} gold and ${thisEXP - data[0][0].experience} experience levels`)
+            embed.setColor('#00FF00')
+
+            query(`UPDATE members_rpg SET gold = ${thisGold}, experience = ${thisEXP} WHERE member_id = ${msg.member.id}`)
+
+            msg.channel.send(embed)
+        })
     }
 }
