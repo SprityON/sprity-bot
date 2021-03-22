@@ -38,15 +38,22 @@ module.exports.command = {
 
                 result.forEach(row => {
                     let r = Object.entries(row)
-                    console.log(r)
 
-                    let item
-                    for (let i = 0; i < allShopItems.length; i++) {
-                        const temporary_item = allShopItems[i].find(item => item.id === setting)
-                        
-                        if (temporary_item) {
-                            item = temporary_item; break
+                    let enabled 
+                    for (let i = 0; i < r.length; i++) {
+                        if (r[i][0] === 'enabled') { enabled = r[i][1]; break; }
+                    }
+
+                    let objs = []
+                    let arr = enabled.split(`,`)
+
+                    let i = 0
+                    for (let value of arr) {
+                        if (value === 't') {
+                            objs.push({id: i + 1, value: value})
                         }
+
+                        i++
                     }
 
                     switch (item.type) {
