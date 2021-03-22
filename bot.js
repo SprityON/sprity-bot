@@ -23,6 +23,7 @@ for (const folder of commandCategoryFolders) {
 	}
 }
 
+
 const eventFolders = fs.readdirSync('./events').filter(file => file.endsWith('.js'))
 for (const e of eventFolders) {
 	const event = require(`./events/${e}`)

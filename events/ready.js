@@ -6,7 +6,7 @@ module.exports = {
     execute(client) {
         console.log(`Logged in as ${client.user.tag}!`)
         client.user.setActivity(`${config.prefix}help`, { type: "LISTENING" })
-        let m = client.guilds.cache.get(`${process.env.GUILDID}`).m
+        let m = client.guilds.cache.get(`${process.env.GUILDID}`).me
         
         Functions.updateDB.checkLeaderboard(m)
         setInterval(() => {
