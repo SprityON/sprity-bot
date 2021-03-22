@@ -17,8 +17,6 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
-        if ( checkRPGprofile(msg) === false ) return
-
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, data => {
             let randomGold = Math.floor(Math.random() * 50) + 10
             let randomEXP = Math.floor(Math.random() * 15) + 5
