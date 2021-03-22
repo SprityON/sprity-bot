@@ -2,9 +2,9 @@ const { query, checkRPGprofile, checkIfNewLevel } = require("../../../functions"
 const { Discord } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg-adventure',
-    category: '$rpg-adventure',
-    usage: '$rpg-adventure',
+    name: 'rpg adventure',
+    category: '$rpg adventure',
+    usage: '$rpg adventure',
     short_description: 'Go on an adventure!',
     help: {
         enabled: true,
@@ -26,7 +26,10 @@ module.exports.command = {
             let thisGold = randomGold + data[0][0].gold
             let thisEXP = randomEXP + data[0][0].experience
 
-            
+            function getChest() {
+                let chanceChest = Math.floor(Math.random() * 200) + 1
+                if (chanceChest == 1) return true
+            }
 
             let embed = new Discord.MessageEmbed()
             let message = [`Adventure time!`, `These monsters are hard to kill...`, `Woah, close one!`, `I hope my Sword hasn't been damaged...`, `I'm too powerful for these lowlives!`, `These monsters sure are scary, but easy to beat!`, `Adventure time #18904, lol`]

@@ -2,9 +2,9 @@ const { query, checkRPGprofile, userLevel } = require("../../../functions")
 const { Discord, embedcolor } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg-profile',
+    name: 'rpg profile',
     category: 'points',
-    usage: '$rpg-profile <member>',
+    usage: '$rpg profile <member>',
     short_description: 'View a profile',
     help: {
         enabled: true,

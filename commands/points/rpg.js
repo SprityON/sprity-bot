@@ -1,6 +1,6 @@
 const ms = require("ms")
 const { query } = require("../../functions")
-const { Discord, embedcolor } = require("../../variables")
+const { Discord, embedcolor, fs } = require("../../variables")
 
 module.exports.info = {
     name: 'rpg',
@@ -58,12 +58,29 @@ module.exports.command = {
                     }).catch(collected => { return msg.channel.send(`Something went wrong... Did too much time pass by?`) })
                 } else return msg.channel.send(`You already have a RPG profile!`)
 
-            } else if (args[0].toLowerCase() === 'info') {
-                msg.channel.send(`information will be here soon`)
+            } else if (args[0].toLowerCase() === 'info' || args[0].toLowerCase() === 'help') {
+                if (args[1]) {
+                    try {
+                        const searchItem = require(`./rpg/${command}`)
+                    } catch (error) {
+                        msg.channel.send(`${args[0]} is not a command!`)
+                    } 
+                } else {
+                    const rpg_commands = fs.readdirSync('./commands/points/rpg').filter(file => file.endsWith('.js'))
+
+                    let embed = new Discord.MessageEmbed().setColor(embedcolor).setTitle(`RPG Help`)
+                    for (let cmd of rpg_commands) {
+                        const searchItem = require(`./rpg/${cmd}`)
+
+                        embed.addField(`${searchItem.info.help.title}`, `\`${searchItem.info.usage}\`\n${searchItem.info.short_description}`, true)
+                    }
+                    
+                    msg.channel.send(embed)
+                }
             } 
             
             else if (args[0].toLowerCase() === 'delete') {
-                msg.channel.send(`Hey ${msg.member.displayName}, are you sure you want to delete your RPG profile? Please type \`'i am sure'\` to delete your profile`)
+                msg.channel.send(`Hey ${msg.member.displayName}, are you sure you want to delete your RPG profile? Please type \`'I am sure'\` to delete your profile`)
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000} ).then(collected => {
                     let answer = collected.first().content.toLowerCase()
                     if (answer === 'i am sure') { 
@@ -71,6 +88,17 @@ module.exports.command = {
                         msg.channel.send(`Your RPG profile was successfully deleted. Use \`$rpg\` again to make a new profile.`)
                     }
                 }).catch(console.log())
+            } else {
+                if (data[2] || data[0].length == 0) return msg.channel.send(`Please create a profile first by using command \`$rpg start\``)
+
+                let command = args[0]
+
+                try {
+                    const searchItem = require(`./rpg/${command}`)
+                    searchItem.command.execute(msg, args, client)
+                } catch (error) {
+                    return msg.channel.send(`\`${command}\` is not a rpg command!`)
+                }
             }
         })
     }

@@ -645,7 +645,7 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
 
     if (previousLevel < nextLevel) {
         query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
-        return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP)`)
+        return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP)`, true)
     }
 }
 
