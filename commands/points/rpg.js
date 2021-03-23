@@ -1,4 +1,3 @@
-const ms = require("ms")
 const { query } = require("../../functions")
 const { Discord, embedcolor, fs } = require("../../variables")
 
@@ -56,7 +55,7 @@ module.exports.command = {
                         
                         else return msg.channel.send(`I wish we had one more fighter... It's dangerous out here!`)
                     }).catch(collected => { return msg.channel.send(`Something went wrong... Did too much time pass by?`) })
-                } else return msg.channel.send(`You already have a RPG profile!`)
+                } else return msg.channel.send(`You already have a RPG profile! Go on an adventure: \`$rpg adventure\``)
 
             } else if (args[0].toLowerCase() === 'info' || args[0].toLowerCase() === 'help') {
                 if (args[1]) {

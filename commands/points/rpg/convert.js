@@ -16,7 +16,7 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, client) {
-        msg.channel.send(`Please specify the amount of gold you want to convert!`)
+        msg.channel.send(`Hey there! How much gold do you want to convert?`)
         
         const filter = m => m.author.id === msg.author.id
         msg.channel.awaitMessages(filter, {max: 1, time: 30000} )
