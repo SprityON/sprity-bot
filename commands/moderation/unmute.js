@@ -24,7 +24,7 @@ module.exports.command = {
 
 		if (!permission) return msg.channel.send(`You don't have permission to mute other members, ${msg.author.tag}!`)
 		
-		if (!checkIfHasRole) return msg.reply(`this member is already unmuted.`)
+		if (checkIfHasRole === true) return msg.reply(`this member is already unmuted.`)
 
 		msg.channel.send(`**${member.displayName}** has been unmuted!`)
 		member.roles.remove(muteRole)
