@@ -94,7 +94,7 @@ module.exports.command = {
                     thisEXP += chestLoot.exp
                     
                     let emoji = msg.guild.emojis.cache.find(e => e.name === `${chestLoot.type}_chest`)
-                    embed.addField(`You found a ${emoji} ${chestLoot.type.charAt(0).toUpperCase() + chestLoot.type.slice(1)} chest!`, `You got: ${chestLoot.gold} gold and ${chestLoot.exp} EXP.`)
+                    embed.addField(`Look! You found a ${emoji} ${chestLoot.type.charAt(0).toUpperCase() + chestLoot.type.slice(1)} chest!`, `You got ${chestLoot.gold} gold and ${chestLoot.exp} EXP`)
                     checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
                     query(`UPDATE members_rpg SET gold = ${thisGold}, experience = ${thisEXP} WHERE member_id = ${msg.member.id}`)
 
@@ -144,7 +144,7 @@ module.exports.command = {
                         checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
 
                         msg.channel.send(embed)
-                    }
+                    } else msg.channel.send(embed)
 
                     const basic_stats_json = JSON.parse(result.basic_stats)
 

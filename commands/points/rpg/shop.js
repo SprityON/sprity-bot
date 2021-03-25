@@ -14,6 +14,8 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
-        msg.channel.send(`hi`)
+        Functions.updateDB.updateItemsDB()
+        
+        
     }
 }
