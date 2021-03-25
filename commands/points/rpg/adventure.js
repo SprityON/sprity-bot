@@ -58,13 +58,13 @@ module.exports.command = {
                     randomGold = Math.floor(Math.random() * 600) + 200
                     randomEXP = Math.floor(Math.random() * 200) + 50
                 }
-                else if (randomAmount >= 875 && randomAmount < 980)  {
+                else if (randomAmount >= 875 && randomAmount < 995)  {
                     thisType = types.find(type => type === 'epic')
 
                     randomGold = Math.floor(Math.random() * 2000) + 1500
                     randomEXP = Math.floor(Math.random() * 400) + 200
                 }
-                else if (randomAmount >= 980 && randomAmount <= 1000) {
+                else if (randomAmount >= 995 && randomAmount <= 1000) {
                     thisType = types.find(type => type === 'legendary')
 
                     randomGold = Math.floor(Math.random() * 30000) + 15000
