@@ -327,7 +327,7 @@ module.exports.command = {
                                         if (action === 'defend') {
                                             actionHandler(true, 0, action)
                                         }
-                                    } else { msg.channel.send(`\`${action}\` is not a valid action!`); amount = 0; actionHandler() }
+                                    } else { msg.channel.send(`\`${action}\` is not a valid action!`); actionHandler() }
                                 }
 
                             }).catch(collected => {})
