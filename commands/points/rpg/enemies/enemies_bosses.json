@@ -5,132 +5,120 @@
                 "name": "Abatu",
                 "description": "Demon King",
                 "difficulty": "hard",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Fiery Attack", "damage": 1 },
+                    { "name": "Multiple Minion Attack", "damage": 1.1},
+                    { "name": "Scratch", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Eygor",
                 "description": "The Gazer",
                 "difficulty": "medium",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Gazing Attack", "damage": 1 },
+                    { "name": "Multiple Tentacle Attack", "damage": 1.1},
+                    { "name": "Tentacle Blow", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Ghoell",
                 "description": "Ghost of Hell",
                 "difficulty": "medium",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Wrap", "damage": 1 },
+                    { "name": "Ghosts Summoning", "damage": 1.1},
+                    { "name": "Brainwash", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Gol",
                 "description": "Mega Golem",
                 "difficulty": "extreme",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Stomp 150%", "damage": 1 },
+                    { "name": "SHAKE THE EARTH", "damage": 1.1},
+                    { "name": "Stomp", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Gomgril",
                 "description": "Chief of Goblins",
                 "difficulty": "hard",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Axe Attack", "damage": 1 },
+                    { "name": "Combo w/ Slave Goblin", "damage": 1.1},
+                    {"name": "Punch w/ Shield",  "damage": 0.9 }
                 ]
             },
             {
                 "name": "Heskan",
                 "description": "Slave Dragon",
                 "difficulty": "hard",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Spew Anxious Fire", "damage": 1 },
+                    { "name": "Panic Attack", "damage": 1.1},
+                    { "name": "Scratch", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Kriv",
                 "description": "King of Air",
                 "difficulty": "medium",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Stab w/ Spear", "damage": 1 },
+                    { "name": "Wind Blow", "damage": 1.1},
+                    { "name": "Bite", "Bite": 0.9, "damage": "high" }
                 ]
             },
             {
                 "name": "Murka",
                 "description": "Iron Dragon",
                 "difficulty": "hard",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Hit w/ Tail", "damage": 1 },
+                    { "name": "Tail Combo", "damage": 1.1},
+                    { "name": "Nose Stab", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Nadarr",
                 "description": "Lion Soldier",
                 "difficulty": "easy",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Sword Combo", "damage": 1 },
+                    { "name": "A Lion's Rage", "damage": 1.1},
+                    { "name": "Slash", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Rhogar",
                 "description": "Dragon King",
                 "difficulty": "extreme",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Spew Fire", "damage": 1 },
+                    { "name": "Dragon King's Roar", "damage": 1.1},
+                    { "name": "Scratch", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Shamash",
                 "description": "Sea Dragon",
                 "difficulty": "easy",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Spew High-Speed Water", "damage": 1 },
+                    { "name": "Hurricane", "damage": 1.1},
+                    { "name": "Cut", "damage": 0.9 }
                 ]
             },
             {
                 "name": "Shedinn",
                 "description": "Rat King",
                 "difficulty": "medium",
-                "boosts": [
-                    {"health": 2, "attack": 1.6}
-                ],
                 "attacks": [
-                    "basic_attack"
+                    { "name": "Hit w/ Staff", "damage": 1 },
+                    { "name": "Rat Soldiers Summoning", "damage": 1.1},
+                    { "name": "Bite", "damage": 0.9 }
                 ]
             }
         ]

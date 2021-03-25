@@ -618,16 +618,16 @@ function checkRPGprofile(msg) {
 
 function userLevel(exp) {
     let levels = [
-        {xp: 50, level: 1},
-        {xp: 100, level: 2},
-        {xp: 175, level: 3},
-        {xp: 306, level: 4},
-        {xp: 536, level: 5},
-        {xp: 938, level: 6},
-        {xp: 1641, level: 7},
-        {xp: 2872, level: 8},
-        {xp: 5026, level: 9},
-        {xp: 8796, level: 10}
+        {xp: 0, level: 1},
+        {xp: 150, level: 2},
+        {xp: 300, level: 3},
+        {xp: 500, level: 4},
+        {xp: 800, level: 5},
+        {xp: 1400, level: 6},
+        {xp: 2800, level: 7},
+        {xp: 4000, level: 8},
+        {xp: 6000, level: 9},
+        {xp: 8800, level: 10}
     ]
     
     for (let i = 0; i < levels.length; i++) {
