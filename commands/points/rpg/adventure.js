@@ -35,7 +35,7 @@ module.exports.command = {
 
             function getChest() {
                 let chanceChest = Math.floor(Math.random() * 200)
-                if (chanceChest >= 0 && chanceChest <= 200) return true
+                if (chanceChest >= 0 && chanceChest <= 35) return true
                 return false
             }
 
