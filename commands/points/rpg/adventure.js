@@ -95,7 +95,7 @@ module.exports.command = {
             msg.channel.send(embed)
 
             const randomAmount = Math.floor(Math.random() * 100) + 1
-            if (randomAmount > 0 && randomAmount <= 10) {
+            if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
