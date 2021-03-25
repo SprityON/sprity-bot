@@ -237,7 +237,7 @@ module.exports.command = {
                                                 return msg.channel.send(`You failed to block and took **${damage} HP**!\nYou lost against **${allData.enemy.name}** and lost ${lostGold} gold. You now have ${lostGold - result.gold} gold left.`) 
                                             }
 
-                                            msg.channel.send(`You failed to block **${allData.enemy.name}'s** attack and took ${damage} HP`)
+                                            msg.channel.send(`You failed to block **${allData.enemy.name}'s** attack and took **${damage} HP**`)
                                         }
 
                                         setTimeout(() => {
