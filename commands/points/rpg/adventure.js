@@ -257,7 +257,7 @@ module.exports.command = {
                                         }
 
                                         setTimeout(() => {
-                                            msg.channel.send(`**${allData.enemy.name}** did ${damage} damage! You have **${userHealth} HP** left.\nUse: \`attack\`, \`defend (unavailable)\` or \`run\``)
+                                            msg.channel.send(`**${allData.enemy.name}** did **${damage}** damage! You have **${userHealth} HP** left.\nUse: \`attack\`, \`defend (unavailable)\` or \`run\``)
                                             return actionHandler()
                                         }, 1000);
                                     }
