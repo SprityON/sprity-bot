@@ -1,3 +1,5 @@
+const { Functions } = require("../../../variables")
+
 module.exports.info = {
     name: 'rpg shop',
     category: 'points',

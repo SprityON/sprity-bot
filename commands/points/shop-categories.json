@@ -5,12 +5,5 @@
 		"title": "Regular Items",
 		"emote": "🛍️",
 		"usage": "$shop regular"
-	},
-	{
-		"category": "",
-		"description": "There will be more categories in the future",
-		"title": "More Items Coming Soon",
-		"emote": "",
-		"usage": "no usage"
 	}
 ]
