@@ -227,7 +227,7 @@ module.exports.command = {
                                             msg.channel.send(`You successfully blocked **${allData.enemy.name}'s** attack!`)
                                         } else {
                                             let random = Math.floor(Math.random() * 1.05) + 0.95
-                                            let damage = allData.enemy.attack * random
+                                            let damage = Math.floor(allData.enemy.attack * random)
                                             userHealth -= damage
 
                                             lostGold = (result.gold / 100) * 5
@@ -274,7 +274,7 @@ module.exports.command = {
         
                                     if (acceptableActions.find(action1 => action1 === action)) {
                                         if (action === 'run') { 
-                                            lostGold = (result.gold / 100) * 5
+                                            lostGold = Math.floor((result.gold / 100) * 5)
 
                                             query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                             return msg.channel.send(`You ran away, but **${allData.enemy.name}** took ${lostGold} of your gold. You now have ${result.gold - lostGold}`) 
@@ -282,7 +282,7 @@ module.exports.command = {
     
                                         if (action === 'attack') {
                                             let random = Math.floor(Math.random() * 1.05) + 0.95
-                                            let damage = basic_stats_json.attack * random
+                                            let damage = Math.floor(basic_stats_json.attack * random)
                                             enemyHealth -= damage
                                             if (enemyHealth <= 0) { 
                                                 return msg.channel.send(`Good job! You did **${damage}** damage and defeated **${allData.enemy.name}**.`).then(() => {
