@@ -43,9 +43,9 @@ module.exports.command = {
                                 query(`INSERT INTO members_rpg (member_id, rpg_name, basic_stats, body_slots, hand_slots, gold, level) VALUES ('${msg.member.id}' , '${rpg_name}', '{"health": 100, "defense": 0, "attack": 20}', '{"head": "none", "chest": "none", "legs": "none", "feet": "none"}', '{"left_hand": "none", "right_hand": "none"}', '100', '1')`)
     
                                 msg.channel.send(new Discord.MessageEmbed()
-                                .setTitle(`Profile created with name ${rpg_name}!`)
+                                .setTitle(`Hi ${rpg_name}!`)
                                 .setColor(embedcolor)
-                                .addField(`Get started`, `**$rpg-adventure**\nGo on an adventure and earn some Gold & EXP\n\n**$rpg-convert**\nConvert your Gold into points to use as currency for the server!\n\n**$rpg-inventory**\nView your inventory\n\n**$rpg-leaderboard**\nView the leaderboard of all current top 5 RPG players`)
+                                .addField(`Get started`, `Use command \`$rpg info\` to actually get gold and EXP!.`)
                                 )
                             }).catch(collected => {
                                 console.log(collected)
@@ -60,9 +60,17 @@ module.exports.command = {
             } else if (args[0].toLowerCase() === 'info' || args[0].toLowerCase() === 'help') {
                 if (args[1]) {
                     try {
-                        const searchItem = require(`./rpg/${command}`)
+                        const searchItem = require(`./rpg/${args[1]}`)
+
+                        let embed = new Discord.MessageEmbed()
+                        .setTitle(`${searchItem.info.help.title} | Help`)
+                        .setDescription(`**Category: ${searchItem.info.category}**\n*${searchItem.info.help.description}*\n\n**Usage**\n\`${searchItem.info.usage}\`\n\n**Aliases**\n${searchItem.info.help.aliases.toString().replace(',',', ')}\n\n**Permissions**\n\`${searchItem.info.help.permissions.toString().replace(',' , ', ')}\``)
+                        .setFooter(`Hope this helps!`)
+                        .setColor(embedcolor)
+
+                        msg.channel.send(embed)
                     } catch (error) {
-                        msg.channel.send(`${args[0]} is not a command!`)
+                        msg.channel.send(`Something went wrong... Is your argument correct?`)
                     } 
                 } else {
                     const rpg_commands = fs.readdirSync('./commands/points/rpg').filter(file => file.endsWith('.js'))
@@ -96,6 +104,7 @@ module.exports.command = {
                     const searchItem = require(`./rpg/${command}`)
                     searchItem.command.execute(msg, args, client)
                 } catch (error) {
+                    console.log(error)
                     return msg.channel.send(`\`${command}\` is not a rpg command!`)
                 }
             }

@@ -1,0 +1,138 @@
+[
+    {
+        "enemies": [
+            {
+                "name": "Abatu",
+                "description": "Demon King",
+                "difficulty": "hard",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Eygor",
+                "description": "The Gazer",
+                "difficulty": "medium",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Ghoell",
+                "description": "Ghost of Hell",
+                "difficulty": "medium",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Gol",
+                "description": "Mega Golem",
+                "difficulty": "extreme",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Gomgril",
+                "description": "Chief of Goblins",
+                "difficulty": "hard",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Heskan",
+                "description": "Slave Dragon",
+                "difficulty": "hard",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Kriv",
+                "description": "King of Air",
+                "difficulty": "medium",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Murka",
+                "description": "Iron Dragon",
+                "difficulty": "hard",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Nadarr",
+                "description": "Lion Soldier",
+                "difficulty": "easy",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Rhogar",
+                "description": "Dragon King",
+                "difficulty": "extreme",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Shamash",
+                "description": "Sea Dragon",
+                "difficulty": "easy",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            },
+            {
+                "name": "Shedinn",
+                "description": "Rat King",
+                "difficulty": "medium",
+                "boosts": [
+                    {"health": 2, "attack": 1.6}
+                ],
+                "attacks": [
+                    "basic_attack"
+                ]
+            }
+        ]
+    }
+]

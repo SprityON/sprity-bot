@@ -466,7 +466,7 @@ normalizePrice = function(number){
     return price
 }
 
-function query(sql, callback) {
+async function query(sql, callback) {
     let scnd_arg = arguments[1]
     con.query(sql, function(err,result,fields) {
         if (scnd_arg) {
@@ -543,10 +543,10 @@ function durationInBetweenMessages(msg, set, time) {
 function spamCheck(msg, set, time) {
     if (msg.member.roles.cache.find(role => role.name === "Muted")) return
     let bool = false
-    let user = { id: `${msg.member.id}`, time: Date.now(), times: 1 }
+    let user = { id: `${msg.member.id}`, time: Date.now(), times: 2 }
 
     for (let u of set) {
-        if (isNaN(u.times)) u.times = 1
+        if (isNaN(u.times)) u.times = 2
 
         if (u.id === msg.member.id) {
             bool = true
@@ -566,7 +566,7 @@ function spamCheck(msg, set, time) {
                 u.times++
                 u.time = Date.now()
             } else if (time > (Date.now() - u.time)){
-                u.times = 1
+                u.times = 2
                 u.time = Date.now()
             }
         }

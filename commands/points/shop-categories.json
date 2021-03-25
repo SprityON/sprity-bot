@@ -7,10 +7,10 @@
 		"usage": "$shop regular"
 	},
 	{
-		"category": "rpg",
-		"description": "Buy armor, swords and more!",
-		"title": "RPG Items",
-		"emote": "⚔️",
-		"usage": "$shop rpg"
+		"category": "",
+		"description": "There will be more categories in the future",
+		"title": "More Items Coming Soon",
+		"emote": "",
+		"usage": "no usage"
 	}
 ]

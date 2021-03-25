@@ -14,7 +14,7 @@ module.exports.info = {
         permissions: ['SEND_MESSAGES']
     }
 }
-
+ 
 module.exports.command = {
     execute(msg, args, amount, client) {
         if ( checkRPGprofile(msg) === false ) return
