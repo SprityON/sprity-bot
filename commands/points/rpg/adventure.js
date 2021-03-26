@@ -241,6 +241,7 @@ module.exports.command = {
                                 amount = 0; channelMessage()
                             } 
                             else { 
+                                console.log('oh yeah')
                                 amount = 0; channelMessage() 
                             }
                         }
@@ -414,7 +415,7 @@ module.exports.command = {
                                             return
                                         }
 
-                                        if (doDamage(allData) === 'won') { return } else if (doDamage(msg.member.id) === 'lose') return
+                                        if (doDamage(allData) === 'won') { return } else if (doDamage(msg.member.id) === 'lost') { return }
                                         return actionHandler()
                                     }
 
