@@ -311,7 +311,7 @@ module.exports.command = {
                                 } else {
                                     msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! **${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
 
-                                    if (doDamage(msg.member.id) === 'lost') return
+                                    if (doDamage(msg.member.id) === 'lost') return 'lost'
                                     msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
                                 
                                     return
@@ -413,7 +413,7 @@ module.exports.command = {
                                             return
                                         }
 
-                                        if (doDamage(allData) === 'won') { return } 
+                                        if (doDamage(allData) === 'won') { return } else return
                                         return actionHandler()
                                     }
 
