@@ -1,12 +1,100 @@
 [
 	{ 
-		"id": "broken_sword",
-		"name": "Broken Sword",
-		"description": "A broken Sword, nothing special.",
+		"id": "wooden_stick",
+		"name": "Wooden Stick",
+		"description": "A stick can still hurt!",
 		"price": 600,
 		"category": "weapons",
 		"bonuses": [
-			{"attack": "1.05"}
+			{"attack": "1.03"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "broken_sword",
+		"name": "Broken Sword",
+		"description": "A broken sword, nothing special.",
+		"price": 1200,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.06"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "night_sword",
+		"name": "Night Sword",
+		"description": "Also referred as 'Night Slayer', since it was used in the night, killing dozens.",
+		"price": 25000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.45"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "cutting_edge_sword",
+		"name": "Cutting-Edge Sword",
+		"description": "This sword cuts everything in its path.",
+		"price": 12500,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.3"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "dragon_axe",
+		"name": "Dragon Axe",
+		"description": "This Axe was made with the Dragon Scales from Rhogar.",
+		"price": 30000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.5"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "dragon_slayer_sword",
+		"name": "Dragon Slayer Sword",
+		"description": "This Sword was used by a Master Dragon Slayer.",
+		"price": 150000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "4"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "tentacle",
+		"name": "Tentacle",
+		"description": "Ripped from an Eygor. Pretty useless... but costly!",
+		"price": 1500,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "knight_sword",
+		"name": "Knight Sword",
+		"description": "A Sword designed purely for the regular Knight.",
+		"price": 20000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.4"}
+		],
+		"uploaded": true
+	},
+	{ 
+		"id": "time_travelling_sword",
+		"name": "Time-Travelling Sword",
+		"description": "Time Travel? Stolen from Ghoell.",
+		"price": 100000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "2.5"}
 		],
 		"uploaded": true
 	}

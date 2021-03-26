@@ -69,7 +69,7 @@ module.exports.command = {
             if (status > lastPage) return msg.channel.send(`**${msg.member.displayName}**, ${text}`)
 
             embed.setTitle(`Shop Items`)
-            embed.setFooter(`To equip an item, do: $equip <item_id> | (${currentPage}/${lastPage})`)
+            embed.setFooter(`To buy an item, do: $rpg buy <item_id> | (${currentPage}/${lastPage})`)
 
             text = ''
             let i = 0

@@ -70,7 +70,7 @@ module.exports.command = {
                                                 emote = client.emojis.resolveID(e)
                                                 emote = msg.guild.emojis.cache.get(emote)
                                             } else { emote = `:${item.emote}:`}
-        
+
                                             text1 += `${emote} **${item.name}** ▬ ${amount}\n*ID* \`${item.id}\`\n\n`
                                             
                                             testI++

@@ -1,4 +1,4 @@
-const { query, checkRPGprofile, userLevel } = require("../../../functions")
+const { query, checkRPGprofile, userLevel, normalizePrice } = require("../../../functions")
 const { Discord, embedcolor } = require("../../../variables")
 
 module.exports.info = {
@@ -23,17 +23,29 @@ module.exports.command = {
             let result = data[0][0]
 
             const basic_stats_json = JSON.parse(result.basic_stats)
-            const body_slots_json = JSON.parse(result.body_slots)
-            const hand_slots_json = JSON.parse(result.hand_slots)
+            const armor = JSON.parse(result.armor)
+
+            let goldEmoji = msg.guild.emojis.cache.find(e => e.name === 'gold')
+            let expEmoji = msg.guild.emojis.cache.find(e => e.name === 'exp')
+            
+            let inventory = JSON.parse(result.inventory)
+            let equippedWeapon = inventory.find(item => item.equipped === true)
+            let weapons = require('./items/weapons/items.json')
+
+            let weapon
+            
+            if (equippedWeapon) {
+                if (equippedWeapon.equipped === true) {
+                    weapon = weapons.find(weapon => weapon.id === equippedWeapon.name).name
+                }
+            } else weapon = 'none'
 
             let embed = new Discord.MessageEmbed().setColor(embedcolor)
-            .setDescription(`\`ID: ${result.member_id}\``)
+            .setDescription(`Weapon: **${weapon}**`)
             .setAuthor(`Profile of ${result.rpg_name} | LVL. ${result.level}`, msg.author.avatarURL({dynamic: true}))
-            .addField(`Basic Stats`, `HP: ${basic_stats_json.health}\nDEF: ${basic_stats_json.defense}\nATT: ${basic_stats_json.attack}`, true)
-            .addField(`Body Slots`, `Head: ${body_slots_json.head}\nChest: ${body_slots_json.chest}\nLegs: ${body_slots_json.legs}\nFeet: ${body_slots_json.feet}`, true)
-            .addField(`Gold and EXP`, `Gold: ${result.gold}\nEXP: ${result.experience}`, true)
-            .addField(`Left Hand`,`${hand_slots_json.left_hand}`,true)
-            .addField(`Right Hand`,`${hand_slots_json.right_hand}`,true)
+            .addField(`Stats`, `HP: ${basic_stats_json.health}\nDEF: ${basic_stats_json.defense}\nATT: ${basic_stats_json.attack}`, true)
+            .addField(`Armor`, `Armor: ${armor.name}`, true)
+            .addField(`Gold and EXP`, `${goldEmoji} ${normalizePrice(result.gold)}\n${expEmoji} ${normalizePrice(result.experience)}`, true)
 
             msg.channel.send(embed)
         })
