@@ -260,13 +260,15 @@ module.exports.command = {
                                 let attackDescription = ''
                                 let damage
 
-                                if (equippedWeapon.equipped === true) {
-                                    attack = weapons.find(weapon => weapon.id === equippedWeapon.name)
-                                    attackDescription = `You used your **${attack.name}**! `
-                                    damage = basic_stats_json.attack * attack.bonuses[0].attack
-                                } else {
-                                    random = Math.floor(Math.random() * 1.01) + 0.99
-                                    damage = basic_stats_json.attack * random
+                                if (equippedWeapon) {
+                                    if (equippedWeapon.equipped === true) {
+                                        attack = weapons.find(weapon => weapon.id === equippedWeapon.name)
+                                        attackDescription = `You used your **${attack.name}**! `
+                                        damage = basic_stats_json.attack * attack.bonuses[0].attack
+                                    } else {
+                                        random = Math.floor(Math.random() * 1.01) + 0.99
+                                        damage = basic_stats_json.attack * random
+                                    }
                                 }
     
                                 enemyHealth = enemyHealth - damage
