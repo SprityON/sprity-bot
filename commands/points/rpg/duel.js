@@ -14,7 +14,13 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
-        if ( checkRPGprofile(msg) === false ) return
-       
+        msg.channel.send(`Mention someone you want to duel, and have them with you!`)
+
+        let filter = m => m.author.id === msg.author.id
+        msg.channel.awaitMessages(filter, {max: 1, time: 120000}).then(collected => {
+            if (collected.first().content.toLowerCase() === 'cancel') return msg.channel.send(`Cancelled your duel!`)
+
+            console.log(collected)
+        })
     }
 }

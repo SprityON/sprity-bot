@@ -551,7 +551,7 @@ function spamCheck(msg, set, time) {
         if (u.id === msg.member.id) {
             bool = true
 
-            if (u.times >= 5) {
+            if (u.times >= 7) {
                 msg.channel.send(`Woah, not so fast **${msg.author.username}**. Muted for 1 minute due to spam protection.`)
                 
                 if (!msg.member.roles.cache.find(role => role.name === "Muted")) {

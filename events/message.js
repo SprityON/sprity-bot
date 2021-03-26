@@ -7,7 +7,7 @@ module.exports = {
         
         if (msg.author.bot == true) return
         memberChecks(msg.member)
-        if (msg.channel.id !== '729697866259628034')spamCheck(msg, set, 1500)
+        if (msg.channel.id !== '729697866259628034') spamCheck(msg, set, 1500)
         if (durationInBetweenMessages(msg, set, 5000) === false) incrementMessageAmountDB(msg)
         publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
