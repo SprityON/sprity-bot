@@ -90,7 +90,7 @@ module.exports.command = {
             embed.setColor('#00FF00')
 
             const randomAmount = Math.floor(Math.random() * 100) + 1
-            if (randomAmount > 100) {
+            if (randomAmount > 35) {
                 if (chestLoot !== false) {
                     thisGold += chestLoot.gold
                     thisEXP += chestLoot.exp
@@ -105,7 +105,7 @@ module.exports.command = {
                     msg.channel.send(embed)
                 }
             }
-            if (randomAmount > 0 && randomAmount <= 100) {
+            if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
