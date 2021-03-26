@@ -14,6 +14,7 @@ module.exports.info = {
 
 module.exports.command = {
     execute(msg, args, amount, client) {
+        /*
         msg.channel.send(`You are about to duel another RPG member.\nMake sure they're online and participating in this duel!\n\nTo start, mention a RPG member.`)
 
         let filter = m => m.author.id === msg.author.id
@@ -81,5 +82,6 @@ module.exports.command = {
                 })
             }
         }
+        */
     }
 }
