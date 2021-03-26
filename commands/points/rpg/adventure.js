@@ -105,7 +105,7 @@ module.exports.command = {
                     msg.channel.send(embed)
                 }
             }
-            if (randomAmount > 0 && randomAmount <= 35) {
+            if (randomAmount > 0 && randomAmount <= 100) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
@@ -229,7 +229,6 @@ module.exports.command = {
                     function actionHandler(anotherAction, healthLeft, action) {
                         if (amount === 1) {
                             if (anotherAction === true) { 
-                                
                                 if (doDamage(msg.member.id) === 'lost') { return }
 
                                 amount = 0
@@ -414,7 +413,7 @@ module.exports.command = {
                                             return
                                         }
 
-                                        if (doDamage(allData) === 'won') { return } else if (doDamage(msg.member.id) === 'lost') { return }
+                                        if (doDamage(allData) === 'won') { return } 
                                         return actionHandler()
                                     }
 
