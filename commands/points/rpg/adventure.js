@@ -105,7 +105,7 @@ module.exports.command = {
                     msg.channel.send(embed)
                 }
             }
-            if (randomAmount > 0 && randomAmount <= 35) {
+            if (randomAmount > 0 && randomAmount <= 100) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
@@ -241,10 +241,11 @@ module.exports.command = {
                                 amount = 0; channelMessage()
                             } 
                             else { 
-                                console.log('oh yeah')
                                 amount = 0; channelMessage() 
                             }
                         }
+
+                        amount = 0
                     }
 
                     let enemyHealth = allData.enemy.health
@@ -256,7 +257,6 @@ module.exports.command = {
                                 let equippedWeapon = inventory.find(item => item.equipped === true)
                                 let weapons = require('./items/weapons/items.json')
 
-                                console.log(inventory)
                                 let random
                                 let attack
                                 let attackDescription = ''
@@ -310,7 +310,6 @@ module.exports.command = {
 
                                     return 'won'
                                 } else {
-                                    console.log(damage)
                                     msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! **${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
 
                                     if (doDamage(msg.member.id) === 'lost') return
@@ -370,7 +369,7 @@ module.exports.command = {
                             if (anotherAction === true) {
                                 if (action === 'defend') {
                                     msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
-                                    return actionHandler()
+                                    return actionHandler(true)
                                 } else {
                                     let missChance = Math.floor(Math.random() * 5) + 1
                                     if (missChance === 1) { 
