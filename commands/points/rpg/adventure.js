@@ -420,7 +420,11 @@ module.exports.command = {
                                         msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
                                         return actionHandler()
                                     }
-                                } else { msg.channel.send(`\`${action}\` is not a valid action!`); return actionHandler() }
+                                } else { 
+                                    msg.channel.send(`\`${action}\` is not a valid action!`)
+                                    msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
+                                    return actionHandler() 
+                                }
                             }
 
                         }).catch(collected => {console.log(collected)})
