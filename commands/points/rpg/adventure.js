@@ -224,7 +224,7 @@ module.exports.command = {
                     }
 
                     let amount = 0
-                    if (amount === 0) channelMessage()
+                    channelMessage()
                     
                     function actionHandler(anotherAction, healthLeft, action) {
                         if (amount === 1) {
@@ -241,7 +241,6 @@ module.exports.command = {
                                 amount = 0; channelMessage()
                             } 
                             else { 
-                                console.log('oh yeah')
                                 amount = 0; channelMessage() 
                             }
                         }
@@ -415,8 +414,7 @@ module.exports.command = {
                                             return
                                         }
 
-                                        console.log('oh hi')
-                                        if (doDamage(allData) === 'won') { return }
+                                        if (doDamage(allData) === 'won') { return } else if (doDamage(msg.member.id) === 'lose') return
                                         return actionHandler()
                                     }
 
