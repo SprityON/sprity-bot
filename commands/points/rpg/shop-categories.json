@@ -1,0 +1,9 @@
+[
+	{
+		"name": "weapons",
+		"description": "Buy weapons (attack dmg ranging from 1 to _",
+		"title": "Weapons",
+		"emote": "⚔️",
+		"usage": "$rpg shop weapons"
+	}
+]

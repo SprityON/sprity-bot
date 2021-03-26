@@ -40,12 +40,12 @@ module.exports.command = {
                                 
                                 if (rpg_name.length > 18) return msg.channel.send(`Your name is too long! Names are only allowed to have 18 characters.`)
     
-                                query(`INSERT INTO members_rpg (member_id, rpg_name, basic_stats, body_slots, hand_slots, gold, level) VALUES ('${msg.member.id}' , '${rpg_name}', '{"health": 100, "defense": 0, "attack": 20}', '{"head": "none", "chest": "none", "legs": "none", "feet": "none"}', '{"left_hand": "none", "right_hand": "none"}', '100', '1')`)
+                                query(`INSERT INTO members_rpg (member_id, rpg_name, inventory, basic_stats, body_slots, hand_slots, gold, level) VALUES ('${msg.member.id}' , '${rpg_name}', '[{"name": "stick", "amount": 1, "equipped": false}, {"name": "test", "amount": 1, "equipped": false}]', '{"health": 100, "defense": 0, "attack": 20}', '{"head": "none", "chest": "none", "legs": "none", "feet": "none"}', '{"left_hand": "none", "right_hand": "none"}', '100', '1')`)
     
                                 msg.channel.send(new Discord.MessageEmbed()
                                 .setTitle(`Hi ${rpg_name}!`)
                                 .setColor(embedcolor)
-                                .addField(`Get started`, `Use command \`$rpg info\` to actually get gold and EXP!.`)
+                                .addField(`Get started`, `Use command \`$rpg info\` to read information about how to use the RPG System!`)
                                 )
                             }).catch(collected => {
                                 console.log(collected)
@@ -104,7 +104,6 @@ module.exports.command = {
                     const searchItem = require(`./rpg/${command}`)
                     searchItem.command.execute(msg, args, client)
                 } catch (error) {
-                    console.log(error)
                     return msg.channel.send(`\`${command}\` is not a rpg command!`)
                 }
             }

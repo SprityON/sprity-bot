@@ -1,0 +1,13 @@
+[
+	{ 
+		"id": "broken_sword",
+		"name": "Broken Sword",
+		"description": "A broken Sword, nothing special.",
+		"price": 600,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.05"}
+		],
+		"uploaded": true
+	}
+]

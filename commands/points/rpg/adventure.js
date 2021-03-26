@@ -11,7 +11,7 @@ module.exports.info = {
         enabled: true,
         title: 'Adventure Time!',
         aliases: ['rpg-adv'],
-        description: 'Grab your Sword & Armor and fight some enemies! Low chance of spotting a boss.',
+        description: 'Grab your Sword & Armor and fight some enemies! Low chance of spotting a enemy.',
         permissions: ['SEND_MESSAGES']
     }
 }
@@ -30,8 +30,6 @@ module.exports.command = {
             let chestLoot = false
 
             let embed = new Discord.MessageEmbed()
-            let message = [`Adventure time!`, `These monsters are hard to kill...`, `Woah, close one!`, `I hope my Sword hasn't been damaged...`, `I'm too powerful for these lowlives!`]
-            let randomMessage = message[Math.floor(Math.random() * message.length)]
 
             function getChest() {
                 let chanceChest = Math.floor(Math.random() * 200)
@@ -83,8 +81,9 @@ module.exports.command = {
             if (chestLoot === false) { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience }
             else { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience  }
 
-            embed.setTitle('🏹  ' + randomMessage)
+            embed.setTitle('You went on a adventure!')
             embed.setDescription(`You went on a adventure and got ${adventureGold} gold and ${adventureEXP} experience levels`)
+            query(`UPDATE members_rpg SET gold = ${adventureGold + data[0][0].gold}, experience = ${adventureEXP + data[0][0].experience} WHERE member_id = ${msg.member.id}`)
             embed.setColor('#00FF00')
 
             const randomAmount = Math.floor(Math.random() * 100) + 1
@@ -231,7 +230,7 @@ module.exports.command = {
                                 
                                 else {
                                     let damage = healthLeft[0] // i didnt want to make another input
-                                    msg.channel.send(`You did **${damage}** damage! **${allData.enemy.name}** has **${healthLeft[1]} HP** left.`)
+                                    msg.channel.send(`You did **${Math.floor(damage)}** damage! **${allData.enemy.name}** has **${Math.floor(healthLeft[1])} HP** left.`)
                                     amount = 0
                                     channelMessage(true) 
                                 }
@@ -239,12 +238,12 @@ module.exports.command = {
                                 let randomAttack = Math.floor(Math.random() * allData.enemy.attacks.length)
                                 let attack = allData.enemy.attacks[randomAttack]
 
-                                let damage = Math.floor(allData.enemy.attack * attack.damage)
+                                let damage = allData.enemy.attack * attack.damage
                                 userHealth -= damage
 
-                                if (userHealth <= 0) return msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${damage}** damage, but you died with **${userHealth} HP**!`)
+                                if (userHealth <= 0) return msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)}** damage, but you died with **${Math.floor(userHealth)} HP**!`)
 
-                                msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${damage} damage**. You have **${userHealth} HP** left.`)
+                                msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**. You have **${Math.floor(userHealth)} HP** left.`)
 
                                 msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
                                 amount = 0; channelMessage()
@@ -270,19 +269,19 @@ module.exports.command = {
                                         return actionHandler()
                                     } else {
                                         let random = Math.floor(Math.random() * 1.05) + 0.95
-                                        let damage = Math.floor(allData.enemy.attack * random)
+                                        let damage = allData.enemy.attack * random
                                         userHealth -= damage
 
                                         lostGold = (result.gold / 100) * 5
 
                                         if (userHealth <= 0) { 
                                             query(`UPDATE members_rpg SET gold = ${lostGold - result.gold} WHERE member_id = ${msg.member.id}`)
-                                            msg.channel.send(`You failed to block and took **${damage} HP**!\nYou lost against **${allData.enemy.name}** and lost **${lostGold}** gold. You now have **${lostGold - result.gold}** gold left.`) 
+                                            msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost **${lostGold}** gold. You now have **${lostGold - result.gold}** gold left.`) 
                                             
                                             ifHasChestRewards(false)
                                         }
 
-                                        msg.channel.send(`You failed to block **${allData.enemy.name}'s** attack and took **${damage} HP**`)
+                                        msg.channel.send(`You failed to block **${allData.enemy.name}'s** attack and took **${Math.floor(damage)} HP**`)
                                         return actionHandler()
                                     }
                                 } else {
@@ -295,21 +294,21 @@ module.exports.command = {
                                     let randomAttack = Math.floor(Math.random() * allData.enemy.attacks.length)
                                     let attack = allData.enemy.attacks[randomAttack]
 
-                                    let damage = Math.floor(allData.enemy.attack * attack.damage)
+                                    let damage = allData.enemy.attack * attack.damage
                                     userHealth -= damage
 
                                     if (userHealth <= 0) { 
                                         lostGold = Math.floor((result.gold / 100) * 5)
 
                                         query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
-                                        msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${damage} damage**, but you died with **${userHealth} HP**!\nYou lost **${lostGold}** gold, and you now have **${result.gold - lostGold}**.`) 
+                                        msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**, but you died with **${Math.floor(userHealth)} HP**!\nYou lost **${lostGold}** gold, and you now have **${result.gold - lostGold}**.`) 
 
                                         ifWonWithChest(false)
                                         return
                                     }
 
                                     setTimeout(() => {
-                                        msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${damage} damage**! You have **${userHealth} HP** left.\nUse: \`attack\`, \`defend\` or \`run\``)
+                                        msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**! You have **${Math.floor(userHealth)} HP** left.\nUse: \`attack\`, \`defend\` or \`run\``)
                                         return actionHandler()
                                     }, 1000);
                                 }
@@ -341,10 +340,10 @@ module.exports.command = {
                                             return actionHandler('missed')
                                         }
                                         let random = Math.floor(Math.random() * 1.05) + 0.95
-                                        let damage = Math.floor(basic_stats_json.attack * random)
+                                        let damage = basic_stats_json.attack * random
                                         enemyHealth -= damage
                                         if (enemyHealth <= 0) { 
-                                            return msg.channel.send(`**${allData.enemy.name}** took **${damage} damage** and was defeated. Good job! `).then(() => {
+                                            return msg.channel.send(`**${allData.enemy.name}** took **${Math.floor(damage)} damage** and was defeated. Good job!`).then(() => {
 
                                                 // check how difficult the enemy was and how much gold the user gets
                                                 let userGold = result.gold
