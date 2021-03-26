@@ -90,7 +90,7 @@ module.exports.command = {
             embed.setColor('#00FF00')
 
             const randomAmount = Math.floor(Math.random() * 100) + 1
-            if (randomAmount > 35) {
+            if (randomAmount > 100) {
                 if (chestLoot !== false) {
                     thisGold += chestLoot.gold
                     thisEXP += chestLoot.exp
@@ -105,7 +105,7 @@ module.exports.command = {
                     msg.channel.send(embed)
                 }
             }
-            if (randomAmount > 0 && randomAmount <= 35) {
+            if (randomAmount > 0 && randomAmount <= 100) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
@@ -241,6 +241,7 @@ module.exports.command = {
                                 amount = 0; channelMessage()
                             } 
                             else { 
+                                console.log('oh yeah')
                                 amount = 0; channelMessage() 
                             }
                         }
@@ -255,6 +256,7 @@ module.exports.command = {
                                 let equippedWeapon = inventory.find(item => item.equipped === true)
                                 let weapons = require('./items/weapons/items.json')
 
+                                console.log(inventory)
                                 let random
                                 let attack
                                 let attackDescription = ''
@@ -265,10 +267,10 @@ module.exports.command = {
                                         attack = weapons.find(weapon => weapon.id === equippedWeapon.name)
                                         attackDescription = `You used your **${attack.name}**! `
                                         damage = basic_stats_json.attack * attack.bonuses[0].attack
-                                    } else {
-                                        random = Math.floor(Math.random() * 1.01) + 0.99
-                                        damage = basic_stats_json.attack * random
                                     }
+                                } else {
+                                    random = Math.floor(Math.random() * 1.01) + 0.99
+                                    damage = basic_stats_json.attack * random
                                 }
     
                                 enemyHealth = enemyHealth - damage
@@ -308,6 +310,7 @@ module.exports.command = {
 
                                     return 'won'
                                 } else {
+                                    console.log(damage)
                                     msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! **${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
 
                                     if (doDamage(msg.member.id) === 'lost') return
@@ -391,6 +394,7 @@ module.exports.command = {
                             amount++
                             if (amount === 1) {
                                 let action = collected.first().content.toLowerCase()
+                                console.log(action)
                                 let acceptableActions = ['attack', 'defend', 'run']
     
                                 if (acceptableActions.find(action1 => action1 === action)) {
@@ -411,7 +415,8 @@ module.exports.command = {
                                             return
                                         }
 
-                                            if (doDamage(allData) === 'won') { return }
+                                        console.log('oh hi')
+                                        if (doDamage(allData) === 'won') { return }
                                         return actionHandler()
                                     }
 
