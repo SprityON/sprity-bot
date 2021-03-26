@@ -334,8 +334,8 @@ module.exports.command = {
                                     } else {
     
                                         if (userHealth <= 0) { 
-                                            query(`UPDATE members_rpg SET gold = ${lostGold - result.gold} WHERE member_id = ${msg.member.id}`)
-                                            msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${lostGold - result.gold}** gold left.`) 
+                                            query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
+                                            msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}** gold left.`) 
                                             
                                             ifHasChestRewards(false)
                                             return 'lost'
