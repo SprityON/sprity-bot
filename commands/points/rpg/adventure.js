@@ -33,7 +33,7 @@ module.exports.command = {
 
             const randomAmount = Math.floor(Math.random() * 150) + 1
             function getChest() {
-                if (randomAmount > 0 && randomAmount <= 35) return true
+                if (randomAmount > 15 && randomAmount <= 35) return true
             }
 
             if (getChest() === true) {
@@ -126,7 +126,6 @@ module.exports.command = {
                     if (chestLoot !== false) {
                         let emoji = msg.guild.emojis.cache.find(e => e.name === `unopenedchest`)
                         embed.addField(`${allData.enemy.name} has a ${emoji} ${chestLoot.type.charAt(0).toUpperCase() + chestLoot.type.slice(1)} chest!`, `To open this chest, defeat **${allData.enemy.name}**.`)
-                        checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
                     }
                     msg.channel.send(embed)
 
@@ -285,11 +284,6 @@ module.exports.command = {
                                     return 'won'
                                 } else {
                                     msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! \n**${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
-
-                                    if (userHealth > 0) {
-                                        setTimeout(() => {
-                                        }, 1000);
-                                    }
                                 
                                     return 'continue'
                                 }
@@ -333,6 +327,13 @@ module.exports.command = {
                                     
                                     return 'lost'
                                 } else {
+                                    let missChance = Math.floor(Math.random() * 5) + 1
+                                    if (missChance === 1) { 
+                                        msg.channel.send(`${allData.enemy.name} missed!`) 
+                                        userHealth += damage
+                                        return
+                                    }
+
                                     msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)}** damage.\nYou now have **${Math.floor(userHealth)}** HP left.`)
                                     return
                                 }
@@ -369,7 +370,6 @@ module.exports.command = {
                             amount++
                             if (amount === 1) {
                                 let action = collected.first().content.toLowerCase()
-                                console.log(action)
                                 let acceptableActions = ['attack', 'defend', 'run']
     
                                 if (acceptableActions.find(action1 => action1 === action)) {
