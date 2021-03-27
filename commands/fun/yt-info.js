@@ -27,6 +27,7 @@ module.exports.command = {
             let embed = new Discord.MessageEmbed()
             embed.setColor(embedcolor)
             embed.setTitle(`${data.items[0].snippet.title} | YouTube Stats`)
+            embed.setThumbnail(`https://yt3.ggpht.com/ytc/AAUvwnitWso1lceS4mgSlgQ1C0Vzrl4J8noX_tLaSgxv=s88-c-k-c0x00ffffff-no-rj`)
             embed.addField(`Total Viewcount`, `${data.items[0].statistics.viewCount}`,true)
             embed.addField(`Subscribers`, `${data.items[0].statistics.subscriberCount}`,true)
             embed.addField(`Video Amount`, `${data.items[0].statistics.videoCount}`,true)
