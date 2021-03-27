@@ -19,7 +19,7 @@ module.exports.info = {
 let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
-        if (commandCooldown(msg, set, 15000) === true) return
+        //if (commandCooldown(msg, set, 15000) === true) return
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
             let randomGold = Math.floor(Math.random() * 10000 / 100 * 0.25) + 5
             let randomEXP = Math.floor(Math.random() * 20 - 5) + 5
@@ -105,7 +105,7 @@ module.exports.command = {
                     msg.channel.send(embed)
                 }
             }
-            if (randomAmount > 0 && randomAmount <= 35) {
+            if (randomAmount > 0 && randomAmount <= 100) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
                     const result = data[0][0]
@@ -309,12 +309,14 @@ module.exports.command = {
 
                                     return 'won'
                                 } else {
-                                    msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! **${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
+                                    msg.channel.send(`${attackDescription}You did **${Math.floor(damage)}** damage! \n**${user.enemy.name}** has **${Math.floor(enemyHealth)} HP** left.`)
 
-                                    if (doDamage(msg.member.id) === 'lost') return 'lost'
-                                    msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
+                                    if (userHealth > 0) {
+                                        setTimeout(() => {
+                                        }, 1000);
+                                    }
                                 
-                                    return
+                                    return 'continue'
                                 }
                             } else if (user === msg.member.id) {
                                 let randomAttack = Math.floor(Math.random() * allData.enemy.attacks.length)
@@ -329,6 +331,7 @@ module.exports.command = {
                                     let randomInt = Math.floor(Math.random() * 10) + 1
     
                                     if (randomInt < 7 && randomInt > 0) {
+                                        userHealth += damage
                                         msg.channel.send(`You successfully blocked **${allData.enemy.name}'s** attack!`)
                                         return
                                     } else {
@@ -337,10 +340,10 @@ module.exports.command = {
                                             query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                             msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}** gold left.`) 
                                             
-                                            ifHasChestRewards(false)
+                                            ifWonWithChest(false)
                                             return 'lost'
                                         }
-                                        msg.channel.send(`You tried to block, but **${allData.enemy.name}'s** '${attack.name}' attack got through your defense. You took **${Math.floor(damage)} HP**`)
+                                        msg.channel.send(`You couldn't block **${allData.enemy.name}'s** attack! You took **${Math.floor(damage)} HP**\nYou have **${Math.floor(userHealth)} HP** left.`)
     
                                         return
                                     }
@@ -355,7 +358,7 @@ module.exports.command = {
                                     
                                     return 'lost'
                                 } else {
-                                    msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)}** damage. You now have **${Math.floor(userHealth)}** HP left.`)
+                                    msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)}** damage.\nYou now have **${Math.floor(userHealth)}** HP left.`)
                                     return
                                 }
                             }
@@ -376,12 +379,11 @@ module.exports.command = {
                                         return actionHandler()
                                     }
 
-                                    if (doDamage(msg.member.id) === 'won') { return } else if (doDamage(msg.member.id) === 'lost') { return }
+                                    let bool = doDamage(msg.member.id)
+                                    if (bool === 'won') { return } else if (bool === 'lost') { return }
 
-                                    setTimeout(() => {
-                                        msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**! You have **${Math.floor(userHealth)} HP** left.\nUse: \`attack\`, \`defend\` or \`run\``)
-                                        return actionHandler()
-                                    }, 1000);
+                                    msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**! You have **${Math.floor(userHealth)} HP** left.\nUse: \`attack\`, \`defend\` or \`run\``)
+                                    return actionHandler()
                                 }
                             }
                         }
@@ -413,7 +415,8 @@ module.exports.command = {
                                             return
                                         }
 
-                                        if (doDamage(allData) === 'won') { return } else return
+                                        if (doDamage(allData) === 'won') { return } 
+                                        else if ('continue') { if (doDamage(msg.member.id) === 'lost') { return } else { msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``) }}
                                         return actionHandler()
                                     }
 
