@@ -19,7 +19,6 @@ module.exports.info = {
 let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
-        if (commandCooldown(msg, set, 15000) === true) return
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
             let randomGold = Math.floor(Math.random() * 10000 / 100 * 0.25) + 5
             let randomEXP = Math.floor(Math.random() * 20 - 5) + 5
@@ -31,7 +30,7 @@ module.exports.command = {
 
             let embed = new Discord.MessageEmbed()
 
-            const randomAmount = Math.floor(Math.random() * 100) + 1
+            const randomAmount = Math.floor(Math.random() * 200) + 1
             function getChest() {
                 if (randomAmount > 15 && randomAmount <= 35) return true
             }
