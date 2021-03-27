@@ -31,18 +31,17 @@ module.exports.command = {
 
             let embed = new Discord.MessageEmbed()
 
+            const randomAmount = Math.floor(Math.random() * 150) + 1
             function getChest() {
-                let chanceChest = Math.floor(Math.random() * 300)
-                if (chanceChest >= 0 && chanceChest <= 35) return true
-                return false
+                if (randomAmount > 0 && randomAmount <= 35) return true
             }
 
             if (getChest() === true) {
                 const types = ['common', 'rare', 'epic', 'legendary']
-                const randomAmount = Math.floor(Math.random() * 1000)
                 let randomGold
                 let randomEXP
 
+                const randomAmount = Math.floor(Math.random() * 1000)
                 let gold = 10000
 
                 let thisType
@@ -52,13 +51,13 @@ module.exports.command = {
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 1) - (gold / 100 * 0.5))) + (gold / 100 * 0.5)
                     randomEXP = Math.floor(Math.random() * 100) + 20
                 }
-                else if (randomAmount >= 700 && randomAmount < 900) { 
+                else if (randomAmount >= 700 && randomAmount < 950) { 
                     thisType = types.find(type => type === 'rare')
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 10) - (gold / 100 * 5))) + (gold / 100 * 5)
                     randomEXP = Math.floor(Math.random() * 200) + 50
                 }
-                else if (randomAmount >= 900 && randomAmount < 995)  {
+                else if (randomAmount >= 950 && randomAmount < 995)  {
                     thisType = types.find(type => type === 'epic')
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 50) - (gold / 100 * 25))) + (gold / 100 * 25)
@@ -89,22 +88,6 @@ module.exports.command = {
             query(`UPDATE members_rpg SET gold = ${adventureGold + data[0][0].gold}, experience = ${adventureEXP + data[0][0].experience} WHERE member_id = ${msg.member.id}`)
             embed.setColor('#00FF00')
 
-            const randomAmount = Math.floor(Math.random() * 100) + 1
-            if (randomAmount > 35) {
-                if (chestLoot !== false) {
-                    thisGold += chestLoot.gold
-                    thisEXP += chestLoot.exp
-                    
-                    emoji = msg.guild.emojis.cache.find(e => e.name === `${chestLoot.type}_chest`)
-                    embed.addField(`What's that? You found a ${emoji} ${chestLoot.type.charAt(0).toUpperCase() + chestLoot.type.slice(1)} chest!`, `You got ${goldEmoji} ${chestLoot.gold} gold and ${expEmoji} ${chestLoot.exp} EXP`)
-                    checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
-                    query(`UPDATE members_rpg SET gold = ${thisGold}, experience = ${thisEXP} WHERE member_id = ${msg.member.id}`)
-
-                    msg.channel.send(embed)
-                } else {
-                    msg.channel.send(embed)
-                }
-            }
             if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     let allData = {}
@@ -427,7 +410,8 @@ module.exports.command = {
                         }).catch(collected => {console.log(collected)})
                     }
                 })
-            }
-        })
+            } else return msg.channel.send(embed)
+        }) 
+        
     }
 }

@@ -1,3 +1,5 @@
+const { query } = require("../../../functions")
+
 module.exports.info = {
     name: 'rpg duel',
     category: 'points',
@@ -83,5 +85,71 @@ module.exports.command = {
             }
         }
         */
+
+        msg.channel.send(`Mention the member you want to duel.`)
+
+        let filter = m => m.author.id === msg.author.id
+        msg.channel.awaitMessages(filter, {max: 1, time: 60000})
+        .then(collected => {
+            let mentionedMember = collected.first().mentions.members.first()
+            if (!mentionedMember) return msg.channel.send(`You have to mention a member first!`)
+
+            // if there was a mentioned member
+            query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id} OR member_id = ${mentionedMember.id}`, data => {
+                console.log(data[0])
+                let result = data[0]
+
+                let basic_stats_json_member = JSON.parse(result[0].basic_stats)
+                let basic_stats_json_mentioned = JSON.parse(result[1].basic_stats)
+
+                let participators = [
+                    { id: msg.member.id, health: basic_stats_json_member.health },
+                    { id: mentionedMember.id, health: basic_stats_json_mentioned.health }
+                ]
+
+                let participatorIndex = 0
+                
+                checkTurn()
+
+                function checkTurn() {
+                    if (participatorIndex >= participators.length) participatorIndex = 1
+
+                    let participator = participators[participatorIndex - 1]
+                    
+                    console.log(participator)
+
+                    filter = m => m.author.id === participator.id
+                    channelMessage(filter, participator.id)
+                    participatorIndex++
+                }
+
+                function channelMessage(filter, member_id) {
+                    let member = msg.guild.members.cache.find(m => m.id === member_id)
+                    console.log(participatorIndex)
+                    let nextMember = msg.guild.members.cache.find(m => m.id === participators[participatorIndex].id)
+
+                    msg.channel.send(`**${member.displayName}**, use \`attack\`, \`defend\` or \`run\``)
+                    msg.channel.awaitMessages(filter, {max: 1, time: 120000})
+                    .then(collected => {
+                        if (collected.first().content === 'end') return msg.channel.send(`${member.displayName} ended the duel!`)
+
+                        let action = collected.first().content.toLowerCase()
+                        switch (action) {
+                            case 'attack':
+                                let damage = 20
+                                let nextMemberHealthLeft = participators[participatorIndex].health -= damage
+                                msg.channel.send(`You attacked **${nextMember.displayName}** and now has **${damage} HP** left.\n**${nextMember.displayName}** now has **${nextMemberHealthLeft} HP** left.`)
+                            break
+                        }
+
+                        checkTurn()
+                    })
+                }
+
+                function doDamage(member) {
+
+                }
+            })
+        })
     }
 }

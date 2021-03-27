@@ -39,7 +39,7 @@ module.exports.command = {
                     weapon = weapons.find(weapon => weapon.id === equippedWeapon.name).name
                 }
             } else weapon = 'none'
-
+            
             let embed = new Discord.MessageEmbed().setColor(embedcolor)
             .setDescription(`Weapon: **${weapon}**`)
             .setAuthor(`Profile of ${result.rpg_name} | LVL. ${result.level}`, msg.author.avatarURL({dynamic: true}))
