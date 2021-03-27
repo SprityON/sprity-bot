@@ -1,4 +1,4 @@
-const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB } = require('../functions');
+const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB, commandCooldown } = require('../functions');
 const vars = require('../variables')
 let set = new Set()
 module.exports = {
@@ -7,10 +7,10 @@ module.exports = {
         
         if (msg.author.bot == true) return
         memberChecks(msg.member)
-        if (msg.channel.id !== '729697866259628034') spamCheck(msg, set, 1500)
         if (durationInBetweenMessages(msg, set, 5000) === false) incrementMessageAmountDB(msg)
         publicAdvert(msg)
         if (!msg.content.startsWith('$')) return
+        if (msg.channel.id !== '729697866259628034') { spamCheck(msg, set, 1500); commandCooldown(msg, set, 2000) }
     
         const args = msg.content.slice(vars.config.prefix.length).trim().split(/ +/)
         const command = args.shift().toLowerCase()
