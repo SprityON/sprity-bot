@@ -138,7 +138,7 @@ module.exports.command = {
                     let randomInt
                     switch (allData.enemy.difficulty) {
                         case 'easy':
-                            randomInt = (Math.random() * (0.95 - 0.85)) + 0.85
+                            randomInt = (Math.random() * (0.85 - 0.75)) + 0.75
                             health = basic_stats_json.health * randomInt
                             attack = basic_stats_json.attack * randomInt
                             
