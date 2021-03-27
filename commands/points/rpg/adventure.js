@@ -282,15 +282,15 @@ module.exports.command = {
         
                                         switch (user.enemy.difficulty) {
                                             case 'easy':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 10 + result.gold}**`)
+                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**`)
                                                 query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 1.5 + result.gold} WHERE member_id = ${msg.member.id}`)
                                             break
                                             case 'medium':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 2}** gold! You now have **${(10000 / 100) * 10 + result.gold}**`)
-                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 2.5 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 2}** gold! You now have **${(10000 / 100) * 2 + result.gold}**`)
+                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 2 + result.gold} WHERE member_id = ${msg.member.id}`)
                                             break
                                             case 'hard':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 10}** gold! You now have **${(10000 / 100) * 10 + result.gold}**`)
+                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 5 + result.gold}**`)
                                                 query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 5 + result.gold} WHERE member_id = ${msg.member.id}`)
                                             break
                                             case 'extreme':
