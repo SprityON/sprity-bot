@@ -24,7 +24,7 @@
 	{ 
 		"id": "ninja_sword",
 		"name": "Ninja Sword",
-		"description": "Also referred as 'Night Slayer', since it was used in the night, killing dozens.",
+		"description": "A sword which was used by experienced ninjas.",
 		"price": 5000,
 		"category": "weapons",
 		"bonuses": [
