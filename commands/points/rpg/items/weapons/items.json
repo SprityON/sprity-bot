@@ -22,6 +22,17 @@
 		"uploaded": true
 	},
 	{ 
+		"id": "ninja_sword",
+		"name": "Ninja Sword",
+		"description": "Also referred as 'Night Slayer', since it was used in the night, killing dozens.",
+		"price": 5000,
+		"category": "weapons",
+		"bonuses": [
+			{"attack": "1.15"}
+		],
+		"uploaded": true
+	},
+	{ 
 		"id": "night_sword",
 		"name": "Night Sword",
 		"description": "Also referred as 'Night Slayer', since it was used in the night, killing dozens.",
