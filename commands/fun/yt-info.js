@@ -30,7 +30,7 @@ module.exports.command = {
             embed.addField(`Total Viewcount`, `${data.items[0].statistics.viewCount}`,true)
             embed.addField(`Subscribers`, `${data.items[0].statistics.subscriberCount}`,true)
             embed.addField(`Video Amount`, `${data.items[0].statistics.videoCount}`,true)
-            embed.setURL(`youtube.com/sprityen`)
+            embed.setURL(`https://www.youtube.com/sprityen`)
             msg.channel.send(embed)
         })
     }
