@@ -40,9 +40,7 @@ module.exports.command = {
             inventory = JSON.parse(result.inventory)
 
             let inventoryItems = `[`
-            let i = 0
             for (let item of inventory) {
-                i++
                 if (item.name === alreadyEquippedItem.name) {
                     inventoryItems += `{ \"name\": \"${item.name}\", \"amount\": ${item.amount}, \"equipped\": false, \"category\": \"weapons\" }, `
                 } else if (item.name !== item_id) {
@@ -50,7 +48,6 @@ module.exports.command = {
                 }
             }
             inventoryItems += `{ \"name\": \"${item_id}\", \"amount\": 1, \"equipped\": true, \"category\": \"weapons\" } `
-
             inventoryItems += ']'
 
             msg.channel.send(`You have equipped item **${item_id}**!`)

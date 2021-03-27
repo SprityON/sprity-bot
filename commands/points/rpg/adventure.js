@@ -31,7 +31,7 @@ module.exports.command = {
 
             let embed = new Discord.MessageEmbed()
 
-            const randomAmount = Math.floor(Math.random() * 150) + 1
+            const randomAmount = Math.floor(Math.random() * 100) + 1
             function getChest() {
                 if (randomAmount > 15 && randomAmount <= 35) return true
             }
