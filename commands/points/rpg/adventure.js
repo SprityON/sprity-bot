@@ -67,7 +67,7 @@ module.exports.command = {
                 else if (randomAmount >= 995 && randomAmount <= 1000) {
                     thisType = types.find(type => type === 'legendary')
 
-                    randomGold = Math.floor(Math.random() * ((gold / 100 * 500) - (gold / 100 * 125))) + (gold / 100 * 125)
+                    randomGold = Math.floor(Math.random() * ((gold / 100 * 200) - (gold / 100 * 125))) + (gold / 100 * 125)
                     randomEXP = Math.floor(Math.random() * 800) + 400
                 }
 
@@ -277,9 +277,6 @@ module.exports.command = {
                                 if (enemyHealth <= 0) { 
                                     msg.channel.send(`${attackDescription}**${user.enemy.name}** took **${Math.floor(damage)} damage** and was defeated. Good job!`).then(() => {
     
-                                        // check how difficult the enemy was and how much gold the user gets
-                                        let userGold = result.gold
-        
                                         switch (user.enemy.difficulty) {
                                             case 'easy':
                                                 msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**`)
