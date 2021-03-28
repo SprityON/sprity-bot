@@ -88,7 +88,7 @@ module.exports.command = {
             query(`UPDATE members_rpg SET gold = ${adventureGold + data[0][0].gold}, experience = ${adventureEXP + data[0][0].experience} WHERE member_id = ${msg.member.id}`)
             embed.setColor('#00FF00')
 
-            if (randomAmount > 0 && randomAmount <= 100) {
+            if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                     embed.addField(space, `**YOU ENCOUNTERED AN ENEMY**`)
                     let allData = {}
