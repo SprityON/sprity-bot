@@ -61,7 +61,8 @@ module.exports.command = {
                 }
                 inventoryItems += ']'
 
-                query(`UPDATE members_rpg SET inventory = '${inventoryItems}' WHERE member_id = ${msg.member.id}`)
+                query(`UPDATE members_rpg SET inventory = '${inventoryItems}' AND SET WHERE member_id = ${msg.member.id}`)
+                query(`UPDATE members_rpg SET gold = ${result.gold - item.price} WHERE member_id = ${msg.member.id}`)
                 return msg.channel.send(`You have bought 1 \`${item_id}\``)
             })
         })
