@@ -1,16 +1,16 @@
 const { fn } = require("moment")
 const { query, checkRPGprofile, checkIfNewLevel, commandCooldown } = require("../../../functions")
-const { Discord } = require("../../../variables")
+const { Discord, space } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg adventure',
+    name: 'adventure',
     category: '$rpg adventure',
     usage: '$rpg adventure',
     short_description: 'Go on an adventure!',
     help: {
         enabled: true,
         title: 'Adventure Time!',
-        aliases: ['rpg-adv'],
+        aliases: ['adv', 'a'],
         description: 'Grab your weapon and fight some enemies! Low chance of spotting a enemy.\nBuy better weapons in the shop to have a higher success rate.',
         permissions: ['SEND_MESSAGES']
     }
@@ -19,6 +19,7 @@ module.exports.info = {
 let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
+        if (commandCooldown(msg, set, 3000) === true) return
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
             let randomGold = Math.floor(Math.random() * 10000 / 100 * 0.25) + 5
             let randomEXP = Math.floor(Math.random() * 20 - 5) + 5
@@ -30,7 +31,7 @@ module.exports.command = {
 
             let embed = new Discord.MessageEmbed()
 
-            const randomAmount = Math.floor(Math.random() * 200) + 1
+            const randomAmount = Math.floor(Math.random() * 100) + 1
             function getChest() {
                 if (randomAmount > 15 && randomAmount <= 35) return true
             }
@@ -40,29 +41,29 @@ module.exports.command = {
                 let randomGold
                 let randomEXP
 
-                const randomAmount = Math.floor(Math.random() * 1000)
+                const chanceForChest = Math.floor(Math.random() * 1000)
                 let gold = 10000
 
                 let thisType
-                if (randomAmount < 700) { 
+                if (chanceForChest < 700) { 
                     thisType = types.find(type => type === 'common');
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 1) - (gold / 100 * 0.5))) + (gold / 100 * 0.5)
                     randomEXP = Math.floor(Math.random() * 100) + 20
                 }
-                else if (randomAmount >= 700 && randomAmount < 950) { 
+                else if (chanceForChest >= 700 && chanceForChest < 950) { 
                     thisType = types.find(type => type === 'rare')
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 10) - (gold / 100 * 5))) + (gold / 100 * 5)
                     randomEXP = Math.floor(Math.random() * 200) + 50
                 }
-                else if (randomAmount >= 950 && randomAmount < 995)  {
+                else if (chanceForChest >= 950 && chanceForChest < 995)  {
                     thisType = types.find(type => type === 'epic')
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 50) - (gold / 100 * 25))) + (gold / 100 * 25)
                     randomEXP = Math.floor(Math.random() * 400) + 200
                 }
-                else if (randomAmount >= 995 && randomAmount <= 1000) {
+                else if (chanceForChest >= 995 && chanceForChest <= 1000) {
                     thisType = types.find(type => type === 'legendary')
 
                     randomGold = Math.floor(Math.random() * ((gold / 100 * 200) - (gold / 100 * 125))) + (gold / 100 * 125)
@@ -89,6 +90,7 @@ module.exports.command = {
 
             if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
+                    embed.addField(space, `**YOU ENCOUNTERED AN ENEMY**`)
                     let allData = {}
                     const result = data[0][0]
     
@@ -258,26 +260,28 @@ module.exports.command = {
                                 if (enemyHealth <= 0) { 
                                     msg.channel.send(`${attackDescription}**${user.enemy.name}** took **${Math.floor(damage)} damage** and was defeated. Good job!`).then(() => {
     
-                                        switch (user.enemy.difficulty) {
-                                            case 'easy':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**`)
-                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 1.5 + result.gold} WHERE member_id = ${msg.member.id}`)
-                                            break
-                                            case 'medium':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 2}** gold! You now have **${(10000 / 100) * 2 + result.gold}**`)
-                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 2 + result.gold} WHERE member_id = ${msg.member.id}`)
-                                            break
-                                            case 'hard':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 5 + result.gold}**`)
-                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 5 + result.gold} WHERE member_id = ${msg.member.id}`)
-                                            break
-                                            case 'extreme':
-                                                msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 25}** gold! You now have **${(10000 / 100) * 10 + result.gold}**`)
-                                                query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 10 + result.gold} WHERE member_id = ${msg.member.id}`)
-                                            break
-                                        }
-                                        
-                                        ifWonWithChest(true)
+                                        setTimeout(() => {
+                                            switch (user.enemy.difficulty) {
+                                                case 'easy':
+                                                    msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**`)
+                                                    query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 1.5 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                break
+                                                case 'medium':
+                                                    msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 2}** gold! You now have **${(10000 / 100) * 2 + result.gold}**`)
+                                                    query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 2 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                break
+                                                case 'hard':
+                                                    msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 5 + result.gold}**`)
+                                                    query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 5 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                break
+                                                case 'extreme':
+                                                    msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 25}** gold! You now have **${(10000 / 100) * 10 + result.gold}**`)
+                                                    query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 10 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                break
+                                            }
+                                            
+                                            ifWonWithChest(true)
+                                        }, 1000);
                                     })
 
                                     return 'won'
@@ -373,7 +377,7 @@ module.exports.command = {
     
                                 if (acceptableActions.find(action1 => action1 === action)) {
                                     if (action === 'run') { 
-                                        lostGold = Math.floor((result.gold / 100) * 5)
+                                        lostGold = Math.floor((result.gold / 100) * 1.75)
 
                                         query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                         msg.channel.send(`You ran away, but **${allData.enemy.name}** took ${goldEmoji} ${lostGold} of your gold. You now have ${goldEmoji} ${result.gold - lostGold}`)
@@ -389,15 +393,25 @@ module.exports.command = {
                                             return
                                         }
 
-                                        if (doDamage(allData) === 'won') { return } 
-                                        else if ('continue') { if (doDamage(msg.member.id) === 'lost') { return } else { msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``) }}
-                                        return actionHandler()
+                                        setTimeout(() => {
+                                            if (doDamage(allData) === 'won') { return } 
+                                            else if ('continue') { 
+                                                    if (doDamage(msg.member.id) === 'lost') { 
+                                                        return 
+                                                    } else { 
+                                                        msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``) 
+                                                    }
+                                            }
+                                            return actionHandler()
+                                        }, 1000);
                                     }
 
                                     if (action === 'defend') {
-                                        if (doDamage(msg.member.id, 'defend') === 'lost') return
-                                        msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
-                                        return actionHandler()
+                                        setTimeout(() => {
+                                            if (doDamage(msg.member.id, 'defend') === 'lost') return
+                                            msg.channel.send(`\nUse: \`attack\`, \`defend\` or \`run\``)
+                                            return actionHandler()
+                                        }, 1000);
                                     }
                                 } else { 
                                     msg.channel.send(`\`${action}\` is not a valid action!`)

@@ -2,7 +2,7 @@ const { query } = require("../../../functions")
 const { Functions, Discord, embedcolor } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg shop',
+    name: 'shop',
     category: 'points',
     usage: '$rpg shop <category> <page>',
     short_description: 'Buy RPG items',

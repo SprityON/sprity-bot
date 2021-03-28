@@ -1,7 +1,7 @@
 const { query } = require("../../../functions")
 
 module.exports.info = {
-    name: 'rpg buy',
+    name: 'buy',
     category: 'points',
     usage: '$rpg buy',
     short_description: 'Buy RPG items',

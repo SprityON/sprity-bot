@@ -2,14 +2,14 @@ const { query, checkRPGprofile, userLevel, normalizePrice } = require("../../../
 const { Discord, embedcolor } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg profile',
+    name: 'profile',
     category: 'points',
     usage: '$rpg profile <member>',
     short_description: 'View a profile',
     help: {
         enabled: true,
         title: 'View A Profile',
-        aliases: ['rpg-stats', 'rpg-info'],
+        aliases: ['stats'],
         description: 'View your rpg-profile or that of others!',
         permissions: ['SEND_MESSAGES']
     }

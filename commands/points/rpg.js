@@ -79,7 +79,8 @@ module.exports.command = {
                     for (let cmd of rpg_commands) {
                         const searchItem = require(`./rpg/${cmd}`)
 
-                        embed.addField(`${searchItem.info.help.title}`, `\`${searchItem.info.usage}\`\n${searchItem.info.short_description}`, true)
+                            embed.addField(`${searchItem.info.help.title}`, `\`${searchItem.info.usage}\`\n${searchItem.info.short_description}`, true)
+                        
                     }
                     
                     msg.channel.send(embed)
@@ -101,8 +102,18 @@ module.exports.command = {
                 let command = args[0]
 
                 try {
+                    let files = fs.readdirSync(`${__dirname}/rpg`).filter(file => file.endsWith('.js'))
+
+                    for (let file of files) {
+                        let cmd = require(`./rpg/${file}`)
+
+                        if (cmd.info.help.aliases.includes(command)) command = cmd.info.name
+                    }
+
                     const searchItem = require(`./rpg/${command}`)
-                    searchItem.command.execute(msg, args, client)
+                    if (searchItem.info.help.enabled === true) {
+                        searchItem.command.execute(msg, args, client)
+                    }
                 } catch (error) {
                     console.log(error)
                     return msg.channel.send(`\`${command}\` is not a rpg command!`)

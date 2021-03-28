@@ -1,14 +1,14 @@
 const { query } = require('../../../functions')
 
 module.exports.info = {
-    name: 'rpg equip',
+    name: 'equip',
     category: 'points',
     usage: '$rpg equip <item id>',
     short_description: 'Equip an item!',
     help: {
         enabled: true,
         title: 'Equip An Item',
-        aliases: [],
+        aliases: ['ueq'],
         description: 'Equip a item to deal more damage.',
         permissions: ['SEND_MESSAGES']
     }

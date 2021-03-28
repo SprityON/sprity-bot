@@ -1,7 +1,7 @@
 const { embedcolor, Discord } = require('../../variables');
 
 module.exports.info = {
-    name: '',
+    name: 'serverinfo',
     category: '',
     usage: '',
     short_description: '',

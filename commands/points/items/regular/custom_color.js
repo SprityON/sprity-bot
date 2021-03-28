@@ -24,7 +24,7 @@ module.exports.command = {
 
         const filter = m => m.author.id === msg.author.id
 
-        msg.channel.send(`**${msg.author.username}**, please type in the hexcode of your custom color. *Type 'cancel' to cancel*`)
+        msg.channel.send(`**${msg.author.username}**, please type in the hexcode of your custom color. *Type 'cancel' to cancel*\nMake sure you have a hexcode ready!`)
 
         await msg.channel.awaitMessages(filter, {
             max: 1,

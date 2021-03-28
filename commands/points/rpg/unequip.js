@@ -1,7 +1,7 @@
 const { query } = require("../../../functions")
 
 module.exports.info = {
-    name: 'rpg unequip',
+    name: 'unequip',
     category: 'points',
     usage: '$rpg unequip <item id>',
     short_description: 'Unequip a item',
@@ -20,8 +20,8 @@ module.exports.command = {
             let result = data[0][0]
             let inventory = JSON.parse(result.inventory)
             
+            if (!args[1])  return msg.channel.send(`You have to provide a item id!`)
             let item_id = args[1].toLowerCase()
-            if (!item_id) return msg.channel.send(`You have to provide a item id!`)
             let equippedWeapon = inventory.find(item => item.equipped === true)
 
             if (!equippedWeapon) {

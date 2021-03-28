@@ -7,11 +7,15 @@ module.exports = {
         
         if (msg.author.bot == true) return
         memberChecks(msg.member)
+        if (msg.channel.id !== '729697866259628034') if (spamCheck(msg, set, 1500) === true) return
         if (durationInBetweenMessages(msg, set, 5000) === false) incrementMessageAmountDB(msg)
         publicAdvert(msg)
+
         if (!msg.content.startsWith('$')) return
-        if (msg.channel.id !== '729697866259628034') { spamCheck(msg, set, 1500); commandCooldown(msg, set, 2000) }
     
+        let cooldownSet = new Set()
+        if (commandCooldown(msg, cooldownSet, 1000) === true) return
+
         const args = msg.content.slice(vars.config.prefix.length).trim().split(/ +/)
         const command = args.shift().toLowerCase()
         

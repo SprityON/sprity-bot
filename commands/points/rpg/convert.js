@@ -1,14 +1,14 @@
 const { query } = require("../../../functions")
 
 module.exports.info = {
-    name: 'rpg convert',
+    name: 'convert',
     category: 'points',
     usage: '$rpg convert',
     short_description: 'Convert gold to points',
     help: {
         enabled: true,
         title: 'Convert Gold To Points',
-        aliases: [],
+        aliases: ['c'],
         description: 'You can convert your gold into points with this command',
         permissions: ['SEND_PERMISSIONS']
     }

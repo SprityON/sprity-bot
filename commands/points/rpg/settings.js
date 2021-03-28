@@ -1,5 +1,5 @@
 module.exports.info = {
-    name: 'rpg settings',
+    name: 'settings',
     category: 'points',
     usage: '$rpg settings <setting> <enable|disable>',
     short_description: 'Enable/disable a RPG setting',

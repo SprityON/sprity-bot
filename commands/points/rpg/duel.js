@@ -1,7 +1,7 @@
 const { query } = require("../../../functions")
 
 module.exports.info = {
-    name: 'rpg duel',
+    name: 'duel',
     category: 'points',
     usage: '$rpg duel <member to duel>',
     short_description: 'Fight a member!',
@@ -88,9 +88,6 @@ module.exports.command = {
 
         msg.channel.send(`Mention the member you want to duel.`)
 
-        let filter = m => m.author.id === msg.author.id
-        msg.channel.awaitMessages(filter, {max: 1, time: 60000})
-        .then(collected => {
             let mentionedMember = collected.first().mentions.members.first()
             if (!mentionedMember) return msg.channel.send(`You have to mention a member first!`)
 
@@ -109,14 +106,13 @@ module.exports.command = {
 
                 let participatorIndex = 0
                 
+                let filter
                 checkTurn()
 
                 function checkTurn() {
                     if (participatorIndex >= participators.length) participatorIndex = 1
 
                     let participator = participators[participatorIndex - 1]
-                    
-                    console.log(participator)
 
                     filter = m => m.author.id === participator.id
                     channelMessage(filter, participator.id)
@@ -150,6 +146,5 @@ module.exports.command = {
 
                 }
             })
-        })
     }
 }

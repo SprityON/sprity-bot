@@ -2,14 +2,14 @@ const { query } = require("../../../functions")
 const { Discord, embedcolor } = require("../../../variables")
 
 module.exports.info = {
-    name: 'rpg inventory',
+    name: 'inventory',
     category: 'points',
     usage: '$rpg inventory <member>',
     short_description: 'View inventory of member',
     help: {
         enabled: true,
         title: 'View Inventory of Member',
-        aliases: [],
+        aliases: ['inv', 'myinv'],
         description: 'View the inventory of yourself or a member',
         permissions: ['SEND_MESSAGES']
     }
