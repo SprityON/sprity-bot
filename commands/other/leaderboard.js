@@ -83,7 +83,7 @@ module.exports.command = {
                                 const member = members[index];
                                 
                                 if (member.member_id == msg.member.id) {
-                                    let you = msg.guild.members.cache.find(member => member.id === `${thisMember[0].member_id}`)
+                                    let you = msg.guild.members.cache.find(member => member.id === `${thisMember.member_id}`)
                                     embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nPoints: ${thisMember[0].points}`)
                                 }
                             }
