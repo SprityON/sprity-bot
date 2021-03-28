@@ -18,7 +18,7 @@ module.exports.info = {
 let set = new Set()
 module.exports.command = {
     execute(msg, args, client) {
-        let bool = commandCooldown(msg, set, 15000)
+        let bool = commandCooldown(msg, set, 5000)
         if (bool === true) return
 
         if (args[0] === 'points') {
