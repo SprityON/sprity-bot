@@ -50,7 +50,7 @@ module.exports.command = {
                     
                     let i = 0
                     let testI = 0
-                    if (currentPage > 1) { i = ((i + currentPage) * 5) - 5}
+                    if (currentPage > 1) { i = (currentPage * 5) - 5}
 
                     let text1 = ''
                     let itemAmount = 0

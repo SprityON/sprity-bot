@@ -8,7 +8,7 @@ module.exports.info = {
     short_description: 'View inventory of member',
     help: {
         enabled: true,
-        title: 'View Inventory of Member',
+        title: 'View Inventory',
         aliases: ['inv', 'myinv'],
         description: 'View the inventory of yourself or a member',
         permissions: ['SEND_MESSAGES']

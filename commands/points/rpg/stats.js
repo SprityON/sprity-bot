@@ -1,14 +1,14 @@
 module.exports.info = {
     name: 'stats',
-    category: '',
-    usage: '',
-    short_description: '',
+    category: 'points',
+    usage: '$rpg stats',
+    short_description: 'See and upgrade your stats',
     help: {
-        enabled: false,
-        title: '',
+        enabled: true,
+        title: 'See/Upgrade Stats',
         aliases: [],
-        description: '',
-        permissions: []
+        description: 'Upgrade your stats with attributes you get from levelling up',
+        permissions: ['SEND_PERMISSIONS']
     }
 }
 
