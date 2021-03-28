@@ -67,7 +67,7 @@ module.exports.command = {
                         let embed = new Discord.MessageEmbed()
                         .setTitle(`Leaderboard`)
                         .setDescription(`${firstplacetext}`)
-                        .addField(`\u200b`, `**Top 5 Chatters [This Week]\n**`)
+                        .addField(`\u200b`, `**Top 5 Richest [All-Time]\n**`)
                         .addField(`**1. ${memberList[0].name} ${boolThisMember1}**`,`Points: ${memberList[0].points}`)
                         .addField(`**2. ${memberList[1].name} ${boolThisMember2}**`,`Points: ${memberList[1].points}`)
                         .addField(`**3. ${memberList[2].name} ${boolThisMember3}**`,`Points: ${memberList[2].points}`)
