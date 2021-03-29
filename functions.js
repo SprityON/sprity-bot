@@ -147,7 +147,7 @@ const updateDB = {
                         let newWeek = week + 1
 
                         query(`UPDATE leaderboard_stats SET top_member_id = ${topMember.id}, messages = ${topmemberDB[0].messages} WHERE week = ${week}`)
-                        query(`SELECT * FROM members ORDER BY messages DESC LIMIT 5`, data => {
+                        query(`SELECT * FROM members ORDER BY messages DESC LIMIT 5`, async data => {
                             let memberList = []
                             data[0].forEach(row => {
                                 let Amember = member.guild.members.cache.find(member => member.id === row.member_id)
@@ -175,9 +175,8 @@ const updateDB = {
 
                             query(`INSERT INTO leaderboard_stats(begindate, enddate, week) VALUES ('${newBeginDate}', '${newEndDate}', '${newWeek}')`)
 
-                            query(`SELECT * FROM members WHERE NOT messages = 0`, data => {
-                                let result = Object.values(data[0])
-                                result.forEach(row => {
+                            await query(`SELECT * FROM members WHERE NOT messages = 0`, data => {
+                                data[0].forEach(row => {
                                     let m = member.guild.members.cache.find(member => member.id === row.member_id)
                                     let points = (row.messages) + ((row.messages / 100) * 30)
                                     query(`UPDATE members SET points = ${points} WHERE member_id = ${m.id}`)
