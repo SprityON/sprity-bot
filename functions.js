@@ -178,9 +178,9 @@ const updateDB = {
                             query(`SELECT * FROM members WHERE NOT messages = 0`, data => {
                                 let result = Object.values(data[0])
                                 result.forEach(row => {
-                                    let member = member.guild.members.cache.find(member => member.id === row.member_id)
+                                    let m = member.guild.members.cache.find(member => member.id === row.member_id)
                                     let points = (row.messages) + ((row.messages / 100) * 30)
-                                    query(`UPDATE members SET points = ${points} WHERE member_id = ${member.id}`)
+                                    query(`UPDATE members SET points = ${points} WHERE member_id = ${m.id}`)
                                 })
                             })
                             

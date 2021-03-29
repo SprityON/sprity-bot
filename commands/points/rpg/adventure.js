@@ -32,6 +32,39 @@ module.exports.command = {
             let embed = new Discord.MessageEmbed()
 
             const randomAmount = Math.floor(Math.random() * 100) + 1
+
+            let adventureGold
+            let adventureEXP
+
+            // if chestloot is false then there is no chest
+            if (chestLoot === false) { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience }
+            else { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience  }
+
+            let emoji = msg.guild.emojis.cache.find(e => e.name === `adventure`)
+            let goldEmoji = msg.guild.emojis.cache.find(e => e.name === 'gold')
+            let expEmoji = msg.guild.emojis.cache.find(e => e.name === 'exp')
+            embed.setTitle(`${emoji} You went on a adventure!`)
+            embed.setDescription(`You went on a adventure and got ${goldEmoji} ${adventureGold} gold and ${expEmoji} ${adventureEXP} experience levels`)
+            query(`UPDATE members_rpg SET gold = ${adventureGold + data[0][0].gold}, experience = ${adventureEXP + data[0][0].experience} WHERE member_id = ${msg.member.id}`)
+            embed.setColor('#00FF00')
+
+
+            /**
+             * 	
+             * following section is for minigames
+             * 
+             */
+
+            if (randomAmount > 35 && randomAmount <= 60) {
+                // minigames
+            }
+
+            /**
+             * 
+             * following section is for the encountering of enemies
+             * 
+             */
+
             function getChest() {
                 if (randomAmount > 15 && randomAmount <= 35) return true
             }
@@ -72,21 +105,6 @@ module.exports.command = {
 
                 chestLoot = { gold: randomGold, exp: randomEXP, items: 'none', rareItem: 'none', type: `${thisType}`}
             } else checkIfNewLevel(data[0][0].experience, thisEXP, embed, msg.member)
-
-            let adventureGold
-            let adventureEXP
-
-            // if chestloot is false then there is no chest
-            if (chestLoot === false) { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience }
-            else { adventureGold = thisGold - data[0][0].gold; adventureEXP = thisEXP - data[0][0].experience  }
-
-            let emoji = msg.guild.emojis.cache.find(e => e.name === `adventure`)
-            let goldEmoji = msg.guild.emojis.cache.find(e => e.name === 'gold')
-            let expEmoji = msg.guild.emojis.cache.find(e => e.name === 'exp')
-            embed.setTitle(`${emoji} You went on a adventure!`)
-            embed.setDescription(`You went on a adventure and got ${goldEmoji} ${adventureGold} gold and ${expEmoji} ${adventureEXP} experience levels`)
-            query(`UPDATE members_rpg SET gold = ${adventureGold + data[0][0].gold}, experience = ${adventureEXP + data[0][0].experience} WHERE member_id = ${msg.member.id}`)
-            embed.setColor('#00FF00')
 
             if (randomAmount > 0 && randomAmount <= 35) {
                 query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {

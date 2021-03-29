@@ -28,11 +28,11 @@ module.exports.command = {
         // .setColor(embedcolor)
         // )
 
-        msg.channel.send(new Discord.MessageEmbed()
-        .setTitle(`Customized Content`)
-        .setDescription(`We have many customized stuff in this server! Read for more info`)
-        .addField(`Points`, `In this server, we have a "currency" called \`points\`.\nWith Points, you can buy your own color role, advertisement tickets (in <#818558571410096148>), change your nickname and much, much more!\n\nQ: Okay sure, having a Points system is fine. But how do you get Points?\nA: You can get Points by either doing: \`$daily\` \`$weekly\` \`$monthly\` OR by creating an RPG account and get Points that way! (\`$rpg start\`)`)
-        .setColor(`00ff00`)
-        )
+        // msg.channel.send(new Discord.MessageEmbed()
+        // .setTitle(`Customized Content`)
+        // .setDescription(`We have many customized stuff in this server! Read for more info`)
+        // .addField(`Points`, `In this server, we have a "currency" called \`points\`.\nWith Points, you can buy your own color role, advertisement tickets (in <#818558571410096148>), change your nickname and much, much more!\n\nQ: Okay sure, having a Points system is fine. But how do you get Points?\nA: You can get Points by either doing: \`$daily\` \`$weekly\` \`$monthly\` OR by creating an RPG account and get Points that way! (\`$rpg start\`)`)
+        // .setColor(`00ff00`)
+        // )
     }
 }
