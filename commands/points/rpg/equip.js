@@ -41,7 +41,13 @@ module.exports.command = {
 
             let inventoryItems = `[`
             for (let item of inventory) {
-                if (item.name === alreadyEquippedItem.name) {
+                console.log(item)
+                console.log(item.name)
+                if (!alreadyEquippedItem) {
+                    if (item.name !== item_id) {
+                        inventoryItems += `{ \"name\": \"${item.name}\", \"amount\": ${item.amount}, \"equipped\": ${item.equipped}, \"category\": \"weapons\" }, `
+                    }
+                } else if (item.name === alreadyEquippedItem.name) {
                     inventoryItems += `{ \"name\": \"${item.name}\", \"amount\": ${item.amount}, \"equipped\": false, \"category\": \"weapons\" }, `
                 } else if (item.name !== item_id) {
                     inventoryItems += `{ \"name\": \"${item.name}\", \"amount\": ${item.amount}, \"equipped\": ${item.equipped}, \"category\": \"weapons\" }, `
