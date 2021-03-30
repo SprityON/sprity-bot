@@ -174,14 +174,6 @@ const updateDB = {
                             announcementsChannel.send(embed)
 
                             query(`INSERT INTO leaderboard_stats(begindate, enddate, week) VALUES ('${newBeginDate}', '${newEndDate}', '${newWeek}')`)
-
-                            await query(`SELECT * FROM members WHERE NOT messages = 0`, data => {
-                                data[0].forEach(row => {
-                                    let m = member.guild.members.cache.find(member => member.id === row.member_id)
-                                    let points = (row.messages) + ((row.messages / 100) * 30)
-                                    query(`UPDATE members SET points = ${points} WHERE member_id = ${m.id}`)
-                                })
-                            })
                             
                             query(`UPDATE members SET messages = '0'`)
                         })
@@ -616,23 +608,38 @@ function checkRPGprofile(msg) {
 }
 
 function userLevel(exp) {
+    let normalXP = 100
+    normalXP
+
     let levels = [
         {xp: 0, level: 1},
-        {xp: 150, level: 2},
+        {xp: 100, level: 2},
         {xp: 300, level: 3},
-        {xp: 500, level: 4},
-        {xp: 800, level: 5},
-        {xp: 1400, level: 6},
-        {xp: 2800, level: 7},
-        {xp: 4000, level: 8},
-        {xp: 6000, level: 9},
-        {xp: 8800, level: 10}
+        {xp: 600, level: 4},
+        {xp: 1000, level: 5},
+        {xp: 1500, level: 6},
+        {xp: 2100, level: 7},
+        {xp: 2800, level: 8},
+        {xp: 3600, level: 9},
+        {xp: 4700, level: 10},
+        {xp: 5700, level: 11},
+        {xp: 6800, level: 12},
+        {xp: 8000, level: 13},
+        {xp: 9300, level: 14},
+        {xp: 10700, level: 15},
+        {xp: 12200, level: 16},
+        {xp: 13800, level: 17},
+        {xp: 15500, level: 18},
+        {xp: 17300, level: 19},
+        {xp: 19200, level: 20}
     ]
     
     for (let i = 0; i < levels.length; i++) {
         level = levels[i]
 
         if (exp < level.xp) {
+            if (level === levels[levels.length]) return 'MAX'
+
             return level.level
         }
     }    
@@ -642,9 +649,26 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
     let previousLevel = userLevel(previousXP)
     let nextLevel = userLevel(nextXP)
 
-    if (previousLevel < nextLevel) {
-        query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
-        return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP)`, true)
+    if (!embed) {
+        if (previousLevel < nextLevel) {
+            query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
+    
+            query(`SELECT * FROM members_rpg WHERE member_id = ${member.id}`, data => {
+                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
+            })
+
+            return `YOU LEVELED UP!\nYou are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`
+        } else return ''
+    } else {
+        if (previousLevel < nextLevel) {
+            query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
+            
+            query(`SELECT * FROM members_rpg WHERE member_id = ${member.id}`, data => {
+                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
+            })
+
+            return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`, true)
+        } else return ''
     }
 }
 
