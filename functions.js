@@ -608,9 +608,6 @@ function checkRPGprofile(msg) {
 }
 
 function userLevel(exp) {
-    let normalXP = 100
-    normalXP
-
     let levels = [
         {xp: 0, level: 1},
         {xp: 100, level: 2},
@@ -637,8 +634,8 @@ function userLevel(exp) {
     for (let i = 0; i < levels.length; i++) {
         level = levels[i]
 
-        if (exp < level.xp) {
-            if (level === levels[levels.length]) return 'MAX'
+        if (exp <= level.xp) {
+            if (level === levels[levels.length - 1]) return 'MAX'
 
             return level.level
         }
@@ -657,7 +654,7 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
                 query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
             })
 
-            return `YOU LEVELED UP!\nYou are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`
+            return `**YOU LEVELED UP!**\nYou are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`
         } else return ''
     } else {
         if (previousLevel < nextLevel) {
@@ -667,7 +664,7 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
                 query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
             })
 
-            return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`, true)
+            return embed.addField(`**YOU LEVELED UP!**`, `You are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`, true)
         } else return ''
     }
 }

@@ -9,7 +9,7 @@ module.exports.info = {
     help: {
         enabled: true,
         title: 'View A Profile',
-        aliases: ['stats'],
+        aliases: ['stats', 's', 'p'],
         description: 'View your rpg-profile or that of others!',
         permissions: ['SEND_MESSAGES']
     }
@@ -19,8 +19,10 @@ module.exports.command = {
     execute(msg, args, amount, client) {
         query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, data => {
             if (args[1]) {
-                if (args[1] !== 'upgrade') return msg.channel.send(`Did you mean \`upgrade\`?`)
+                args[1].toLowerCase()
+                if (args[1] !== 'upgrade' && args[1] !== 'u') return msg.channel.send(`Did you mean \`upgrade\`?`)
                 if (!args[2]) return msg.channel.send(`Select a stat you want to upgrade!`)
+                args[2].toLowerCase()
 
                 let amount 
                 console.log(args)
@@ -33,6 +35,21 @@ module.exports.command = {
                 if (data[0][0].attributes < amount) return msg.channel.send(`You cannot spend **${amount}** attributes, you only have **${data[0][0].attributes}**!`)
 
                 let acceptableStats = ['hp', 'def', 'att']
+
+                switch (args[2]) {
+                    case 'health':
+                        args[2] = 'hp'
+                    break
+                    
+                    case 'defense':
+                        args[2] = 'def'
+                    break
+                    
+                    case 'attack':
+                        args[2] = 'att'
+                    break
+                }
+
                 if (acceptableStats.find(stat => stat === args[2])) {
                     let newStat
                     let change
