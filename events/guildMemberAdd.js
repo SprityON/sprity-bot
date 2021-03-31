@@ -6,7 +6,6 @@ module.exports = {
         const vars = require('../variables.js')
         const Functions = vars.Functions
 
-        const con = Functions.dbConnection()
         const memberCount = member.guild.members.cache.size
         const channel = member.guild.channels.cache.get('718838641815715880');
         if (!channel) return
@@ -29,9 +28,11 @@ module.exports = {
         Functions.updateDB.insertInDatabase(member)
         Functions.updateDB.isMemberKicked(member)
 
-        let sql = `SELECT * FROM members WHERE member_id = ${member.id}`
         query(`SELECT * FROM members WHERE member_id = ${member.id}`, data => {
             let result = data[0][0]
+
+            let warnRole = member.guild.roles.cache.find(role => role.name === 'Warning 1')
+            let warnRoleTwo = member.guild.roles.cache.find(role => role.name === 'Warning 2')
             if (result.warns == 0) {
                 if (member.roles.cache.has(warnRole.id)) member.roles.remove(warnRole)
                 if (member.roles.cache.has(warnRoleTwo.id)) member.roles.remove(warnRoleTwo)
