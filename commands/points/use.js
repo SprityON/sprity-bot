@@ -70,6 +70,7 @@ module.exports.command = {
                 })
             })
         } catch (error) {
+            console.log(error)
             return msg.channel.send(`**${msg.author.username}**, \`${id}\` is not a valid item id (or this item is unusable)`)
         }
     }
