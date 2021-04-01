@@ -1,7 +1,7 @@
 const { Discord } = require("../../variables")
 
 module.exports.info = {
-    name: 'private-channel',
+    name: 'private_channel',
     category: '',
     usage: '',
     short_description: 'Create your private channel',
