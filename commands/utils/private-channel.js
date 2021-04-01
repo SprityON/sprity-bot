@@ -103,11 +103,10 @@ module.exports.command = {
                             }
                         } else if (content.startsWith(`change`)) {
                             let contentArgs = content.split(/ +/)
-                            contentArgs = contentArgs.shift()
 
                             console.log(contentArgs)
 
-                            switch (contentArgs[0]) {
+                            switch (contentArgs[1]) {
                                 case ('description' || 'topic'): 
                                     msg.channel.send(`What would you like your channel topic to be?`)
                                     msg.channel.awaitMessages(filter, {max: 1, time: 300000})
