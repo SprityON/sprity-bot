@@ -30,8 +30,7 @@ module.exports.command = {
                 const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
                 if (content.startsWith('invite')) {
                     if (privateChannel) {
-                        let mentioned = collected.first().mentions.members
-                        console.log(collected.first())
+                        let mentioned = collected.first().mentions.members.first()
                         if (mentioned.id) {
                             privateChannel.updateOverwrite(mentioned.id, {
                                 VIEW_CHANNEL: true
@@ -48,7 +47,7 @@ module.exports.command = {
                     if (content.includes('<@>')) {
                         if (privateChannel) {
 
-                            let mentioned = collected.first().mentions.members
+                            let mentioned = collected.first().mentions.members.first()
                             if (mentioned.id) {
                                 privateChannel.updateOverwrite(mentioned.id, {
                                     VIEW_CHANNEL: false
