@@ -19,6 +19,9 @@ module.exports.command = {
     async execute(msg, args, amount, client) {
 
         query(`SELECT * FROM private_channels WHERE member_id = ${msg.member.id}`, data => {
+
+            filter = m => m.author.id === msg.author.id
+            
             if (!data[0][0]) {
                 msg.channel.send(`Seems like you do not have a private channel yet!\nA private channel costs \`10,000\` points. Want to buy one? (y/n)`)
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000})
@@ -54,8 +57,6 @@ module.exports.command = {
                 })
             } else {
                 msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`create (to create a private channel)\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
-
-                filter = m => m.author.id === msg.author.id
     
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                 .then(collected => {
@@ -63,7 +64,6 @@ module.exports.command = {
     
                         let content = collected.first().content.toLowerCase()
             
-                            
                             const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
     
                             if (content.startsWith('invite')) {
