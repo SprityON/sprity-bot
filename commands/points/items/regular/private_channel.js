@@ -31,17 +31,16 @@ module.exports.command = {
                 if (content.startsWith('invite')) {
                     if (privateChannel) {
                         let mentioned = collected.first().mentions.members
-                        if (!mentioned) { status = [false, `You did not mention a member to invite!`] } else {
-                            privateChannel.updateOverwrite(mentioned.id, {
-                                VIEW_CHANNEL: true
-                            }).then(() => {
-                                msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
-                                status = [true]
-                            }).catch(() => {
-                                status = [false, 'You did not mention a member!']
-                            })
-    
-                        }
+                        privateChannel.updateOverwrite(mentioned.id, {
+                            VIEW_CHANNEL: true
+                        }).then(() => {
+                            msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
+                            status = [true]
+                        }).catch((err) => {
+                            console.log(err)
+                            status = [false, 'You did not mention a member to invite!']
+                        })
+
                     } else status = [false, 'You do not have a private channel!']
                 }
                 else if (content.startsWith('remove')) {
