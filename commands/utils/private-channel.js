@@ -2,7 +2,7 @@ const { query } = require("../../functions")
 const { Discord, embedcolor } = require("../../variables")
 
 module.exports.info = {
-    name: 'private_channel',
+    name: 'private-channel',
     category: '',
     usage: '',
     short_description: 'Create your private channel',
@@ -28,7 +28,8 @@ module.exports.command = {
                 let content = collected.first().content.toLowerCase()
     
                 query(`SELECT * FROM private_channels WHERE member_id = ${msg.member.id}`, data => {
-                    if (data[2]) {
+                    console.log(data[0])
+                    if (data[2] && data[0].length === 0) {
                         msg.channel.send(`Seems like you do not have a private channel yet!\n\nA private channel costs \`10,000\` points. Want to buy one? (y/n)`)
                         msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                         .then(collected => {
