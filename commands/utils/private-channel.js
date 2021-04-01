@@ -58,7 +58,7 @@ module.exports.command = {
                     } else return msg.channel.send(`Cancelled!`)
                 })
             } else {
-                msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`change <topic|name>\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
+                msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`change <description|name>\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
     
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                 .then(collected => {
@@ -107,8 +107,8 @@ module.exports.command = {
                             console.log(contentArgs)
 
                             switch (contentArgs[1]) {
-                                case 'description' || 'topic': 
-                                    msg.channel.send(`What would you like your channel topic to be?`)
+                                case 'description': 
+                                    msg.channel.send(`What would you like your channel description to be?`)
                                     msg.channel.awaitMessages(filter, {max: 1, time: 300000})
                                     .then(collected => {
                                         privateChannel.setTopic(collected.first().content)
@@ -124,7 +124,7 @@ module.exports.command = {
                                     })
                                 break
                                 default:
-                                    msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change topic\`,  \`change name\``)
+                                    msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change description\`,  \`change name\``)
                                 break
                             }
                         }
