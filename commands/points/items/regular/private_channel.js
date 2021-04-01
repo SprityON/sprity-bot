@@ -70,7 +70,7 @@ module.exports.command = {
                             channel.setParent('827183999738445884')
                             */
                 
-                            channel.setParent('827183999738445884')
+                            channel.setParent('827185165985906729')
                             //827186285231734824
                 
                             channel.updateOverwrite(msg.guild.id, {
