@@ -28,7 +28,7 @@ module.exports.command = {
                 let content = collected.first().content.toLowerCase()
     
                 const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
-                if (content === 'invite') {
+                if (content.startsWith('invite')) {
                     if (privateChannel) {
                         let mentioned = msg.channel.mentions.members
                         if (!mentioned) { status = [false, `You did not mention a member to invite!`] } else {
