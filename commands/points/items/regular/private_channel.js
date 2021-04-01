@@ -48,13 +48,15 @@ module.exports.command = {
                         if (privateChannel) {
 
                             let mentioned = collected.first().mentions.members
-                            if (mentioned) {
+                            if (mentioned.id) {
                                 privateChannel.updateOverwrite(mentioned.id, {
                                     VIEW_CHANNEL: false
                                 })
                                 msg.channel.send(`You removed ${mentioned.displayName} from your private channel!`)
                                 status = [true]
-                            } else status = [false, `You did not mention a member to remove!`]
+                            } else {
+                                status = [false, `You did not mention a member to remove!`]
+                            }
                 
                         } else status = [false, `You do not have a private channel!`]
                         
