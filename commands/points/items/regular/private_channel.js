@@ -36,7 +36,8 @@ module.exports.command = {
                                 VIEW_CHANNEL: true
                             })
     
-                            return msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
+                            msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
+                            status = [true]
                         }
                     } else status = [false, 'You do not have a private channel!']
                 }
@@ -49,7 +50,8 @@ module.exports.command = {
                                 channel.updateOverwrite(mentioned.id, {
                                     VIEW_CHANNEL: false
                                 })
-                                return msg.channel.send(`You removed ${mentioned.displayName} from your private channel!`)
+                                msg.channel.send(`You removed ${mentioned.displayName} from your private channel!`)
+                                status = [true]
                             } else status = [false, `You did not mention a member to remove!`]
                 
                         } else status = [false, `You do not have a private channel!`]
@@ -80,6 +82,9 @@ module.exports.command = {
                             channel.updateOverwrite(msg.member.id, {
                                 VIEW_CHANNEL: true
                             })
+
+                            status = [true]
+
                             msg.channel.send(`Creation successful! Go to your private channel: ${channel}`)
                             channel.send(new Discord.MessageEmbed()
                             .setTitle(`Welcome to your private channel, ${msg.author.username}!`)
