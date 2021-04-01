@@ -40,7 +40,7 @@ module.exports.command = {
                             console.log(err)
                             status = [false, 'You did not mention a member to invite!']
                         })
-
+                        console.log('test')
                     } else status = [false, 'You do not have a private channel!']
                 }
                 else if (content.startsWith('remove')) {
