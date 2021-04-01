@@ -57,7 +57,7 @@ module.exports.command = {
                 await searchItem.command.execute(msg, args).then(data => {
                     if (data[0] === false || data === false) {
                         if (data[1]) {
-                            msg.channel.send(`${data[1]} The item \`${id}\` was not removed from your inventory.`)
+                            item.once ? msg.channel.send(data[1]) : msg.channel.send(`${data[1]} The item \`${id}\` was not removed from your inventory.`)
                         } else {
                             msg.channel.send(`Something went wrong when using the item ${searchItem.info.name}. It was not removed from your inventory.`)
                         }
