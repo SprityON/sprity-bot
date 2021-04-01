@@ -80,7 +80,7 @@ module.exports.command = {
                     })
                 } else {
                     let text
-                    if (amountOfWeeks > 1) {
+                    if (amountOfWeeks >= 1) {
                         let days = amountOfDays - (amountOfWeeks * 7);
                         let hours = amountOfHours - (amountOfDays * 24)
                         text = `${amountOfWeeks} weeks, ${days} days and ${hours} hours`
@@ -90,16 +90,16 @@ module.exports.command = {
                         let minutes = amountOfMinutes - (amountOfHours * 60)
                         text = `${amountOfDays} days, ${hours} hours and ${minutes} minutes`
                     }
-                    else if (amountOfMillisecondsLeft > 60000 && amountOfMillisecondsLeft < 86400000) {
+                    else if (amountOfMillisecondsLeft > 3600000 && amountOfMillisecondsLeft < 86400000) {
                         let minutes = amountOfMinutes - (amountOfHours * 60)
                         text = `${amountOfHours} hours and ${minutes} minutes`
-                    } else {
+                    } else if (amountOfMillisecondsLeft > 60000 && amountOfMillisecondsLeft < 3600000) {
                         seconds =  amountOfSeconds - (amountOfMinutes * 60)
                         text = `${amountOfMinutes} minutes and ${seconds} seconds`
                     }
                     msg.channel.send(new Discord.MessageEmbed()
                     .setTitle(`Wow, not so fast ${msg.author.username}!`)
-                    .setDescription(`Get more weekly points in: \n\`${text}\``)
+                    .setDescription(`Get more monthly points in: \n\`${text}\``)
                     .setColor(embedcolor)
                     .setFooter(`Use $help points for more information`))
                 }
