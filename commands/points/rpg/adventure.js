@@ -285,6 +285,7 @@ module.exports.command = {
                                     enemyHealth = enemyHealth - damage
     
                                     if (enemyHealth <= 0) { 
+                                        isActive = false
                                         msg.channel.send(`${attackDescription}**${user.enemy.name}** took **${Math.floor(damage)} damage** and was defeated. Good job!`).then(() => {
         
                                             setTimeout(async () => {
@@ -366,6 +367,7 @@ module.exports.command = {
                                         } else {
         
                                             if (userHealth <= 0) { 
+                                                isActive = false
                                                 query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                                 msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}** gold left.`) 
                                                 
@@ -379,7 +381,8 @@ module.exports.command = {
                                     }
         
                                     if (userHealth <= 0) {
-        
+                                        isActive = false
+                                        
                                         query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                         msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**, but you died with **${Math.floor(userHealth)} HP**!\nYou lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}**.`) 
         
