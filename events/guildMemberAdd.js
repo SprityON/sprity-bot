@@ -21,7 +21,7 @@ module.exports = {
         var roleMember = member.guild.roles.cache.get('719173522538365008')
         member.roles.add(roleMember)
 
-        const totalBotsChannelID = guild.channels.cache.get('751176168614527007')
+        const totalBotsChannelID = member.guild.channels.cache.get('751176168614527007')
         totalBotsChannelID.setName('All Bots: ' + botCount.toString())
 
         Functions.updateDB.addInventory(member)

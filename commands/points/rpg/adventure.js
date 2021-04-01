@@ -286,13 +286,11 @@ module.exports.command = {
                                         setTimeout(async () => {
                                             switch (user.enemy.difficulty) {
                                                 case 'easy':
-                                                    if (chestLoot !== false) {
+                                                    if (chestLoot === true) {
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
-                                                        
-                                                        console.log()
 
-                                                        msg.channel.send(`You received ${goldEmoji} **${((10000 / 100) * 1.5)}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
+                                                        msg.channel.send(`You received ${goldEmoji} **${((10000 / 100) * 1.5)}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
                                                         query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 1.5) + oldAmount} WHERE member_id = ${msg.member.id}`)
                                                     } else {
                                                         msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**\n`)
@@ -300,7 +298,7 @@ module.exports.command = {
                                                     }
                                                 break
                                                 case 'medium':
-                                                    if (chestLoot !== false) {
+                                                    if (chestLoot === true) {
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
                                                         
@@ -312,7 +310,7 @@ module.exports.command = {
                                                     }
                                                 break
                                                 case 'hard':
-                                                    if (chestLoot !== false) {                                                 
+                                                    if (chestLoot === true) {                                                 
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
                                                         
@@ -324,7 +322,7 @@ module.exports.command = {
                                                     }
                                                 break
                                                 case 'extreme':
-                                                    if (chestLoot !== false) {                         
+                                                    if (chestLoot === true) {                         
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
                                                         
