@@ -21,6 +21,16 @@
 			"type": "tool"
 		},
 		{
+			"id": "private_channel",
+			"name": "Private Channel",
+			"description": "Ever wanted to be alone for awhile (perhaps with friends)? Then buy this item!",
+			"price": "10000",
+			"emote": ":lock:",
+			"uploaded": false,
+			"once": true,
+			"type": "tool"
+		},
+		{
 			"id": "noob_role",
 			"name": "Noob role",
 			"description": "Do you want yourself to be known as a noob?\n***WARNING:*** makes you a big noob",

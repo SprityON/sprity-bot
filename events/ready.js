@@ -7,10 +7,17 @@ module.exports = {
         console.log(`Logged in as ${client.user.tag}!`)
         client.user.setActivity(`${config.prefix}help`, { type: "LISTENING" })
         let m = client.guilds.cache.get(`${process.env.GUILDID}`).me
-        
+
         Functions.updateDB.checkLeaderboard(m)
         setInterval(() => {
             Functions.updateDB.checkLeaderboard(m)
         }, 30000);
+
+        setInterval(() => {
+            let members = m.guild.members.cache
+            members.forEach(member => {
+                Functions.memberChecks(member)
+            })
+        }, 300000);
     }
 }
