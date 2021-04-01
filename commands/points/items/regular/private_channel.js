@@ -31,13 +31,13 @@ module.exports.command = {
                 if (content === 'invite') {
                     if (privateChannel) {
                         let mentioned = msg.channel.mentions.members
-                        if (mentioned) {
+                        if (!mentioned) { status = [false, `You did not mention a member to invite!`] } else {
                             channel.updateOverwrite(mentioned.id, {
                                 VIEW_CHANNEL: true
                             })
     
                             return msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
-                        } else status = [false, `You did not mention a member to invite!`]
+                        }
                     } else status = [false, 'You do not have a private channel!']
                 }
                 else if (content.startsWith('remove')) {
