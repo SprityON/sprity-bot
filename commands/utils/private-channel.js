@@ -21,7 +21,7 @@ module.exports.command = {
         query(`SELECT * FROM private_channels WHERE member_id = ${msg.member.id}`, data => {
 
             filter = m => m.author.id === msg.author.id
-            
+
             if (!data[0][0]) {
                 msg.channel.send(`Seems like you do not have a private channel yet!\nA private channel costs \`10,000\` points. Want to buy one? (y/n)`)
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000})
@@ -56,7 +56,7 @@ module.exports.command = {
                     } else return msg.channel.send(`Cancelled!`)
                 })
             } else {
-                msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`create (to create a private channel)\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
+                msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
     
                 msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                 .then(collected => {
@@ -64,41 +64,41 @@ module.exports.command = {
     
                         let content = collected.first().content.toLowerCase()
             
-                            const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
-    
-                            if (content.startsWith('invite')) {
+                        const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
+
+                        if (content.startsWith('invite')) {
+                            let mentioned = collected.first().mentions.members.first()
+                            if (mentioned) {
+                                privateChannel.updateOverwrite(mentioned.id, {
+                                    VIEW_CHANNEL: true
+                                })
+                                msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
+                            } 
+                        }
+                        else if (content.startsWith('remove')) {
+                            if (content.includes('<@>')) {
                                 let mentioned = collected.first().mentions.members.first()
+                                
                                 if (mentioned) {
                                     privateChannel.updateOverwrite(mentioned.id, {
-                                        VIEW_CHANNEL: true
+                                        VIEW_CHANNEL: false
                                     })
-                                    msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
-                                } 
-                            }
-                            else if (content.startsWith('remove')) {
-                                if (content.includes('<@>')) {
-                                        let mentioned = collected.first().mentions.members.first()
-                                        
-                                        if (mentioned) {
-                                            privateChannel.updateOverwrite(mentioned.id, {
-                                                VIEW_CHANNEL: false
-                                            })
-                                            return msg.channel.send(`You removed ${mentioned.displayName} from your private channel!`)
-                                        } else {
-                                            return msg.channel.send(`You did not mention a member to remove!`)
-                                        }
-                                    
+                                    return msg.channel.send(`You removed **${mentioned.user.username}** from your private channel!`)
                                 } else {
-                                    msg.channel.send(`Are you sure you want to remove your private channel? (y/n)`)
-                                    msg.channel.awaitMessages(filter, {max: 1, time: 60000})
-                                    .then(collected => {
-                                        if (collected.first().content.toLowerCase() === 'y' || collected.first().content.toLowerCase() === 'yes' ) {
-                                            privateChannel.delete()
-                                            return msg.channel.send(`Your private channel was removed`)
-                                        } else return msg.channel.send(`Your private channel was not removed.`)
-                                    })
+                                    return msg.channel.send(`You did not mention a member to remove!`)
                                 }
+                                
+                            } else {
+                                msg.channel.send(`Are you sure you want to remove your private channel? (y/n)\nNote: You have to buy a private channel again!`)
+                                msg.channel.awaitMessages(filter, {max: 1, time: 60000})
+                                .then(collected => {
+                                    if (collected.first().content.toLowerCase() === 'y' || collected.first().content.toLowerCase() === 'yes' ) {
+                                        privateChannel.delete()
+                                        return msg.channel.send(`Your private channel was removed`)
+                                    } else return msg.channel.send(`Your private channel was not removed.`)
+                                })
                             }
+                        }
                         
                     } else return msg.channel.send('Cancelled!')
                 })
