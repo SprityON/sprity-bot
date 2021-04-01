@@ -1,4 +1,4 @@
-const { query, commandCooldown } = require("../../functions");
+const { query, commandCooldown, normalizePrice } = require("../../functions");
 const { Discord, embedcolor } = require("../../variables");
 
 module.exports.info = {
@@ -42,7 +42,7 @@ module.exports.command = {
                         let boolThisMember = ''
     
                         let topChatter = msg.guild.members.cache.find(member => member.displayName === memberList[0].name)
-                        let firstplacetext = `${topChatter} is 1st place with over ***${memberList[0].points}*** points!`
+                        let firstplacetext = `${topChatter} is 1st place with over ***${normalizePrice(memberList[0].points)}*** points!`
     
                         let i
                         for (i = 0; i < memberList.length; i++) {
@@ -58,7 +58,7 @@ module.exports.command = {
                         let embed = new Discord.MessageEmbed()
                         .addField(`\u200b`, `**Top 5 Richest Members [All-Time]\n**`)
                         for (i = 0; i < memberList.length; i++) {
-                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Points: ${memberList[i].points}`)
+                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Points: ${normalizePrice(memberList[i].points)}`)
                         }
 
                         // embed for leaderboard
@@ -75,7 +75,7 @@ module.exports.command = {
                                 
                                 if (member.member_id == msg.member.id) {
                                     let you = msg.guild.members.cache.find(member => member.id === `${thisMember[0].member_id}`)
-                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nPoints: ${thisMember[0].points}`)
+                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nPoints: ${normalizePrice(thisMember[0].points)}`)
                                 }
                             }
                         }
@@ -106,7 +106,7 @@ module.exports.command = {
 
                         let goldEmoji = msg.guild.emojis.cache.find(e => e.name === 'gold')
                         let topChatter = msg.guild.members.cache.find(member => member.displayName === memberList[0].name)
-                        let firstplacetext = `${topChatter} is 1st place with over ${goldEmoji} ***${memberList[0].gold}*** gold!`
+                        let firstplacetext = `${topChatter} is 1st place with over ${goldEmoji} ***${normalizePrice(memberList[0].gold)}*** gold!`
 
                         let i
                         for (i = 0; i < memberList.length; i++) {
@@ -122,7 +122,7 @@ module.exports.command = {
                         let embed = new Discord.MessageEmbed()
                         .addField(`\u200b`, `**Richest RPG Players [All-Time]\n**`)
                         for (i = 0; i < memberList.length; i++) {
-                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Gold: ${memberList[i].gold}`)
+                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Gold: ${normalizePrice(memberList[i].gold)}`)
                         }
 
                         // embed for leaderboard
@@ -139,7 +139,7 @@ module.exports.command = {
                                 
                                 if (member.member_id == msg.member.id) {
                                     let you = msg.guild.members.cache.find(member => member.id === `${thisMember[0].member_id}`)
-                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nGold: ${thisMember[0].gold}`)
+                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nGold: ${normalizePrice(thisMember[0].gold)}`)
                                 }
                             }
                         }
@@ -169,7 +169,7 @@ module.exports.command = {
                         let boolThisMember = ''
 
                         let topChatter = msg.guild.members.cache.find(member => member.displayName === memberList[0].name)
-                        let firstplacetext = `${topChatter} is 1st place with over ***${memberList[0].messages}*** messages!`
+                        let firstplacetext = `${topChatter} is 1st place with over ***${normalizePrice(memberList[0].messages)}*** messages!`
 
                         let i
                         for (i = 0; i < memberList.length; i++) {
@@ -185,7 +185,7 @@ module.exports.command = {
                         let embed = new Discord.MessageEmbed()
                         .addField(`\u200b`, `**Most Active Players [This Week]\n**`)
                         for (i = 0; i < memberList.length; i++) {
-                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Messages: ${memberList[i].messages}`)
+                            embed.addField(`**${i+1}. ${memberList[i].name}**`, `Messages: ${normalizePrice(memberList[i].messages)}`)
                         }
 
                         // embed for leaderboard
@@ -202,7 +202,7 @@ module.exports.command = {
                                 
                                 if (member.member_id == msg.member.id) {
                                     let you = msg.guild.members.cache.find(member => member.id === `${thisMember[0].member_id}`)
-                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nMessages: ${thisMember[0].messages}`)
+                                    embed.addField(`\u200b`, `**${index + 1}. ${you.displayName} (YOU)**\nMessages: ${normalizePrice(thisMember[0].messages)}`)
                                 }
                             }
                         }

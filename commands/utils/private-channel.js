@@ -56,7 +56,7 @@ module.exports.command = {
                         })
 
                     } else return msg.channel.send(`Cancelled!`)
-                }).catch(msg.channel.send(`You ran out of time.`))
+                }).catch(err => msg.channel.send(`You ran out of time.`))
             } else {
                 msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`change <description|name>\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
     
@@ -99,7 +99,7 @@ module.exports.command = {
                                         query(`DELETE FROM private_channels WHERE member_id = ${msg.member.id}`)
                                         return msg.channel.send(`Your private channel was removed`)
                                     } else return msg.channel.send(`Your private channel was not removed.`)
-                                }).catch(msg.channel.send(`You ran out of time.`))
+                                }).catch(err => msg.channel.send(`You ran out of time.`))
                             }
                         } else if (content.startsWith(`change`)) {
                             let contentArgs = content.split(/ +/)
@@ -113,7 +113,7 @@ module.exports.command = {
                                     .then(collected => {
                                         privateChannel.setTopic(collected.first().content)
                                         return msg.channel.send(`Your channel topic has been changed.`)
-                                    }).catch(msg.channel.send(`You ran out of time.`))
+                                    }).catch(err => msg.channel.send(`You ran out of time.`))
                                 break
                                 case 'name': 
                                     msg.channel.send(`What would you like your channel name to be?`)
@@ -121,7 +121,7 @@ module.exports.command = {
                                     .then(collected => {
                                         privateChannel.setName(collected.first().content)
                                         return msg.channel.send(`Your channel name has been changed.`)
-                                    }).catch(msg.channel.send(`You ran out of time.`))
+                                    }).catch(err => msg.channel.send(`You ran out of time.`))
                                 break
                                 default:
                                     msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change description\`,  \`change name\``)
@@ -130,7 +130,7 @@ module.exports.command = {
                         }
                         
                     } else return msg.channel.send('Cancelled!')
-                }).catch(msg.channel.send(`You ran out of time.`))
+                }).catch(err => msg.channel.send(`You ran out of time.`))
             }
         })
     }
