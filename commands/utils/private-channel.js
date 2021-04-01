@@ -29,7 +29,7 @@ module.exports.command = {
     
                 query(`SELECT * FROM private_channels WHERE member_id = ${msg.member.id}`, data => {
                     console.log(data[0])
-                    if (data[2] && data[0].length === 0) {
+                    if (!data[0]) {
                         msg.channel.send(`Seems like you do not have a private channel yet!\n\nA private channel costs \`10,000\` points. Want to buy one? (y/n)`)
                         msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                         .then(collected => {
