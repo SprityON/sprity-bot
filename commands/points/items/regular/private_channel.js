@@ -30,7 +30,7 @@ module.exports.command = {
                 const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
                 if (content.startsWith('invite')) {
                     if (privateChannel) {
-                        let mentioned = msg.channel.mentions.members
+                        let mentioned = collected.first().mentions.members
                         if (!mentioned) { status = [false, `You did not mention a member to invite!`] } else {
                             channel.updateOverwrite(mentioned.id, {
                                 VIEW_CHANNEL: true
@@ -45,7 +45,7 @@ module.exports.command = {
                     if (content.includes('<@>')) {
                         if (privateChannel) {
 
-                            let mentioned = msg.channel.mentions.members
+                            let mentioned = collected.first().mentions.members
                             if (mentioned) {
                                 channel.updateOverwrite(mentioned.id, {
                                     VIEW_CHANNEL: false
