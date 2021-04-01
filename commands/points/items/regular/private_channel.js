@@ -98,6 +98,6 @@ module.exports.command = {
             } else status = [false, 'Cancelled!']
         })
 
-        if (status) { return status } else return
+        if (status[0] === 'false' || status[0] === 'true') { return status } else return
     }
 }
