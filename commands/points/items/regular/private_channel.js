@@ -16,7 +16,7 @@ module.exports.info = {
 
 module.exports.command = {
     async execute(msg, args, amount, client) {
-        msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
+        msg.channel.send(`Please specify an argument. Allowed arguments are:\n\`create (to create a private channel)\`\n\`invite <member>\`\n\`remove <member>\`\n\`remove (to delete your private channel)\`\n\n*Type \`cancel\` to cancel*`)
 
         filter = m => m.author.id === msg.author.id
 
@@ -63,7 +63,7 @@ module.exports.command = {
                             } else status = [false, `Your private channel was not removed.`]
                         })
                     }
-                } else {
+                } else if (content === 'create') {
                     if (!privateChannel) {
                         msg.guild.channels.create(`${msg.author.username.toLowerCase()}'s private channel`).then(channel => {
                             /*
