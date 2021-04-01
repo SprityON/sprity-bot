@@ -57,7 +57,7 @@ module.exports.command = {
 
                 filter = m => m.author.id === msg.author.id
     
-                await msg.channel.awaitMessages(filter, {max: 1, time: 60000})
+                msg.channel.awaitMessages(filter, {max: 1, time: 60000})
                 .then(collected => {
                     if (collected.first().content.toLowerCase() !== 'cancel') {
     
