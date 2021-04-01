@@ -64,7 +64,7 @@ module.exports.command = {
     
                         let content = collected.first().content.toLowerCase()
             
-                        const privateChannel = msg.guild.channels.cache.find(channel => channel.permissionOverwrites.find(overwrite => overwrite.id === msg.member.id))
+                        const privateChannel = msg.guild.channels.cache.find(channel => channel.id === data[0][0].channel_id)
 
                         if (content.startsWith('invite')) {
                             let mentioned = collected.first().mentions.members.first()
