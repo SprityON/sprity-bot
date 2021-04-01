@@ -80,7 +80,7 @@ module.exports.command = {
                             channel.updateOverwrite(msg.member.id, {
                                 VIEW_CHANNEL: true
                             })
-                
+                            msg.channel.send(`Creation successful! Go to your private channel: ${channel}`)
                             channel.send(new Discord.MessageEmbed()
                             .setTitle(`Welcome to your private channel, ${msg.author.username}!`)
                             .setDescription(`**Invite/Remove a member from your channel**\n\`$private-channel invite <member>\` let a member join your private channel\n\`$private-channel remove <member>\` remove a member from your private channel\n\nRemove your channel by doing: \`$private-channel remove\``))
