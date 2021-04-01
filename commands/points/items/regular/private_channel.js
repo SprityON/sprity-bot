@@ -97,7 +97,7 @@ module.exports.command = {
         
             } else status = [false, 'Cancelled!']
         })
-
+        console.log(status)
         if (status[0] === false || status[0] === true) { return status } else return
     }
 }
