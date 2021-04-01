@@ -107,7 +107,7 @@ module.exports.command = {
                             console.log(contentArgs)
 
                             switch (contentArgs[1]) {
-                                case ('description' || 'topic'): 
+                                case 'description' || 'topic': 
                                     msg.channel.send(`What would you like your channel topic to be?`)
                                     msg.channel.awaitMessages(filter, {max: 1, time: 300000})
                                     .then(collected => {
@@ -115,7 +115,7 @@ module.exports.command = {
                                         return msg.channel.send(`Your channel topic has been changed.`)
                                     })
                                 break
-                                case ('name'): 
+                                case 'name': 
                                     msg.channel.send(`What would you like your channel name to be?`)
                                     msg.channel.awaitMessages(filter, {max: 1, time: 300000})
                                     .then(collected => {
