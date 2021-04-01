@@ -51,7 +51,7 @@ module.exports.command = {
             embed.setColor('#00FF00')
 
 
-            /**
+            /*
              * 	
              * following section is for minigames
              * 
@@ -61,7 +61,7 @@ module.exports.command = {
                 // minigames
             } */
 
-            /**
+            /*
              * 
              * following section is for the encountering of enemies
              * 
@@ -286,19 +286,31 @@ module.exports.command = {
                                         setTimeout(async () => {
                                             switch (user.enemy.difficulty) {
                                                 case 'easy':
-                                                    if (chestLoot === true) {
+                                                    if (getChest() === true) {
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
 
-                                                        msg.channel.send(`You received ${goldEmoji} **${((10000 / 100) * 1.5)}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
-                                                        query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 1.5) + oldAmount} WHERE member_id = ${msg.member.id}`)
+                                                        msg.channel.send(`You received ${goldEmoji} **${((10000 / 100) * 0.5)}** gold! You now have **${(10000 / 100) * 0.5 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
+                                                        query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 0.5) + oldAmount} WHERE member_id = ${msg.member.id}`)
                                                     } else {
-                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1.5}** gold! You now have **${(10000 / 100) * 1.5 + result.gold}**\n`)
-                                                        query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 1.5 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 0.5}** gold! You now have **${(10000 / 100) * 0.5 + result.gold}**\n`)
+                                                        query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 0.5 + result.gold} WHERE member_id = ${msg.member.id}`)
                                                     }
                                                 break
                                                 case 'medium':
-                                                    if (chestLoot === true) {
+                                                    if (getChest() === true) {
+                                                        let oldAmount = result.gold + chestLoot.gold
+                                                        query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
+                                                        
+                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1}** gold! You now have **${(10000 / 100) * 1 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
+                                                        query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 1) + oldAmount} WHERE member_id = ${msg.member.id}`)
+                                                    } else {
+                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 1}** gold! You now have **${(10000 / 100) * 1 + result.gold}**\n`)
+                                                        query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 1 + result.gold} WHERE member_id = ${msg.member.id}`)
+                                                    }
+                                                break
+                                                case 'hard':
+                                                    if (getChest() === true) {                                                 
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
                                                         
@@ -309,28 +321,16 @@ module.exports.command = {
                                                         query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 2 + result.gold} WHERE member_id = ${msg.member.id}`)
                                                     }
                                                 break
-                                                case 'hard':
-                                                    if (chestLoot === true) {                                                 
+                                                case 'extreme':
+                                                    if (getChest() === true) {                         
                                                         let oldAmount = result.gold + chestLoot.gold
                                                         query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
                                                         
                                                         msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 5 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
                                                         query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 5) + oldAmount} WHERE member_id = ${msg.member.id}`)
                                                     } else {
-                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 5 + result.gold}**\n`)
+                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 5}** gold! You now have **${(10000 / 100) * 10 + result.gold}**\n`)
                                                         query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 5 + result.gold} WHERE member_id = ${msg.member.id}`)
-                                                    }
-                                                break
-                                                case 'extreme':
-                                                    if (chestLoot === true) {                         
-                                                        let oldAmount = result.gold + chestLoot.gold
-                                                        query(`UPDATE members_rpg SET gold = ${oldAmount}, experience = ${result.experience + chestLoot.exp} WHERE member_id = ${msg.member.id}`)
-                                                        
-                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 25}** gold! You now have **${(10000 / 100) * 10 + result.gold}**\nYou stole and opened the chest!\nLoot: ${goldEmoji} **${chestLoot.gold} Gold & ${expEmoji} ${chestLoot.exp} EXP**\n${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}`)
-                                                        query(`UPDATE members_rpg SET gold = ${((10000 / 100) * 10) + oldAmount} WHERE member_id = ${msg.member.id}`)
-                                                    } else {
-                                                        msg.channel.send(`You received ${goldEmoji} **${(10000 / 100) * 25}** gold! You now have **${(10000 / 100) * 10 + result.gold}**\n`)
-                                                        query(`UPDATE members_rpg SET gold = ${(10000 / 100) * 10 + result.gold} WHERE member_id = ${msg.member.id}`)
                                                     }
                                                 break
                                             }
