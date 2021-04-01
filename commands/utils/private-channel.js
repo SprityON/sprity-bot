@@ -121,6 +121,9 @@ module.exports.command = {
                                         return msg.channel.send(`Your channel name has been changed.`)
                                     })
                                 break
+                                default:
+                                    msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change topic\`,  \`change name\``)
+                                break
                             }
                         }
                         
