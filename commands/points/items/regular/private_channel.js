@@ -32,7 +32,7 @@ module.exports.command = {
                     if (privateChannel) {
                         let mentioned = collected.first().mentions.members
                         if (!mentioned) { status = [false, `You did not mention a member to invite!`] } else {
-                            channel.updateOverwrite(mentioned.id, {
+                            privateChannel.updateOverwrite(mentioned.id, {
                                 VIEW_CHANNEL: true
                             })
     
@@ -47,7 +47,7 @@ module.exports.command = {
 
                             let mentioned = collected.first().mentions.members
                             if (mentioned) {
-                                channel.updateOverwrite(mentioned.id, {
+                                privateChannel.updateOverwrite(mentioned.id, {
                                     VIEW_CHANNEL: false
                                 })
                                 msg.channel.send(`You removed ${mentioned.displayName} from your private channel!`)
