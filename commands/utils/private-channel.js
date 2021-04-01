@@ -104,26 +104,22 @@ module.exports.command = {
                         } else if (content.startsWith(`change`)) {
                             let contentArgs = content.split(/ +/).shift()
 
-                            switch (contentArgs) {
-                                case ('description' || 'topic'): 
-                                    msg.channel.send(`What would you like your channel topic to be?`)
-                                    msg.channel.awaitMessages(filter, {max: 1, time: 300000})
-                                    .then(collected => {
-                                        privateChannel.setTopic(collected.first().content)
-                                        return msg.channel.send(`Your channel topic has been changed.`)
-                                    })
-                                break
-                                case ('name'): 
-                                    msg.channel.send(`What would you like your channel name to be?`)
-                                    msg.channel.awaitMessages(filter, {max: 1, time: 300000})
-                                    .then(collected => {
-                                        privateChannel.setName(collected.first().content)
-                                        return msg.channel.send(`Your channel name has been changed.`)
-                                    })
-                                break
-                                default:
-                                    msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change topic\`,  \`change name\``)
-                                break
+                            if (contentArgs === 'description' || contentArgs === 'topic') {
+                                msg.channel.send(`What would you like your channel topic to be?`)
+                                msg.channel.awaitMessages(filter, {max: 1, time: 300000})
+                                .then(collected => {
+                                    privateChannel.setTopic(collected.first().content)
+                                    return msg.channel.send(`Your channel topic has been changed.`)
+                                })
+                            } else if (contentArgs === 'name') {
+                                msg.channel.send(`What would you like your channel name to be?`)
+                                msg.channel.awaitMessages(filter, {max: 1, time: 300000})
+                                .then(collected => {
+                                    privateChannel.setName(collected.first().content)
+                                    return msg.channel.send(`Your channel name has been changed.`)
+                                })
+                            } else {
+                                msg.channel.send(`You have to provide more arguments! Accepted arguments are: \`change topic\`,  \`change name\``)
                             }
                         }
                         
