@@ -31,6 +31,7 @@ module.exports.command = {
                 if (content.startsWith('invite')) {
                     if (privateChannel) {
                         let mentioned = collected.first().mentions.members
+                        console.log(collected.first())
                         if (mentioned.id) {
                             privateChannel.updateOverwrite(mentioned.id, {
                                 VIEW_CHANNEL: true
