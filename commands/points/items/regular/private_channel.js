@@ -15,7 +15,7 @@ module.exports.info = {
 }
 
 module.exports.command = {
-    execute(msg, args, amount, client) {
+    async execute(msg, args, amount, client) {
         msg.channel.send(`Please specify an argument. It can be: \`invite <member>\`, \`remove <member>\` or \`remove (to delete your private channel)\`. *Type \`cancel\` to cancel*`)
 
         filter = m => m.author.id === msg.author.id
