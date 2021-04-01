@@ -94,6 +94,7 @@ module.exports.command = {
                                 .then(collected => {
                                     if (collected.first().content.toLowerCase() === 'y' || collected.first().content.toLowerCase() === 'yes' ) {
                                         privateChannel.delete()
+                                        query(`DELETE FROM private_channels WHERE member_id = ${msg.member.id}`)
                                         return msg.channel.send(`Your private channel was removed`)
                                     } else return msg.channel.send(`Your private channel was not removed.`)
                                 })
