@@ -102,7 +102,8 @@ module.exports.command = {
                                 })
                             }
                         } else if (content.startsWith(`change`)) {
-                            let contentArgs = content.split(/ +/).shift()
+                            let contentArgs = content.split(/ +/)
+                            contentArgs = contentArgs.shift()
 
                             console.log(contentArgs)
 
