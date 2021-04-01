@@ -90,7 +90,7 @@ module.exports.command = {
                         let minutes = amountOfMinutes - (amountOfHours * 60)
                         text = `${amountOfDays} days, ${hours} hours and ${minutes} minutes`
                     }
-                    else if (amountOfMillisecondsLeft > 3600000 && amountOfMillisecondsLeft < 86400000) {
+                    else if (amountOfMillisecondsLeft > 60000 && amountOfMillisecondsLeft < 86400000) {
                         let minutes = amountOfMinutes - (amountOfHours * 60)
                         text = `${amountOfHours} hours and ${minutes} minutes`
                     } else {
