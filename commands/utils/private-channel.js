@@ -3,11 +3,11 @@ const { Discord, embedcolor } = require("../../variables")
 
 module.exports.info = {
     name: 'private-channel',
-    category: '',
-    usage: '',
+    category: 'utils',
+    usage: '$private-channel',
     short_description: 'Create your private channel',
     help: {
-        enabled: false,
+        enabled: true,
         title: 'Create Your Private Channel',
         aliases: ['pc', 'private'],
         description: 'Ever wanted to be alone while using bot commands? Then this command is just for you!',
