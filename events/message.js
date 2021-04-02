@@ -1,6 +1,7 @@
 const { durationInBetweenMessages, spamCheck, publicAdvert, memberChecks, incrementMessageAmountDB, commandCooldown } = require('../functions');
 const vars = require('../variables')
 let set = new Set()
+let cooldownSet = new Set()
 module.exports = {
     name: 'message',
     execute(msg, client) {
@@ -13,7 +14,6 @@ module.exports = {
 
         if (!msg.content.startsWith('$')) return
     
-        let cooldownSet = new Set()
         if (commandCooldown(msg, cooldownSet, 1000) === true) return
 
         const args = msg.content.slice(vars.config.prefix.length).trim().split(/ +/)

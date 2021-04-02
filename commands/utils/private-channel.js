@@ -34,16 +34,9 @@ module.exports.command = {
 
                             msg.guild.channels.create(`${msg.author.username.toLowerCase()}'s private channel`).then(channel => {
                                 channel.setParent('827185165985906729')
-
                                 channel.setTopic(`Owner: ${msg.author.username}`)
-                                
-                                channel.updateOverwrite(msg.guild.id, {
-                                    VIEW_CHANNEL: false
-                                })
-                    
-                                channel.updateOverwrite(msg.member.id, {
-                                    VIEW_CHANNEL: true
-                                })
+                                channel.updateOverwrite(msg.guild.id, { VIEW_CHANNEL: false })
+                                channel.updateOverwrite(msg.member.id, { VIEW_CHANNEL: true })
 
                                 query(`UPDATE members SET points = ${result.points - 10000} WHERE member_id = ${msg.member.id}`)
                                 query(`INSERT INTO private_channels (member_id, channel_id) VALUES (${msg.member.id}, ${channel.id}) `)
@@ -51,7 +44,7 @@ module.exports.command = {
                                 msg.channel.send(`Creation successful! Check out your private channel: ${channel}`)
                                 channel.send(new Discord.MessageEmbed().setColor(embedcolor)
                                 .setTitle(`Welcome to your private channel, ${msg.author.username}!`)
-                                .setDescription(`**Invite/Remove a member from your channel**\n\`$use private_channel, and after that: invite <member>\` let a member join your private channel\n\`$use private-channel, and after that: remove <member>\` remove a member from your private channel\n\nRemove your channel by doing: \`$use private-channel. and after that: remove\``))
+                                .setDescription(`**Invite/Remove a member from your channel**\n\`$private-channel, and after that: invite <member>\` let a member join your private channel\n\`$private-channel, and after that: remove <member>\` remove a member from your private channel\n\`$pc, and then after that: change name OR description\` change your private channel name or description\n\nRemove your channel by doing: \`$private-channel, and after that: remove\``))
                             })
                         })
 
@@ -71,9 +64,7 @@ module.exports.command = {
                         if (content.startsWith('invite')) {
                             let mentioned = collected.first().mentions.members.first()
                             if (mentioned) {
-                                privateChannel.updateOverwrite(mentioned.id, {
-                                    VIEW_CHANNEL: true
-                                })
+                                privateChannel.updateOverwrite(mentioned.id, { VIEW_CHANNEL: true })
                                 msg.channel.send(`You invited ${mentioned.displayName} to your private channel!`)
                             } else return msg.channel.send(`To invite a member, mention them!`)
                         }
@@ -82,9 +73,7 @@ module.exports.command = {
                                 let mentioned = collected.first().mentions.members.first()
                                 
                                 if (mentioned) {
-                                    privateChannel.updateOverwrite(mentioned.id, {
-                                        VIEW_CHANNEL: false
-                                    })
+                                    privateChannel.updateOverwrite(mentioned.id, { VIEW_CHANNEL: false })
                                     return msg.channel.send(`You removed **${mentioned.user.username}** from your private channel!`)
                                 } else {
                                     return msg.channel.send(`You did not mention a member to remove!`)

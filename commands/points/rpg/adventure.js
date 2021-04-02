@@ -23,7 +23,13 @@ module.exports.command = {
 
         if (!isActive.find(m => m.id === msg.member.id)) {
             isActive.push({id: msg.member.id})
-            
+
+            /**
+             * It removes the member from the isActive Array.
+             * This is done to prevent the command from being spammed.
+             * @returns
+             */
+
             function removeMemberActive() {
                 let i = 0
                 isActive.forEach(member => {
