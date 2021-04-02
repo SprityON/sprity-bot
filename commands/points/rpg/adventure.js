@@ -1,5 +1,4 @@
-const { fn } = require("moment")
-const { query, checkRPGprofile, checkIfNewLevel, commandCooldown } = require("../../../functions")
+const { query, checkIfNewLevel, commandCooldown } = require("../../../functions")
 const { Discord, space } = require("../../../variables")
 
 module.exports.info = {
@@ -17,12 +16,23 @@ module.exports.info = {
 }
 
 let set = new Set()
-let isActive = false
+let isActive = []
 module.exports.command = {
     execute(msg, args, client) {
         if (commandCooldown(msg, set, 3000) === true) return
-        if (isActive === false) {
-            isActive = true
+
+        if (!isActive.find(m => m.id === msg.member.id)) {
+            isActive.push({id: msg.member.id})
+            
+            function removeMemberActive() {
+                let i = 0
+                isActive.forEach(member => {
+                    if (member.id === msg.member.id) {
+                        isActive.splice(i, 1)
+                    }
+                    i++
+                })
+            }
 
             query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
                 let userExperience = data[0][0].experience
@@ -285,7 +295,7 @@ module.exports.command = {
                                     enemyHealth = enemyHealth - damage
     
                                     if (enemyHealth <= 0) { 
-                                        isActive = false
+                                        removeMemberActive()
                                         msg.channel.send(`${attackDescription}**${user.enemy.name}** took **${Math.floor(damage)} damage** and was defeated. Good job!`).then(() => {
         
                                             setTimeout(async () => {
@@ -367,7 +377,7 @@ module.exports.command = {
                                         } else {
         
                                             if (userHealth <= 0) { 
-                                                isActive = false
+                                                removeMemberActive()
                                                 query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                                 msg.channel.send(`You failed to block and took **${Math.floor(damage)} HP**!\nYou lost against **${allData.enemy.name}** and lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}** gold left.`) 
                                                 
@@ -381,7 +391,7 @@ module.exports.command = {
                                     }
         
                                     if (userHealth <= 0) {
-                                        isActive = false
+                                        removeMemberActive()
                                         
                                         query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                         msg.channel.send(`**${allData.enemy.name}** used **${attack.name}** and did **${Math.floor(damage)} damage**, but you died with **${Math.floor(userHealth)} HP**!\nYou lost ${goldEmoji} **${lostGold}** gold. You now have ${goldEmoji} **${result.gold - lostGold}**.`) 
@@ -437,7 +447,8 @@ module.exports.command = {
         
                                     if (acceptableActions.find(action1 => action1 === action)) {
                                         if (action === 'run') { 
-                                            lostGold = Math.floor((result.gold / 100) * 1.75)
+                                            removeMemberActive()
+                                            lostGold = Math.floor((result.gold / 100) * 2)
     
                                             query(`UPDATE members_rpg SET gold = ${result.gold - lostGold} WHERE member_id = ${msg.member.id}`)
                                             msg.channel.send(`You ran away, but **${allData.enemy.name}** took ${goldEmoji} ${lostGold} of your gold. You now have ${goldEmoji} ${result.gold - lostGold}`)
@@ -486,7 +497,7 @@ module.exports.command = {
                             }).catch(collected => {console.log(collected)})
                         }
                     })
-                } else { isActive = false; return msg.channel.send(embed) }
+                } else { removeMemberActive(); return msg.channel.send(embed) }
             }) 
         }
     }
