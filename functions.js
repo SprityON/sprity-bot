@@ -648,9 +648,6 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
     let previousLevel = userLevel(previousXP)
     let nextLevel = userLevel(nextXP)
 
-    // console.log(previousLevel)
-    // console.log(nextLevel)
-
     if (!embed) {
         if (previousLevel < nextLevel) {
             query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
