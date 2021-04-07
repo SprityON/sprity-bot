@@ -633,11 +633,13 @@ function userLevel(exp) {
     
     for (let i = 0; i < levels.length; i++) {
         level = levels[i]
+        nextLevel = levels[i+1]
 
-        if (exp <= level.xp) {
+        if (level.xp >= exp) {
             if (level === levels[levels.length - 1]) return 'MAX'
+            let currentLevel = levels[i-1].level
 
-            return level.level
+            return currentLevel
         }
     }    
 }
@@ -646,25 +648,28 @@ function checkIfNewLevel(previousXP, nextXP, embed, member) {
     let previousLevel = userLevel(previousXP)
     let nextLevel = userLevel(nextXP)
 
+    // console.log(previousLevel)
+    // console.log(nextLevel)
+
     if (!embed) {
         if (previousLevel < nextLevel) {
             query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
     
             query(`SELECT * FROM members_rpg WHERE member_id = ${member.id}`, data => {
-                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
+                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 2} WHERE member_id = ${member.id}`)
             })
 
-            return `**YOU LEVELED UP!**\nYou are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`
+            return `**YOU LEVELED UP!**\nYou are now level **${nextLevel}** (${nextXP} EXP). You have **2** more attributes to spend!`
         } else return ''
     } else {
         if (previousLevel < nextLevel) {
             query(`UPDATE members_rpg SET level = ${nextLevel} WHERE member_id = ${member.id}`)
             
             query(`SELECT * FROM members_rpg WHERE member_id = ${member.id}`, data => {
-                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 5} WHERE member_id = ${member.id}`)
+                query(`UPDATE members_rpg SET attributes = ${data[0][0].attributes + 2} WHERE member_id = ${member.id}`)
             })
 
-            return embed.addField(`**YOU LEVELED UP!**`, `You are now level **${nextLevel}** (${nextXP} EXP). You have **5** more attributes to spend!`, true)
+            return embed.addField(`YOU LEVELED UP!`, `You are now level **${nextLevel}** (${nextXP} EXP). You have **2** more attributes to spend!`, true)
         } else return ''
     }
 }

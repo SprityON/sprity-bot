@@ -80,7 +80,7 @@ module.exports.command = {
                 /* if (randomAmount > 35 && randomAmount <= 60) {
                     // minigames
                 } */
-    
+                
                 /*
                  * 
                  * following section is for the encountering of enemies
@@ -130,7 +130,7 @@ module.exports.command = {
     
                 if (randomAmount > 0 && randomAmount <= 35) {
                     query(`SELECT * FROM members_rpg WHERE member_id = ${msg.member.id}`, async data => {
-                        embed.addField(space, `**YOU ENCOUNTERED AN ENEMY**`)
+                        embed.addField(space, `${checkIfNewLevel(userExperience, thisEXP, false, msg.member)}\n\n**YOU ENCOUNTERED AN ENEMY**`)
                         let allData = {}
                         const result = data[0][0]
         

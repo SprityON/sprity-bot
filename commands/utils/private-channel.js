@@ -93,8 +93,6 @@ module.exports.command = {
                         } else if (content.startsWith(`change`)) {
                             let contentArgs = content.split(/ +/)
 
-                            console.log(contentArgs)
-
                             switch (contentArgs[1]) {
                                 case 'description': 
                                     msg.channel.send(`What would you like your channel description to be?`)
